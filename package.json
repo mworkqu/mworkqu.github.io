@@ -1,0 +1,9 @@
+{
+  "name": "gestaltung-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "python -m http.server 4173",
+    "deploy:note": "echo Deploy this static site with GitHub Pages from the main branch root."
+  }
+}
