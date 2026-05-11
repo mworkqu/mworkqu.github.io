@@ -19,10 +19,14 @@ This project is intentionally split into simple folders so future debugging and 
 |-- about/index.html
 |-- contact/index.html
 |-- login/index.html
+|-- login/client/index.html
+|-- login/admin/index.html
+|-- login/vendor/index.html
 `-- dashboard/
     |-- index.html
     |-- client/index.html
     |-- admin/index.html
+    |-- admin/users/index.html
     `-- vendor/index.html
 ```
 

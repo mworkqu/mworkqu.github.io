@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User Management | GESTALTUNG</title><link rel="stylesheet" href="../../../assets/css/styles.css"></head>
+  <body>
+    <header class="site-header"><div class="nav"><a class="brand" href="../../../index.html"><span class="brand-mark">G</span><span>GESTALTUNG</span></a><nav class="nav-links" data-nav-links><a href="../../../studio/">Studio</a><a href="../../../manufacturing/">Manufacturing</a><a href="../../../shop/">Shop</a><a href="../../../projects/">Projects</a><a href="../../../about/">About</a><a href="../../../contact/">Contact</a><a href="../../../login/">Access</a></nav><div class="nav-actions"><a class="button primary" href="../">Admin Overview</a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button></div></div></header>
+    <main class="dashboard-shell">
+      <aside class="sidebar"><p class="eyebrow">Admin</p><nav><a href="../">Overview</a><a class="active" href="#">Users</a><a href="#">Project Requests</a><a href="#">Manufacturing Orders</a><a href="#">Vendors</a><a href="#">Quotations</a><a href="#">Shop Products</a><a href="#">Analytics</a></nav></aside>
+      <section class="dashboard-main">
+        <div class="section-head"><p class="eyebrow">User management</p><h1>Add or remove platform users.</h1><p class="lead">Static front-end controls for the future admin system. The table demonstrates how client, admin, and vendor access will be managed.</p></div>
+        <div class="split">
+          <form class="panel form-grid" data-user-form>
+            <div class="field"><label>Full Name</label><input name="name" type="text" required></div>
+            <div class="field"><label>Email</label><input name="email" type="email" required></div>
+            <div class="field"><label>Role</label><select name="role"><option>Client</option><option>Admin</option><option>Vendor / Workshop</option></select></div>
+            <div class="field"><label>Status</label><select name="status"><option>Active</option><option>Pending</option><option>Suspended</option></select></div>
+            <div class="field full"><button class="button primary" type="submit">Add User</button></div>
+          </form>
+          <div class="panel">
+            <h3>Access policy</h3>
+            <p class="kicker">Admins can create role-based accounts, suspend inactive users, and remove access for completed projects or expired vendor relationships.</p>
+          </div>
+        </div>
+        <section class="section">
+          <table class="table" data-user-table>
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Client Example</td><td>client@example.com</td><td>Client</td><td>Active</td><td><button class="button secondary danger" type="button" data-remove-user>Remove</button></td></tr>
+              <tr><td>Workshop Partner</td><td>vendor@example.com</td><td>Vendor / Workshop</td><td>Pending</td><td><button class="button secondary danger" type="button" data-remove-user>Remove</button></td></tr>
+              <tr><td>Operations Admin</td><td>admin@example.com</td><td>Admin</td><td>Active</td><td><button class="button secondary danger" type="button" data-remove-user>Remove</button></td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+    <script src="../../../assets/js/main.js"></script>
+  </body>
+</html>
