@@ -1,8 +1,129 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Vendor Dashboard | GESTALTUNG</title><link rel="stylesheet" href="../../assets/css/styles.css"></head>
-  <body>
-    <header class="site-header"><div class="nav"><a class="brand" href="../../index.html"><span class="brand-mark">G</span><span>GESTALTUNG</span></a><nav class="nav-links" data-nav-links><a href="../../studio/">Studio</a><a href="../../manufacturing/">Manufacturing</a><a href="../../shop/">Shop</a><a href="../../projects/">Projects</a><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../login/">Login</a></nav><div class="nav-actions"><a class="button primary" href="../../dashboard/">Dashboards</a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button></div></div></header>
-    <main class="dashboard-shell"><aside class="sidebar"><p class="eyebrow">Vendor</p><nav><a class="active" href="#">Assigned Jobs</a><a href="#">Files</a><a href="#">Submit Price</a><a href="#">Production Status</a><a href="#">Completion Photos</a><a href="#">Notes</a></nav></aside><section class="dashboard-main"><div class="section-head"><h1>Vendor Dashboard</h1><p class="lead">View assigned jobs, download files, submit pricing, accept or reject work, update production, upload completion photos, and mark jobs ready.</p></div><div class="grid four"><div class="card metric"><span>Assigned Jobs</span><strong>7</strong></div><div class="card metric"><span>Pricing Needed</span><strong>3</strong></div><div class="card metric"><span>In Production</span><strong>2</strong></div><div class="card metric"><span>Ready</span><strong>1</strong></div></div><section class="section"><div class="timeline"><div class="timeline-item">Download Files</div><div class="timeline-item">Submit Price</div><div class="timeline-item">Accept / Reject Job</div><div class="timeline-item">Update Production Status</div><div class="timeline-item">Upload Completion Photos</div><div class="timeline-item">Mark Ready</div></div></section></section></main><script src="../../assets/js/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendor Dashboard — GESTALTUNG</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="../../">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
+      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
+      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
+      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+    </svg>
+    <span class="g-logo-text">GESTALTUNG</span>
+  </a>
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="../../studio/">Studio</a>
+    <a class="g-nav-link" href="../../manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="../../shop/">Shop</a>
+    <a class="g-nav-link" href="../../login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+</header>
+
+<main class="dash-shell">
+
+  <aside class="dash-sidebar">
+    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid var(--rule)">Vendor</p>
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <a class="dash-nav-link active" href="#">Overview</a>
+      <a class="dash-nav-link" href="#">Active Orders</a>
+      <a class="dash-nav-link" href="#">Completed</a>
+      <a class="dash-nav-link" href="#">Files</a>
+      <a class="dash-nav-link" href="#">Messages</a>
+      <a class="dash-nav-link" href="#">Account</a>
+    </nav>
+    <div style="margin-top:auto;padding-top:32px">
+      <a class="link-muted mono" href="../../login/" style="font-size:11px">Sign out</a>
+    </div>
+  </aside>
+
+  <section class="dash-main">
+    <div style="margin-bottom:36px">
+      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:6px">Overview</p>
+      <h1 style="font-size:28px;font-weight:200">Workshop dashboard.</h1>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <span class="mono" style="font-size:10px;color:var(--muted)">Active orders</span>
+        <strong>7</strong>
+      </div>
+      <div class="metric-card">
+        <span class="mono" style="font-size:10px;color:var(--muted)">Due this week</span>
+        <strong>3</strong>
+      </div>
+      <div class="metric-card">
+        <span class="mono" style="font-size:10px;color:var(--muted)">Awaiting files</span>
+        <strong>2</strong>
+      </div>
+      <div class="metric-card">
+        <span class="mono" style="font-size:10px;color:var(--muted)">Completed this month</span>
+        <strong>14</strong>
+      </div>
+    </div>
+
+    <div style="margin-top:40px">
+      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--rule)">Active orders</p>
+      <table class="g-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Description</th>
+            <th>Process</th>
+            <th>Due</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono" style="font-size:11px">MO-2024-019</td>
+            <td>Bracket assembly × 12</td>
+            <td>CNC · AL6061</td>
+            <td class="mono" style="font-size:11px">16 May</td>
+            <td><span class="badge active">In progress</span></td>
+            <td><a class="btn-table" href="#">Update</a></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">MO-2024-021</td>
+            <td>Enclosure panels × 4</td>
+            <td>Laser · SS304</td>
+            <td class="mono" style="font-size:11px">18 May</td>
+            <td><span class="badge active">In progress</span></td>
+            <td><a class="btn-table" href="#">Update</a></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">MO-2024-022</td>
+            <td>Prototype housing × 1</td>
+            <td>3D print · SLA</td>
+            <td class="mono" style="font-size:11px">20 May</td>
+            <td><span class="badge">Awaiting files</span></td>
+            <td><a class="btn-table" href="#">View</a></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">MO-2024-023</td>
+            <td>Turned fittings × 50</td>
+            <td>CNC · SS316</td>
+            <td class="mono" style="font-size:11px">22 May</td>
+            <td><span class="badge">Queued</span></td>
+            <td><a class="btn-table" href="#">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="../../assets/js/main.js"></script>
+</body>
 </html>

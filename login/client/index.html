@@ -1,9 +1,55 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Client Login | GESTALTUNG</title><link rel="stylesheet" href="../../assets/css/styles.css"></head>
-  <body>
-    <header class="site-header"><div class="nav"><a class="brand" href="../../index.html"><span class="brand-mark">G</span><span>GESTALTUNG</span></a><nav class="nav-links" data-nav-links><a href="../../studio/">Studio</a><a href="../../manufacturing/">Manufacturing</a><a href="../../shop/">Shop</a><a href="../../projects/">Projects</a><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../">Access</a></nav><div class="nav-actions"><a class="button primary" href="../../studio/#request">Shape an Idea</a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button></div></div></header>
-    <main><section class="section"><div class="split"><div><p class="eyebrow">Client access</p><h1>Return to your project space.</h1><p class="lead">Review quotes, upload revisions, track orders, download files, and message the GESTALTUNG team.</p></div><form class="panel form-grid"><div class="field full"><label>Client Email</label><input type="email"></div><div class="field full"><label>Password</label><input type="password"></div><div class="field full"><a class="button primary" href="../../dashboard/client/">Enter Client Dashboard</a></div><div class="field full"><a class="button secondary" href="../../contact/">Need help accessing a project?</a></div></form></div></section></main>
-    <script src="../../assets/js/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Login — GESTALTUNG</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="../../">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
+      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
+      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
+      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+    </svg>
+    <span class="g-logo-text">GESTALTUNG</span>
+  </a>
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="../../studio/">Studio</a>
+    <a class="g-nav-link" href="../../manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="../../shop/">Shop</a>
+    <a class="g-nav-link active" href="../../login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+</header>
+
+<main class="login-shell">
+  <div class="login-panel">
+    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:8px">Client portal</p>
+    <h1 style="font-size:26px;font-weight:200;margin-bottom:32px">Sign in</h1>
+    <form class="g-form" action="../../dashboard/client/" method="get">
+      <div class="field">
+        <label class="mono">Email</label>
+        <input type="email" name="email" required placeholder="you@company.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label class="mono">Password</label>
+        <input type="password" name="password" required placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-machine" type="submit" style="width:100%;margin-top:8px">Sign in</button>
+    </form>
+    <div style="margin-top:28px;padding-top:24px;border-top:0.5px solid var(--rule)">
+      <a class="link-muted mono" href="../" style="font-size:12px">&larr; Other access roles</a>
+    </div>
+  </div>
+</main>
+
+<script src="../../assets/js/main.js"></script>
+</body>
 </html>

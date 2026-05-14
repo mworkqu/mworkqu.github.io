@@ -1,11 +1,176 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Shop | GESTALTUNG</title><link rel="stylesheet" href="../assets/css/styles.css"></head>
-  <body>
-    <header class="site-header"><div class="nav"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>GESTALTUNG</span></a><nav class="nav-links" data-nav-links><a href="../studio/">Studio</a><a href="../manufacturing/">Manufacturing</a><a href="../shop/">Shop</a><a href="../projects/">Projects</a><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../login/">Access</a></nav><div class="nav-actions"><a class="button primary" href="#products">Explore Products</a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button></div></div></header>
-    <main><section class="hero compact"><div class="hero-inner"><div class="hero-content"><p class="eyebrow">Curated product commerce</p><h1>Engineered products for learning, making, and everyday work.</h1><p class="lead">A clean product system for useful tools, kits, spare parts, lab accessories, and digital files designed with the same precision as the studio.</p><div class="hero-actions"><a class="button primary" href="#products">Explore Products</a><a class="button secondary" href="../contact/">Create a Custom Version</a></div></div></div></section>
-    <section class="section"><div class="section-head center"><p class="eyebrow">The shop</p><h2>Consumer-ready objects with engineering credibility behind them.</h2><p class="kicker">Product cards focus on use, finish, and clarity first. Technical details remain available without overwhelming the buying experience.</p></div><div class="tag-list"><span class="tag">Ready-Made Products</span><span class="tag">3D Printed Products</span><span class="tag">Engineering Tools</span><span class="tag">Educational Kits</span><span class="tag">STL / CAD Downloads</span><span class="tag">Customizable Products</span><span class="tag">Spare Parts</span><span class="tag">Lab Accessories</span></div></section>
-    <section class="section alt" id="products"><div class="section-inner"><div class="section-head"><p class="eyebrow">Featured products</p><h2>Designed to be used, displayed, taught, and improved.</h2></div><div class="product-grid"><article class="product-card"><div class="product-photo"></div><div class="product-body"><p class="eyebrow">Lab accessory</p><h3>Adjustable Lab Stand</h3><p>Stable, clean, and customizable for benches, classrooms, and prototyping spaces.</p><div class="price-line"><strong>QAR 180</strong><a class="button secondary" href="#">Add to Cart</a></div></div></article><article class="product-card"><div class="product-photo"></div><div class="product-body"><p class="eyebrow">Digital file</p><h3>CAD Download Pack</h3><p>Well-organized STL and STEP files for students, makers, and technical teams.</p><div class="price-line"><strong>QAR 45</strong><a class="button secondary" href="#">Add to Cart</a></div></div></article><article class="product-card"><div class="product-photo"></div><div class="product-body"><p class="eyebrow">Educational kit</p><h3>Mechanical Gear Kit</h3><p>A tactile learning object for classrooms, labs, and product demonstrations.</p><div class="price-line"><strong>QAR 120</strong><a class="button secondary" href="#">Add to Cart</a></div></div></article></div></div></section></main>
-    <footer class="site-footer"><div class="footer-inner"><div class="footer-col"><strong>GESTALTUNG</strong><span>Design it. Make it. Launch it.</span></div><div class="footer-col"><strong>Shop</strong><a href="#">Products</a><a href="#">Digital Files</a></div><div class="footer-col"><strong>Support</strong><a href="../contact/">Contact</a><a href="../login/">Login</a></div><div class="footer-col"><strong>Legal</strong><span>&copy; <span data-year></span></span></div></div></footer><script src="../assets/js/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop — GESTALTUNG</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="../">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
+      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
+      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
+      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+    </svg>
+    <span class="g-logo-text">GESTALTUNG</span>
+  </a>
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="../studio/">Studio</a>
+    <a class="g-nav-link" href="../manufacturing/">Manufacturing</a>
+    <a class="g-nav-link active" href="../shop/">Shop</a>
+    <a class="g-nav-link" href="../login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+</header>
+
+<main>
+
+  <section class="page-header">
+    <p class="page-label mono">03 / Shop</p>
+    <h1 class="page-title">Engineered objects,<br>ready to ship.</h1>
+    <p class="page-lead">A curated catalogue of precision-made products — tools, fixtures, and objects designed and manufactured by GESTALTUNG.</p>
+  </section>
+
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">Category</span>
+      <div class="tag-list">
+        <span class="tag">All</span>
+        <span class="tag">Tools</span>
+        <span class="tag">Fixtures</span>
+        <span class="tag">Objects</span>
+        <span class="tag">Digital files</span>
+      </div>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:.18">
+            <rect x="8" y="8" width="48" height="48" stroke="currentColor" stroke-width=".8"/>
+            <line x1="8" y1="32" x2="56" y2="32" stroke="currentColor" stroke-width=".5"/>
+            <line x1="32" y1="8" x2="32" y2="56" stroke="currentColor" stroke-width=".5"/>
+            <circle cx="32" cy="32" r="12" stroke="currentColor" stroke-width=".6" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <p class="mono" style="font-size:10px;color:var(--muted)">TOOL · AL6061</p>
+          <h3>Precision Marking Gauge</h3>
+          <p>Anodised aluminium marking gauge with hardened steel scribe. Calibrated to 0.1 mm increments.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+            <span class="mono" style="font-size:13px;font-weight:400">QAR 185</span>
+            <a class="btn-machine" href="#" style="padding:8px 18px;font-size:11px">Order</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:.18">
+            <rect x="12" y="20" width="40" height="24" stroke="currentColor" stroke-width=".8"/>
+            <line x1="12" y1="32" x2="52" y2="32" stroke="currentColor" stroke-width=".5"/>
+            <circle cx="32" cy="32" r="6" stroke="currentColor" stroke-width=".6" fill="none"/>
+            <rect x="28" y="8" width="8" height="12" stroke="currentColor" stroke-width=".5"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <p class="mono" style="font-size:10px;color:var(--muted)">FIXTURE · SS304</p>
+          <h3>Modular Work-Holding Set</h3>
+          <p>Stainless steel T-slot fixture system. 24-piece set compatible with 16 mm and 20 mm T-slot tables.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+            <span class="mono" style="font-size:13px;font-weight:400">QAR 640</span>
+            <a class="btn-machine" href="#" style="padding:8px 18px;font-size:11px">Order</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:.18">
+            <polygon points="32,8 56,44 8,44" stroke="currentColor" stroke-width=".8" fill="none"/>
+            <line x1="32" y1="8" x2="32" y2="44" stroke="currentColor" stroke-width=".5"/>
+            <line x1="20" y1="26" x2="44" y2="26" stroke="currentColor" stroke-width=".5"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <p class="mono" style="font-size:10px;color:var(--muted)">DIGITAL · STEP + PDF</p>
+          <h3>Parametric Bracket Library</h3>
+          <p>80 fully parametric bracket profiles in SolidWorks and STEP format. Includes technical drawing templates.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+            <span class="mono" style="font-size:13px;font-weight:400">QAR 120</span>
+            <a class="btn-machine" href="#" style="padding:8px 18px;font-size:11px">Buy</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">Custom orders</span>
+    </div>
+    <div class="g-split">
+      <div>
+        <h3 style="font-weight:200;font-size:26px;margin-bottom:16px">Need a specific configuration?</h3>
+        <p style="color:var(--muted);line-height:1.7;margin-bottom:24px">All products can be specified to custom dimensions, materials, and finishes. Minimum order quantities apply for some processes.</p>
+        <a class="btn-machine" href="../manufacturing/#quote">Request custom production</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="row-item c3">
+          <span class="mono" style="font-size:11px;color:var(--muted)">Lead time</span>
+          <span>5 – 10 working days</span>
+        </div>
+        <div class="row-item c3">
+          <span class="mono" style="font-size:11px;color:var(--muted)">Delivery</span>
+          <span>Doha same-day · GCC 3–5 days · International 7–14 days</span>
+        </div>
+        <div class="row-item c3">
+          <span class="mono" style="font-size:11px;color:var(--muted)">Returns</span>
+          <span>14-day return on stocked items. Custom orders non-returnable.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="g-footer">
+  <div class="footer-grid">
+    <div>
+      <a class="g-logo" href="../" style="margin-bottom:12px;display:inline-flex">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
+          <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
+          <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+          <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
+          <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
+          <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+        </svg>
+        <span class="g-logo-text">GESTALTUNG</span>
+      </a>
+      <p class="mono" style="font-size:10px;color:var(--muted)">Doha, Qatar &nbsp;·&nbsp; <span data-year></span></p>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:8px">
+      <a class="link-muted mono" href="../studio/" style="font-size:12px">Studio</a>
+      <a class="link-muted mono" href="../manufacturing/" style="font-size:12px">Manufacturing</a>
+      <a class="link-muted mono" href="../shop/" style="font-size:12px">Shop</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column;gap:8px">
+      <a class="link-muted mono" href="../projects/" style="font-size:12px">Projects</a>
+      <a class="link-muted mono" href="../about/" style="font-size:12px">About</a>
+      <a class="link-muted mono" href="../contact/" style="font-size:12px">Contact</a>
+    </nav>
+    <p class="mono" style="font-size:10px;color:var(--dim);align-self:end">&copy; <span data-year></span> GESTALTUNG.</p>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
 </html>
