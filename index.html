@@ -3,265 +3,143 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GESTALTUNG | From Ideas to Manufactured Products</title>
-  <meta name="description" content="GESTALTUNG is an engineering studio, manufacturing platform, and product-commerce system — based in Doha, Qatar.">
+  <title>GESTALTUNG — Engineering Studio</title>
+  <meta name="description" content="GESTALTUNG is an engineering studio, manufacturing platform, and product-commerce system — Doha, Qatar.">
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-          }
+      theme: { extend: {
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
         }
-      }
+      }}
     }
   </script>
 
-  <!-- React + Babel -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 
   <style>
-    /* ─── Reset ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:       #0C1B2E;
-      --navy-mid:   #122035;
-      --navy-light: #1A2F48;
-      --blue:       #1B53BE;
-      --blue-hover: #1647A8;
-      --blue-light: #E8EFFC;
-      --text:       #0F1923;
-      --muted:      #5C6B7A;
-      --muted-lt:   #8A99A8;
-      --border:     #DDE1E7;
-      --bg-soft:    #F3F5F8;
-      --white:      #FFFFFF;
+      --bg:      #F8F8F6;
+      --surface: #FFFFFF;
+      --ink:     #0A0A0A;
+      --rule:    rgba(10,10,10,0.07);
+      --muted:   rgba(10,10,10,0.38);
+      --dim:     rgba(10,10,10,0.20);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--white);
-      color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      font-weight: 400;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-thumb { background: rgba(27,83,190,0.25); border-radius: 2px; }
+    .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
 
-    /* ─── Nav ───────────────────────────────────────────── */
+    /* ── The only high-contrast element ── */
+    .btn-machine {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 12px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .btn-machine:hover { opacity: 0.75; transform: translateY(-1px); }
+
+    /* ── Nav ── */
     #g-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 200;
-      height: 72px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 60px;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid var(--border);
+      padding: 0 72px;
+      background: rgba(248,248,246,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid var(--rule);
       transition: box-shadow 0.4s ease;
     }
-    #g-nav.scrolled {
-      box-shadow: 0 2px 24px rgba(12,27,46,0.10);
-    }
+    #g-nav.scrolled { box-shadow: 0 1px 32px rgba(10,10,10,0.07); }
 
     .nav-link {
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
-      letter-spacing: 0.01em;
-      transition: color 0.25s ease;
+      transition: color 0.2s ease;
     }
-    .nav-link:hover { color: var(--navy); }
+    .nav-link:hover { color: var(--ink); }
 
-    /* ─── Buttons ───────────────────────────────────────── */
-    .btn-blue {
-      display: inline-flex;
+    /* ── CAD grid ── */
+    .cad-grid {
+      background-color: #FAFAF9;
+      background-image:
+        linear-gradient(rgba(10,10,10,0.048) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,10,10,0.048) 1px, transparent 1px),
+        linear-gradient(rgba(10,10,10,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,10,10,0.022) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    }
+
+    /* ── Service row ── */
+    .service-row {
+      display: grid;
+      grid-template-columns: 52px 200px 1fr auto;
       align-items: center;
-      gap: 10px;
-      background: var(--blue);
-      color: #fff;
-      padding: 14px 30px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      gap: 32px;
+      padding: 26px 0;
+      border-top: 0.5px solid var(--rule);
       text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      color: inherit;
+      transition: background 0.2s ease;
     }
-    .btn-blue:hover {
-      background: var(--blue-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 24px rgba(27,83,190,0.30);
-    }
+    .service-row:last-child { border-bottom: 0.5px solid var(--rule); }
+    .service-row:hover { background: rgba(10,10,10,0.018); }
+    .service-row:hover .row-arrow { transform: translate(3px, -3px); color: var(--ink); }
+    .row-arrow { transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), color 0.2s ease; color: var(--dim); }
 
-    .btn-blue-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: transparent;
-      color: var(--blue);
-      padding: 13px 29px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1.5px solid var(--blue);
-      cursor: pointer;
-      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
     }
-    .btn-blue-outline:hover {
-      background: var(--blue);
-      color: #fff;
-      transform: translateY(-1px);
-    }
-
-    .btn-navy {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--navy);
-      color: #fff;
-      padding: 14px 30px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
-    .btn-navy:hover { background: var(--navy-light); transform: translateY(-1px); }
-
-    .btn-white-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: transparent;
-      color: rgba(255,255,255,0.85);
-      padding: 13px 29px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1.5px solid rgba(255,255,255,0.30);
-      cursor: pointer;
-      transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
-    }
-    .btn-white-outline:hover {
-      border-color: rgba(255,255,255,0.70);
-      color: #fff;
-      transform: translateY(-1px);
-    }
-
-    /* ─── Section reveal ────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
-    /* ─── Card hover ────────────────────────────────────── */
-    .service-card {
-      transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
-    }
-    .service-card:hover {
-      box-shadow: 0 12px 48px rgba(12,27,46,0.10);
-      transform: translateY(-4px);
-      border-color: var(--blue) !important;
-    }
-
-    .pillar-col {
-      transition: background 0.3s ease;
-    }
-    .pillar-col:hover {
-      background: #EAF0FB;
-    }
-
-    /* ─── Section separator ─────────────────────────────── */
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 14px;
-    }
-
-    /* ─── Step number ───────────────────────────────────── */
-    .step-num {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--blue-light);
-      color: var(--blue);
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-bottom: 20px;
-    }
-
-    /* ─── Cap tag ───────────────────────────────────────── */
-    .cap-tag {
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      padding: 8px 20px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-      cursor: default;
-      border-radius: 2px;
-    }
-    .cap-tag:hover {
-      background: var(--blue-light);
-      border-color: rgba(27,83,190,0.25);
-      color: var(--blue);
-    }
-
-    /* ─── Blueprint bg for accent sections ──────────────── */
-    .bg-grid-subtle {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    /* ─── Hover underline link ──────────────────────────── */
-    .link-arrow {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--blue);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap 0.25s ease, opacity 0.25s ease;
-    }
-    .link-arrow:hover { gap: 10px; opacity: 0.80; }
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-thumb { background: rgba(10,10,10,0.10); }
   </style>
 </head>
 <body>
@@ -270,590 +148,638 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 
-/* ═══ ICONS ═════════════════════════════════════════════ */
-const ArrowRight = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
-    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const IconHandshake = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 22l-4 4M26 22l4 4M14 22l6-6 6 6"/>
-    <path d="M8 26l4-4 6 4 6-4 4 4"/>
-    <path d="M4 18l4 8M36 18l-4 8"/>
-    <circle cx="20" cy="12" r="3"/>
-  </svg>
-);
-
-const IconGear = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="20" cy="20" r="5"/>
-    <path d="M20 6v4M20 30v4M6 20h4M30 20h4M9.17 9.17l2.83 2.83M27.17 27.17l2.83 2.83M30.83 9.17l-2.83 2.83M12.83 27.17l-2.83 2.83"/>
-  </svg>
-);
-
-const IconChart = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="6"  y="24" width="7" height="10" rx="1"/>
-    <rect x="16" y="16" width="7" height="18" rx="1"/>
-    <rect x="26" y="8"  width="7" height="26" rx="1"/>
-    <path d="M4 36h32"/>
-  </svg>
-);
-
-const IconShield = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20 4l12 4v12c0 8-5 13-12 16C13 33 8 28 8 20V8l12-4z"/>
-    <path d="M14 20l4 4 8-8"/>
-  </svg>
-);
-
-const IconBulb = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20 6a10 10 0 0 1 7 17l-1 3H14l-1-3A10 10 0 0 1 20 6z"/>
-    <path d="M15 30h10M16 34h8"/>
-  </svg>
-);
-
-/* ═══ LOGO ═══════════════════════════════════════════════ */
-const Logo = ({ light = false }) => (
-  <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect x="0.5" y="0.5" width="27" height="27"
-        stroke={light ? 'rgba(255,255,255,0.35)' : 'rgba(12,27,46,0.30)'} strokeWidth="0.8"/>
-      <rect x="4.5" y="4.5" width="19" height="19"
-        stroke={light ? 'rgba(255,255,255,0.18)' : 'rgba(12,27,46,0.14)'} strokeWidth="0.6"/>
-      <line x1="4.5" y1="14" x2="23.5" y2="14"
-        stroke={light ? 'rgba(255,255,255,0.22)' : '#1B53BE'} strokeWidth="0.7"/>
-      <line x1="14" y1="4.5" x2="14" y2="23.5"
-        stroke={light ? 'rgba(255,255,255,0.22)' : '#1B53BE'} strokeWidth="0.7"/>
-      <circle cx="14" cy="14" r="3.2"
-        stroke={light ? 'rgba(255,255,255,0.40)' : '#1B53BE'} strokeWidth="0.7" fill="none"/>
-      <circle cx="14" cy="14" r="0.9"
-        fill={light ? 'rgba(255,255,255,0.70)' : '#1B53BE'}/>
+/* ── Icons  (Lucide SVG paths — lucide.dev ISC License) ── */
+const Icon = ({ name, size = 14, strokeWidth = 1.5 }) => {
+  const d = {
+    'arrow-right':    'M5 12h14M12 5l7 7-7 7',
+    'arrow-up-right': 'M7 17L17 7M7 7h10v10',
+    'chevron-right':  'M9 18l6-6-6-6',
+    'minus':          'M5 12h14',
+    'plus':           'M12 5v14M5 12h14',
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth={strokeWidth}
+      strokeLinecap="round" strokeLinejoin="round">
+      <path d={d[name]}/>
     </svg>
-    <span style={{
-      fontFamily: 'Inter, sans-serif',
-      fontSize: 14,
-      fontWeight: 700,
-      letterSpacing: '0.20em',
-      color: light ? '#FFFFFF' : 'var(--navy)',
+  );
+};
+
+/* ── Logo ── */
+const Logo = () => (
+  <a href="/" style={{ display:'flex', alignItems:'center', gap:10, textDecoration:'none' }}>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" strokeWidth=".6"/>
+      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" strokeWidth=".5"/>
+      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" strokeWidth=".5"/>
+      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" strokeWidth=".5"/>
+      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" strokeWidth=".5" fill="none"/>
+      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+    </svg>
+    <span className="mono" style={{
+      fontSize: 11.5,
+      fontWeight: 400,
+      letterSpacing: '0.26em',
+      color: 'rgba(10,10,10,0.72)',
     }}>
       GESTALTUNG
     </span>
   </a>
 );
 
-/* ═══ NAVIGATION ═════════════════════════════════════════ */
+/* ═══════════════════════════════
+   NAV
+═══════════════════════════════ */
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 48);
+    const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const links = ['Studio', 'Manufacturing', 'Shop', 'Projects', 'About', 'Contact'];
-
   return (
     <nav id="g-nav" className={scrolled ? 'scrolled' : ''}>
       <Logo />
-      <div style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
-        {links.map(l => (
-          <a key={l} href={`/${l.toLowerCase()}/`} className="nav-link">{l}</a>
+      <div style={{ display:'flex', gap:36, alignItems:'center' }}>
+        {[
+          ['Studio',        '/studio/'],
+          ['Manufacturing', '/manufacturing/'],
+          ['Shop',          '/shop/'],
+          ['Access',        '/login/'],
+        ].map(([label, href]) => (
+          <a key={label} href={href} className="nav-link">{label}</a>
         ))}
       </div>
-      <a href="/studio/#request" className="btn-blue" style={{ fontSize: 11, padding: '10px 22px' }}>
-        Start a Project <ArrowRight />
+      <a href="/studio/#request" className="btn-machine">
+        Start a Project <Icon name="arrow-right" size={12}/>
       </a>
     </nav>
   );
 };
 
-/* ═══ HERO ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
 const Hero = () => (
   <section style={{
     minHeight: '100vh',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    padding: '0 72px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    paddingBottom: 72,
+    paddingTop: 60,
+    maxWidth: 1440,
+    margin: '0 auto',
+    width: '100%',
     position: 'relative',
-    overflow: 'hidden',
   }}>
-    {/* ── Left panel ── */}
-    <div className="bg-grid-subtle" style={{
-      background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
+
+    {/* Top metadata strip */}
+    <div className="mono" style={{
+      position: 'absolute',
+      top: 80, left: 72, right: 72,
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      padding: '120px 72px 80px 72px',
-      position: 'relative',
-      zIndex: 1,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      fontSize: 8.5,
+      fontWeight: 300,
+      letterSpacing: '0.20em',
+      textTransform: 'uppercase',
+      color: 'rgba(10,10,10,0.22)',
     }}>
-      {/* Blue accent line */}
-      <div style={{ width: 56, height: 3, background: 'var(--blue)', marginBottom: 36 }} />
-
-      <h1 style={{
-        fontFamily: 'Inter, sans-serif',
-        fontSize: 'clamp(36px, 4.5vw, 62px)',
-        fontWeight: 800,
-        lineHeight: 1.12,
-        color: '#FFFFFF',
-        margin: '0 0 28px',
-        letterSpacing: '-0.02em',
-      }}>
-        From Ideas<br/>
-        to Manufactured<br/>
-        <span style={{ color: 'rgba(255,255,255,0.55)' }}>Products.</span>
-      </h1>
-
-      <p style={{
-        fontSize: 15,
-        fontWeight: 300,
-        lineHeight: 1.80,
-        color: 'rgba(255,255,255,0.62)',
-        maxWidth: 380,
-        margin: '0 0 44px',
-      }}>
-        GESTALTUNG partners with innovators to turn concepts, sketches, and engineering challenges into precision-manufactured, real-world products.
-      </p>
-
-      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-        <a href="/studio/#request" className="btn-blue">
-          Learn More <ArrowRight />
-        </a>
-        <a href="/manufacturing/" className="btn-white-outline">
-          Upload a File
-        </a>
-      </div>
-
-      {/* Bottom meta */}
-      <div style={{
-        position: 'absolute',
-        bottom: 44,
-        left: 72,
-        display: 'flex',
-        gap: 28,
-      }}>
-        {[['Doha, Qatar', 'Location'], ['Est. 2024', 'Founded'], ['End-to-End', 'Service']].map(([val, lbl]) => (
-          <div key={lbl}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.80)', lineHeight: 1.3 }}>{val}</div>
-            <div style={{ fontSize: 10, fontWeight: 400, color: 'rgba(255,255,255,0.32)', letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 2 }}>{lbl}</div>
-          </div>
-        ))}
-      </div>
+      <span>Gestaltung — Engineering Studio</span>
+      <span style={{ borderLeft:'0.5px solid rgba(10,10,10,0.10)', paddingLeft:20 }}>
+        25.2N · 51.5E · Doha, QAT
+      </span>
+      <span style={{ borderLeft:'0.5px solid rgba(10,10,10,0.10)', paddingLeft:20 }}>
+        Est. MMXXIV · Rev 1.0
+      </span>
     </div>
 
-    {/* ── Right panel — hero image placeholder ── */}
-    {/*
-      HERO IMAGE: Replace this div with:
-      <div style={{ backgroundImage: 'url(your-hero-image.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-    */}
-    <div style={{
-      background: 'linear-gradient(160deg, #162840 0%, #0C1B2E 50%, #1A3050 100%)',
-      position: 'relative',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+    {/* Headline */}
+    <h1 style={{
+      fontSize: 'clamp(58px, 8.5vw, 120px)',
+      fontWeight: 200,
+      lineHeight: 0.98,
+      letterSpacing: '-0.03em',
+      color: '#0A0A0A',
+      margin: '0 0 48px',
+      maxWidth: 900,
     }}>
-      {/* Technical illustration placeholder */}
-      <svg width="360" height="360" viewBox="0 0 360 360" fill="none" style={{ opacity: 0.14 }}>
-        {/* Grid */}
-        {Array.from({ length: 7 }, (_, i) => (
-          <g key={i}>
-            <line x1={i * 60} y1="0" x2={i * 60} y2="360" stroke="white" strokeWidth="0.5"/>
-            <line x1="0" y1={i * 60} x2="360" y2={i * 60} stroke="white" strokeWidth="0.5"/>
-          </g>
-        ))}
-        {/* Central geometry */}
-        <circle cx="180" cy="180" r="120" stroke="white" strokeWidth="0.8" strokeDasharray="6 6"/>
-        <circle cx="180" cy="180" r="80"  stroke="white" strokeWidth="1.0"/>
-        <circle cx="180" cy="180" r="40"  stroke="white" strokeWidth="0.8" strokeDasharray="4 4"/>
-        <circle cx="180" cy="180" r="6"   stroke="white" strokeWidth="1.0" fill="none"/>
-        <circle cx="180" cy="180" r="2"   fill="white"/>
-        {/* Crosshairs */}
-        <line x1="60"  y1="180" x2="300" y2="180" stroke="white" strokeWidth="0.6"/>
-        <line x1="180" y1="60"  x2="180" y2="300" stroke="white" strokeWidth="0.6"/>
-        {/* Dimension arcs */}
-        <path d="M 180 60 A 120 120 0 0 1 300 180" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="3 6"/>
-        {/* Tick marks */}
-        {[0,45,90,135,180,225,270,315].map(deg => {
-          const r = (deg * Math.PI) / 180;
-          return (
-            <line key={deg}
-              x1={180 + 76 * Math.cos(r)} y1={180 + 76 * Math.sin(r)}
-              x2={180 + 84 * Math.cos(r)} y2={180 + 84 * Math.sin(r)}
-              stroke="white" strokeWidth="0.8"/>
-          );
-        })}
-        {/* Corner brackets */}
-        <path d="M 20 20 h 30 M 20 20 v 30" stroke="white" strokeWidth="1"/>
-        <path d="M 340 20 h -30 M 340 20 v 30" stroke="white" strokeWidth="1"/>
-        <path d="M 20 340 h 30 M 20 340 v -30" stroke="white" strokeWidth="1"/>
-        <path d="M 340 340 h -30 M 340 340 v -30" stroke="white" strokeWidth="1"/>
-      </svg>
+      From Ideas<br/>
+      to Manufactured<br/>
+      Products.
+    </h1>
 
-      {/* Subtle vertical label */}
-      <span style={{
-        position: 'absolute',
-        right: 28,
-        top: '50%',
-        transform: 'translateY(-50%) rotate(90deg)',
-        fontFamily: 'Inter, sans-serif',
-        fontSize: 9,
-        fontWeight: 500,
-        letterSpacing: '0.24em',
-        textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.22)',
-        whiteSpace: 'nowrap',
+    {/* Description + CTA row */}
+    <div style={{ display:'flex', alignItems:'center', gap:52, flexWrap:'wrap' }}>
+      <p style={{
+        fontSize: 14,
+        fontWeight: 300,
+        lineHeight: 1.80,
+        color: 'rgba(10,10,10,0.44)',
+        maxWidth: 360,
+        margin: 0,
       }}>
-        Engineering · Manufacturing · Commerce
-      </span>
+        An engineering studio, manufacturing platform, and product-commerce system — end to end.
+      </p>
+      <a href="/studio/#request" className="btn-machine">
+        Start a Project <Icon name="arrow-right" size={13}/>
+      </a>
+    </div>
+
+    {/* Bottom rule + tripartite label */}
+    <div style={{ marginTop:60, paddingTop:20, borderTop:'0.5px solid rgba(10,10,10,0.08)' }}>
+      <div className="mono" style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
+        fontSize: 8.5,
+        fontWeight: 300,
+        letterSpacing: '0.20em',
+        textTransform: 'uppercase',
+        color: 'rgba(10,10,10,0.22)',
+      }}>
+        <span>Engineering Studio</span>
+        <span style={{ textAlign:'center' }}>Manufacturing Platform</span>
+        <span style={{ textAlign:'right' }}>Product Commerce</span>
+      </div>
     </div>
   </section>
 );
 
-/* ═══ FOUR PILLARS ═══════════════════════════════════════ */
-const Pillars = () => {
-  const pillars = [
-    { Icon: IconHandshake, title: 'Client Focused',       desc: 'We build strong partnerships and deliver exceptional value on every project we take on.' },
-    { Icon: IconBulb,      title: 'Innovation Driven',    desc: 'We embrace new ideas, cutting-edge processes, and technology to solve complex challenges.' },
-    { Icon: IconChart,     title: 'Results Oriented',     desc: 'We are committed to delivering measurable, real-world results that move your product forward.' },
-    { Icon: IconShield,    title: 'Integrity First',      desc: 'We operate with full transparency, accountability, and the highest professional standards.' },
-  ];
-
-  return (
-    <section className="reveal" style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-        {pillars.map(({ Icon, title, desc }, i) => (
-          <div key={i} className="pillar-col" style={{
-            padding: '60px 40px',
-            borderRight: i < 3 ? '1px solid var(--border)' : 'none',
-            textAlign: 'center',
-          }}>
-            <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
-              <Icon />
-            </div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 12, letterSpacing: '-0.01em' }}>{title}</h3>
-            <p style={{ fontSize: 13.5, fontWeight: 400, lineHeight: 1.75, color: 'var(--muted)' }}>{desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-/* ═══ SERVICES ═══════════════════════════════════════════ */
+/* ═══════════════════════════════
+   SERVICE INDEX
+═══════════════════════════════ */
 const Services = () => {
-  const services = [
+  const rows = [
     {
       num: '01',
-      tag: 'Design & Engineering',
       title: 'Studio',
-      headline: 'Bring the idea.',
-      desc: 'For sketches, concepts, broken parts, reverse engineering challenges, and products that need to be designed from the ground up.',
+      sub: 'Design & Engineering',
+      desc: 'Concepts, sketches, reverse engineering, and full product design — from first principles to production-ready files.',
       href: '/studio/',
-      cta: 'Explore Studio',
     },
     {
       num: '02',
-      tag: 'Production Platform',
       title: 'Manufacturing',
-      headline: 'Make it real.',
-      desc: 'For CAD files, STL models, and engineering drawings that need careful quotation, material selection, and production oversight.',
+      sub: 'Production Platform',
+      desc: 'CAD files, STL models, and technical drawings — quoted, produced, and delivered through a single workflow.',
       href: '/manufacturing/',
-      cta: 'Explore Manufacturing',
     },
     {
       num: '03',
-      tag: 'Product Commerce',
       title: 'Shop',
-      headline: 'Live with the result.',
-      desc: 'Ready-made engineered products, digital files, educational kits, and small-batch manufactured items — curated and available now.',
+      sub: 'Product Commerce',
+      desc: 'Engineered products, digital files, educational kits, and small-batch manufactured items — curated and ready.',
       href: '/shop/',
-      cta: 'Explore Shop',
     },
   ];
 
   return (
-    <section className="reveal" style={{ padding: '120px 60px', background: '#fff' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 60, flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            <p className="section-label">What We Do</p>
-            <h2 style={{ fontSize: 'clamp(28px, 3.2vw, 44px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 480 }}>
-              A complete path from concept to finished product.
-            </h2>
-          </div>
-          <a href="/about/" className="link-arrow">
-            Our Full Approach <ArrowRight />
-          </a>
-        </div>
+    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
+      <div style={{ maxWidth:1440, margin:'0 auto', padding:'0 72px' }}>
 
-        {/* Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-          {services.map((s, i) => (
-            <a key={i} href={s.href} className="service-card" style={{
-              background: '#fff',
-              border: '1px solid var(--border)',
-              padding: '44px 40px 40px',
-              textDecoration: 'none',
-              color: 'inherit',
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 36 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--muted-lt)', textTransform: 'uppercase' }}>{s.num}</span>
-                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--blue)', background: 'var(--blue-light)', padding: '4px 12px', borderRadius: '2px' }}>{s.tag}</span>
-              </div>
-
-              <p style={{ fontSize: 10.5, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 10 }}>{s.title}</p>
-              <h3 style={{ fontSize: 26, fontWeight: 700, color: 'var(--navy)', margin: '0 0 14px', lineHeight: 1.20, letterSpacing: '-0.01em' }}>{s.headline}</h3>
-              <p style={{ fontSize: 13.5, fontWeight: 400, lineHeight: 1.80, color: 'var(--muted)', flex: 1, margin: '0 0 32px' }}>{s.desc}</p>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--blue)', fontSize: 12, fontWeight: 600 }}>
-                {s.cta} <ArrowRight />
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ═══ MANIFESTO STRIP ════════════════════════════════════ */
-const Manifesto = () => (
-  <section className="reveal" style={{
-    background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
-    padding: '100px 60px',
-  }}>
-    <div className="bg-grid-subtle" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.5 }} />
-    <div style={{ maxWidth: 820, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-      <div style={{ width: 48, height: 3, background: 'var(--blue)', margin: '0 auto 36px' }} />
-      <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', marginBottom: 28 }}>
-        The Philosophy
-      </p>
-      <h2 style={{
-        fontFamily: 'Cormorant Garamond, Georgia, serif',
-        fontSize: 'clamp(26px, 3.5vw, 46px)',
-        fontWeight: 300,
-        fontStyle: 'italic',
-        lineHeight: 1.55,
-        color: 'rgba(255,255,255,0.90)',
-        margin: '0 0 36px',
-      }}>
-        "Gestaltung — German for shaping, forming,<br/>and designing with intention."
-      </h2>
-      <p style={{ fontSize: 14.5, fontWeight: 300, lineHeight: 1.90, color: 'rgba(255,255,255,0.52)', maxWidth: 620, margin: '0 auto 40px' }}>
-        Engineering. Manufacturing. Commerce. Not as separate systems — but as a single, unified discipline rooted in material honesty, technical precision, and the quiet ambition to make things well.
-      </p>
-      <a href="/about/" className="btn-white-outline">
-        Our Story <ArrowRight />
-      </a>
-    </div>
-  </section>
-);
-
-/* ═══ WORKFLOW ═══════════════════════════════════════════ */
-const Workflow = () => {
-  const steps = [
-    { num: '01', name: 'Discover',  desc: 'The idea, file, part, or product need is understood in full context and documented.' },
-    { num: '02', name: 'Shape',     desc: 'Design direction, CAD structure, and material + production logic are refined together.' },
-    { num: '03', name: 'Validate',  desc: 'Decisions are tested through 3D printing, CNC prototypes, or physical assembly.' },
-    { num: '04', name: 'Produce',   desc: 'The final object moves through internal or partner manufacturing workflows.' },
-    { num: '05', name: 'Deliver',   desc: 'The result is delivered, put to use, or prepared as a product for the shop.' },
-  ];
-
-  return (
-    <section className="reveal" style={{ padding: '120px 60px', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 64, flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            <p className="section-label">How We Work</p>
-            <h2 style={{ fontSize: 'clamp(26px, 3.2vw, 42px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
-              A clear process,<br/>start to finish.
-            </h2>
-          </div>
-          <a href="/studio/#request" className="btn-blue">
-            Begin Your Project <ArrowRight />
-          </a>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
-          {steps.map((s, i) => (
-            <div key={i} style={{
-              padding: '36px 28px',
-              borderLeft:  '1px solid var(--border)',
-              borderTop:   '3px solid ' + (i === 0 ? 'var(--blue)' : 'transparent'),
-              borderRight: i === 4 ? '1px solid var(--border)' : 'none',
-              background: i === 0 ? 'rgba(27,83,190,0.03)' : 'transparent',
-              transition: 'border-top-color 0.3s ease, background 0.3s ease',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderTopColor = 'var(--blue)';
-              e.currentTarget.style.background = 'rgba(27,83,190,0.03)';
-            }}
-            onMouseLeave={e => {
-              if (i !== 0) {
-                e.currentTarget.style.borderTopColor = 'transparent';
-                e.currentTarget.style.background = 'transparent';
-              }
-            }}>
-              <div className="step-num">{s.num}</div>
-              <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--navy)', margin: '0 0 10px' }}>{s.name}</h3>
-              <p style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.75, color: 'var(--muted)', margin: 0 }}>{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ═══ CAPABILITIES ═══════════════════════════════════════ */
-const Capabilities = () => {
-  const caps = ['Engineering Design', 'CAD Modeling', 'Reverse Engineering', '3D Printing', 'CNC Machining', 'Laser Cutting', 'Lathe Work', 'Sheet Metal', 'Product Prototyping', 'Silicone Molding', 'Educational Kits', 'Small-Batch Production', 'Finishing & Assembly', 'Technical Drawings'];
-
-  return (
-    <section className="reveal" style={{ padding: '100px 60px', background: '#fff', borderTop: '1px solid var(--border)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
-          <div>
-            <p className="section-label">Our Capabilities</p>
-            <h2 style={{ fontSize: 'clamp(24px, 2.8vw, 36px)', fontWeight: 800, color: 'var(--navy)', letterSpacing: '-0.02em' }}>Manufacturing Processes</h2>
-          </div>
-          <a href="/manufacturing/" className="link-arrow">View All Processes <ArrowRight /></a>
-        </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-          {caps.map((c, i) => <span key={i} className="cap-tag">{c}</span>)}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ═══ DESIGN SPACE ═══════════════════════════════════════ */
-const DesignSpace = () => (
-  <section className="reveal" style={{ padding: '120px 60px', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
-    <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
-        {/* Text */}
-        <div>
-          <p className="section-label">Coming Soon</p>
-          <h2 style={{ fontSize: 'clamp(28px, 3.2vw, 44px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 0 20px' }}>
-            The Design Atelier —<br/>Your Product Space.
-          </h2>
-          <p style={{ fontSize: 14.5, fontWeight: 400, lineHeight: 1.85, color: 'var(--muted)', margin: '0 0 32px', maxWidth: 440 }}>
-            A digital workspace where clients will configure, visualize, and commission bespoke products directly from the studio. Design meets production in a single, seamless environment.
-          </p>
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a href="/contact/" className="btn-blue">Register Interest <ArrowRight /></a>
-            <a href="/studio/"  className="btn-blue-outline">Visit Studio</a>
-          </div>
-        </div>
-
-        {/* Blueprint preview */}
+        {/* Section label row */}
         <div style={{
-          background: 'linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%)',
-          border: '1px solid rgba(27,83,190,0.25)',
-          position: 'relative',
-          overflow: 'hidden',
-          height: 380,
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 20px 60px rgba(12,27,46,0.16)',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          padding: '28px 0 4px',
         }}>
-          <svg width="280" height="280" viewBox="0 0 280 280" fill="none" style={{ opacity: 0.22 }}>
-            <circle cx="140" cy="140" r="100" stroke="white" strokeWidth="0.6" strokeDasharray="5 5"/>
-            <circle cx="140" cy="140" r="70"  stroke="white" strokeWidth="0.8"/>
-            <circle cx="140" cy="140" r="38"  stroke="white" strokeWidth="0.6" strokeDasharray="3 5"/>
-            <circle cx="140" cy="140" r="5"   stroke="white" strokeWidth="0.8" fill="none"/>
-            <circle cx="140" cy="140" r="1.5" fill="white"/>
-            <line x1="20" y1="140" x2="260" y2="140" stroke="white" strokeWidth="0.5"/>
-            <line x1="140" y1="20" x2="140" y2="260" stroke="white" strokeWidth="0.5"/>
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map(d => {
-              const r = d * Math.PI / 180;
-              return <line key={d}
-                x1={140 + 66 * Math.cos(r)} y1={140 + 66 * Math.sin(r)}
-                x2={140 + 74 * Math.cos(r)} y2={140 + 74 * Math.sin(r)}
-                stroke="white" strokeWidth="0.6"/>;
-            })}
-          </svg>
-          <div style={{ position: 'absolute', top: 18, left: 20, fontSize: 8, fontWeight: 500, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>
-            ATELIER · v2.0 · IN DEVELOPMENT
-          </div>
-          <div style={{ position: 'absolute', bottom: 18, right: 20, fontSize: 8, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(27,83,190,0.55)' }}>
-            GESTALTUNG · DOHA
-          </div>
+          <span className="mono" style={{
+            fontSize: 8.5,
+            fontWeight: 300,
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            color: 'rgba(10,10,10,0.28)',
+          }}>
+            Service Index
+          </span>
+          <a href="/about/" style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: 11,
+            fontWeight: 300,
+            color: 'rgba(10,10,10,0.36)',
+            textDecoration: 'none',
+            letterSpacing: '0.03em',
+            transition: 'color 0.2s ease',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
+          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.36)'}
+          >
+            Our approach →
+          </a>
         </div>
-      </div>
-    </div>
-  </section>
-);
 
-/* ═══ CTA BANNER ═════════════════════════════════════════ */
-const CTA = () => (
-  <section className="reveal" style={{
-    background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
-    padding: '100px 60px',
-    textAlign: 'center',
-  }}>
-    <div style={{ maxWidth: 620, margin: '0 auto' }}>
-      <div style={{ width: 48, height: 3, background: 'var(--blue)', margin: '0 auto 32px' }} />
-      <h2 style={{ fontSize: 'clamp(32px, 4.5vw, 58px)', fontWeight: 800, color: '#fff', lineHeight: 1.12, letterSpacing: '-0.02em', margin: '0 0 20px' }}>
-        Have something<br/>worth building?
-      </h2>
-      <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.55)', margin: '0 0 44px' }}>
-        Bring the concept, sketch, CAD file, or requirement. GESTALTUNG will take it from idea to manufactured reality.
-      </p>
-      <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <a href="/studio/#request"       className="btn-blue">Begin in Studio <ArrowRight /></a>
-        <a href="/manufacturing/#upload" className="btn-white-outline">Upload a File</a>
-      </div>
-    </div>
-  </section>
-);
+        {/* Rows */}
+        {rows.map((r, i) => (
+          <a key={i} href={r.href} className="service-row">
+            <span className="mono" style={{
+              fontSize: 9,
+              fontWeight: 300,
+              letterSpacing: '0.14em',
+              color: 'rgba(10,10,10,0.22)',
+            }}>
+              {r.num}
+            </span>
 
-/* ═══ FOOTER ═════════════════════════════════════════════ */
-const Footer = () => {
-  const cols = [
-    { label: 'Systems',  links: [['Studio', '/studio/'], ['Manufacturing', '/manufacturing/'], ['Shop', '/shop/']] },
-    { label: 'Company',  links: [['Projects', '/projects/'], ['About', '/about/'], ['Contact', '/contact/']] },
-    { label: 'Access',   links: [['Client Portal', '/login/client/'], ['Admin', '/login/admin/'], ['Vendor Portal', '/login/vendor/']] },
+            <div>
+              <div style={{ fontSize:17, fontWeight:400, letterSpacing:'-0.01em', marginBottom:4 }}>
+                {r.title}
+              </div>
+              <div className="mono" style={{
+                fontSize: 8.5,
+                fontWeight: 300,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: 'rgba(10,10,10,0.28)',
+              }}>
+                {r.sub}
+              </div>
+            </div>
+
+            <p style={{
+              fontSize: 13,
+              fontWeight: 300,
+              lineHeight: 1.75,
+              color: 'rgba(10,10,10,0.44)',
+              maxWidth: 440,
+              margin: 0,
+            }}>
+              {r.desc}
+            </p>
+
+            <span className="row-arrow">
+              <Icon name="arrow-up-right" size={17} strokeWidth={1.2}/>
+            </span>
+          </a>
+        ))}
+
+        <div style={{ padding:'40px 0 72px' }}/>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════
+   DESIGN SPACE — CAD Interface
+═══════════════════════════════ */
+const DesignSpace = () => {
+  const [activeLayer, setActiveLayer] = useState('assembly');
+
+  const layers = [
+    { id:'assembly',   label:'Assembly View', on:true  },
+    { id:'structural', label:'Structural',    on:false },
+    { id:'surface',    label:'Surface Mesh',  on:false },
+    { id:'dims',       label:'Dimensions',    on:true  },
+    { id:'notes',      label:'Annotations',   on:false },
+  ];
+
+  const props = [
+    ['Material',   'Aluminium 6061'],
+    ['Process',    '5-axis CNC'],
+    ['Tolerance',  '±0.05 mm'],
+    ['Finish',     'Anodised Type II'],
+    ['Scale',      '1 : 1'],
   ];
 
   return (
-    <footer style={{ background: 'var(--navy)', padding: '80px 60px 44px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1fr 1fr', gap: 60, marginBottom: 72 }}>
-          {/* Brand */}
-          <div>
-            <div style={{ marginBottom: 24 }}><Logo light /></div>
-            <p style={{ fontSize: 13.5, fontWeight: 300, lineHeight: 1.80, color: 'rgba(255,255,255,0.38)', maxWidth: 240, margin: '0 0 20px' }}>
-              The place where ideas become real, precision-manufactured products.
-            </p>
-            <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>
-              Doha, Qatar
+    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
+      <div style={{ maxWidth:1440, margin:'0 auto', padding:'0 72px 80px' }}>
+
+        {/* Section header */}
+        <div style={{
+          display:'flex', justifyContent:'space-between',
+          alignItems:'baseline', padding:'28px 0 20px',
+        }}>
+          <span className="mono" style={{
+            fontSize:8.5, fontWeight:300,
+            letterSpacing:'0.22em', textTransform:'uppercase',
+            color:'rgba(10,10,10,0.28)',
+          }}>
+            Design Atelier — Status: In Development
+          </span>
+          <a href="/contact/" style={{
+            fontFamily:'Inter, sans-serif', fontSize:11, fontWeight:300,
+            color:'rgba(10,10,10,0.36)', textDecoration:'none',
+            letterSpacing:'0.03em', transition:'color 0.2s ease',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
+          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.36)'}
+          >
+            Register interest →
+          </a>
+        </div>
+
+        {/* CAD window */}
+        <div style={{ border:'0.5px solid rgba(10,10,10,0.12)', background:'#FDFDFC' }}>
+
+          {/* ── Title bar ── */}
+          <div className="mono" style={{
+            height:32, padding:'0 14px',
+            display:'flex', alignItems:'center', justifyContent:'space-between',
+            borderBottom:'0.5px solid rgba(10,10,10,0.07)',
+            background:'rgba(10,10,10,0.022)',
+          }}>
+            <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+              <div style={{ display:'flex', gap:5 }}>
+                {[0.14,0.09,0.06].map((o,i) => (
+                  <div key={i} style={{ width:9, height:9, borderRadius:'50%', background:`rgba(10,10,10,${o})` }}/>
+                ))}
+              </div>
+              <span style={{ fontSize:9.5, fontWeight:400, letterSpacing:'0.12em', color:'rgba(10,10,10,0.42)', textTransform:'uppercase' }}>
+                Gestaltung Design Atelier — Untitled.gst
+              </span>
+            </div>
+            <span style={{ fontSize:8.5, fontWeight:300, letterSpacing:'0.08em', color:'rgba(10,10,10,0.24)' }}>
+              v2.0 · in development
             </span>
           </div>
 
-          {/* Cols */}
-          {cols.map((col, i) => (
+          {/* ── Menu bar ── */}
+          <div className="mono" style={{
+            height:26, padding:'0 14px',
+            display:'flex', alignItems:'center',
+            borderBottom:'0.5px solid rgba(10,10,10,0.055)',
+            gap:2,
+          }}>
+            {['File','Edit','View','Insert','Select','Tools','Help'].map(m => (
+              <span key={m} style={{
+                padding:'0 11px', fontSize:10.5, fontWeight:300,
+                color:'rgba(10,10,10,0.38)', cursor:'default',
+                letterSpacing:'0.02em',
+              }}>{m}</span>
+            ))}
+          </div>
+
+          {/* ── Workspace ── */}
+          <div style={{ display:'grid', gridTemplateColumns:'168px 1fr', height:460 }}>
+
+            {/* Layer panel */}
+            <div style={{ borderRight:'0.5px solid rgba(10,10,10,0.07)', display:'flex', flexDirection:'column' }}>
+
+              <div className="mono" style={{
+                padding:'10px 14px 8px',
+                borderBottom:'0.5px solid rgba(10,10,10,0.055)',
+                fontSize:8.5, fontWeight:400,
+                letterSpacing:'0.18em', textTransform:'uppercase',
+                color:'rgba(10,10,10,0.32)',
+              }}>
+                Layers
+              </div>
+
+              {layers.map(l => (
+                <div key={l.id} onClick={() => setActiveLayer(l.id)} style={{
+                  padding:'8px 14px',
+                  display:'flex', alignItems:'center', gap:8,
+                  cursor:'pointer',
+                  background: activeLayer===l.id ? 'rgba(10,10,10,0.032)' : 'transparent',
+                  borderLeft: activeLayer===l.id ? '1.5px solid rgba(10,10,10,0.48)' : '1.5px solid transparent',
+                  transition:'background 0.15s ease',
+                }}>
+                  <div style={{
+                    width:5.5, height:5.5, borderRadius:'50%', flexShrink:0,
+                    background: l.on ? 'rgba(10,10,10,0.42)' : 'transparent',
+                    border:'0.5px solid rgba(10,10,10,0.22)',
+                  }}/>
+                  <span className="mono" style={{
+                    fontSize:9.5,
+                    fontWeight: l.on ? 400 : 300,
+                    color: l.on ? 'rgba(10,10,10,0.65)' : 'rgba(10,10,10,0.30)',
+                    letterSpacing:'0.02em',
+                  }}>
+                    {l.label}
+                  </span>
+                </div>
+              ))}
+
+              {/* Properties */}
+              <div style={{ marginTop:'auto', padding:'12px 14px', borderTop:'0.5px solid rgba(10,10,10,0.055)' }}>
+                <div className="mono" style={{
+                  fontSize:8.5, fontWeight:300,
+                  letterSpacing:'0.16em', textTransform:'uppercase',
+                  color:'rgba(10,10,10,0.25)', marginBottom:10,
+                }}>
+                  Properties
+                </div>
+                {props.map(([k,v]) => (
+                  <div key={k} style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
+                    <span className="mono" style={{ fontSize:8.5, fontWeight:300, color:'rgba(10,10,10,0.30)', letterSpacing:'0.02em' }}>{k}</span>
+                    <span className="mono" style={{ fontSize:8.5, fontWeight:400, color:'rgba(10,10,10,0.52)', letterSpacing:'0.02em' }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Viewport */}
+            <div className="cad-grid" style={{ position:'relative', overflow:'hidden' }}>
+
+              {/* Corner brackets */}
+              {[
+                { top:10, left:10,  borderTop:'0.5px solid rgba(10,10,10,0.18)', borderLeft: '0.5px solid rgba(10,10,10,0.18)' },
+                { top:10, right:10, borderTop:'0.5px solid rgba(10,10,10,0.18)', borderRight:'0.5px solid rgba(10,10,10,0.18)' },
+                { bottom:10, left:10,  borderBottom:'0.5px solid rgba(10,10,10,0.18)', borderLeft: '0.5px solid rgba(10,10,10,0.18)' },
+                { bottom:10, right:10, borderBottom:'0.5px solid rgba(10,10,10,0.18)', borderRight:'0.5px solid rgba(10,10,10,0.18)' },
+              ].map((s,i) => <div key={i} style={{ position:'absolute', width:14, height:14, ...s }}/>)}
+
+              {/* Viewport label */}
+              <div className="mono" style={{
+                position:'absolute', top:14, left:22,
+                fontSize:8.5, fontWeight:300,
+                letterSpacing:'0.14em', textTransform:'uppercase',
+                color:'rgba(10,10,10,0.20)',
+              }}>
+                Top View · Orthographic
+              </div>
+
+              {/* Technical drawing SVG */}
+              <svg
+                style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}
+                viewBox="0 0 680 460"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                {/* Outer dashed */}
+                <circle cx="340" cy="230" r="150" stroke="rgba(10,10,10,0.06)" strokeWidth="0.6" strokeDasharray="9 7"/>
+                {/* Primary */}
+                <circle cx="340" cy="230" r="108" stroke="rgba(10,10,10,0.11)" strokeWidth="0.8"/>
+                {/* Inner dashed */}
+                <circle cx="340" cy="230" r="62"  stroke="rgba(10,10,10,0.06)" strokeWidth="0.6" strokeDasharray="4 6"/>
+                {/* Center mark */}
+                <circle cx="340" cy="230" r="5.5" stroke="rgba(10,10,10,0.28)" strokeWidth="0.7" fill="none"/>
+                <circle cx="340" cy="230" r="1.4" fill="rgba(10,10,10,0.38)"/>
+                {/* Crosshairs */}
+                <line x1="100" y1="230" x2="580" y2="230" stroke="rgba(10,10,10,0.09)" strokeWidth="0.5"/>
+                <line x1="340" y1="50"  x2="340" y2="410" stroke="rgba(10,10,10,0.09)" strokeWidth="0.5"/>
+                {/* 45° lines */}
+                <line x1="188" y1="78"  x2="492" y2="382" stroke="rgba(10,10,10,0.04)" strokeWidth="0.5"/>
+                <line x1="492" y1="78"  x2="188" y2="382" stroke="rgba(10,10,10,0.04)" strokeWidth="0.5"/>
+                {/* Dimension baseline */}
+                <line x1="100" y1="418" x2="580" y2="418" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
+                <line x1="100" y1="410" x2="100" y2="426" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
+                <line x1="580" y1="410" x2="580" y2="426" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
+                {/* Radius leader */}
+                <line x1="340" y1="230" x2="432" y2="148" stroke="rgba(10,10,10,0.10)" strokeWidth="0.5"/>
+                {/* Tick marks at 30° */}
+                {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => {
+                  const r = deg * Math.PI / 180;
+                  return (
+                    <line key={deg}
+                      x1={340 + 104*Math.cos(r)} y1={230 + 104*Math.sin(r)}
+                      x2={340 + 113*Math.cos(r)} y2={230 + 113*Math.sin(r)}
+                      stroke="rgba(10,10,10,0.16)" strokeWidth="0.6"/>
+                  );
+                })}
+                {/* Dimension text */}
+                <text x="438" y="144" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">R 108.000</text>
+                <text x="348" y="225" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">⌀ 11.000</text>
+                <text x="318" y="440" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">480.000</text>
+              </svg>
+            </div>
+          </div>
+
+          {/* ── Status bar ── */}
+          <div className="mono" style={{
+            height:27, padding:'0 14px',
+            display:'flex', alignItems:'center', justifyContent:'space-between',
+            borderTop:'0.5px solid rgba(10,10,10,0.065)',
+            background:'rgba(10,10,10,0.016)',
+          }}>
+            <div style={{ display:'flex', gap:24 }}>
+              {[['X','0.000'],['Y','0.000'],['Z','0.000']].map(([ax,val]) => (
+                <span key={ax} style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.38)', letterSpacing:'0.04em' }}>
+                  <span style={{ color:'rgba(10,10,10,0.26)' }}>{ax}:</span> {val}
+                </span>
+              ))}
+            </div>
+            <div style={{ display:'flex', gap:24 }}>
+              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.28)' }}>Scale 1:1</span>
+              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.28)' }}>Zoom 100%</span>
+              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.35)', letterSpacing:'0.06em' }}>
+                GESTALTUNG.CO · DOHA, QAT
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════
+   PROCESS INDEX
+═══════════════════════════════ */
+const Capabilities = () => {
+  const caps = [
+    'Engineering Design','CAD Modeling','Reverse Engineering',
+    '3D Printing','CNC Machining','Laser Cutting',
+    'Lathe Work','Sheet Metal','Product Prototyping',
+    'Silicone Molding','Small-Batch Production','Technical Drawings',
+  ];
+
+  return (
+    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
+      <div style={{ maxWidth:1440, margin:'0 auto', padding:'44px 72px 64px' }}>
+        <div style={{ display:'flex', alignItems:'baseline', gap:48, flexWrap:'wrap' }}>
+          <span className="mono" style={{
+            fontSize:8.5, fontWeight:300,
+            letterSpacing:'0.22em', textTransform:'uppercase',
+            color:'rgba(10,10,10,0.28)', flexShrink:0,
+          }}>
+            Process Index
+          </span>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:7, flex:1 }}>
+            {caps.map((c,i) => (
+              <span key={i} style={{
+                fontFamily:'Inter, sans-serif',
+                fontSize:11.5, fontWeight:300,
+                color:'rgba(10,10,10,0.42)',
+                padding:'5px 14px',
+                border:'0.5px solid rgba(10,10,10,0.09)',
+                background:'transparent',
+                transition:'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
+                cursor:'default',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color='rgba(10,10,10,0.78)';
+                e.currentTarget.style.borderColor='rgba(10,10,10,0.22)';
+                e.currentTarget.style.background='rgba(10,10,10,0.025)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color='rgba(10,10,10,0.42)';
+                e.currentTarget.style.borderColor='rgba(10,10,10,0.09)';
+                e.currentTarget.style.background='transparent';
+              }}>
+                {c}
+              </span>
+            ))}
+          </div>
+          <a href="/manufacturing/" style={{
+            fontFamily:'Inter, sans-serif', fontSize:11, fontWeight:300,
+            color:'rgba(10,10,10,0.32)', textDecoration:'none',
+            flexShrink:0, letterSpacing:'0.03em',
+            transition:'color 0.2s ease',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.72)'}
+          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.32)'}
+          >
+            All processes →
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+const Footer = () => {
+  const cols = [
+    { label:'Systems', links:[['Studio','/studio/'],['Manufacturing','/manufacturing/'],['Shop','/shop/']] },
+    { label:'Company', links:[['Projects','/projects/'],['About','/about/'],['Contact','/contact/']] },
+    { label:'Access',  links:[['Client','/login/client/'],['Admin','/login/admin/'],['Vendor','/login/vendor/']] },
+  ];
+
+  return (
+    <footer style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
+      <div style={{ maxWidth:1440, margin:'0 auto', padding:'60px 72px 44px' }}>
+
+        <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:64, marginBottom:60 }}>
+          {/* Brand */}
+          <div>
+            <div style={{ marginBottom:18 }}><Logo /></div>
+            <p style={{ fontSize:12.5, fontWeight:300, lineHeight:1.80, color:'rgba(10,10,10,0.36)', maxWidth:210, margin:'0 0 14px' }}>
+              The place where ideas become real, precision-manufactured products.
+            </p>
+            <span className="mono" style={{ fontSize:8.5, fontWeight:300, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(10,10,10,0.22)' }}>
+              Doha, Qatar · MMXXIV
+            </span>
+          </div>
+
+          {/* Link cols */}
+          {cols.map((col,i) => (
             <div key={i}>
-              <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: 24 }}>{col.label}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {col.links.map(([name, href]) => (
+              <p className="mono" style={{
+                fontSize:8.5, fontWeight:300,
+                letterSpacing:'0.22em', textTransform:'uppercase',
+                color:'rgba(10,10,10,0.26)', marginBottom:18,
+              }}>
+                {col.label}
+              </p>
+              <div style={{ display:'flex', flexDirection:'column', gap:11 }}>
+                {col.links.map(([name,href]) => (
                   <a key={name} href={href} style={{
-                    fontSize: 13.5, fontWeight: 400,
-                    color: 'rgba(255,255,255,0.48)', textDecoration: 'none',
-                    transition: 'color 0.25s ease',
+                    fontSize:12.5, fontWeight:300,
+                    color:'rgba(10,10,10,0.38)', textDecoration:'none',
+                    transition:'color 0.2s ease',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}
+                  onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.38)'}
                   >{name}</a>
                 ))}
               </div>
@@ -861,21 +787,20 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom */}
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 32 }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-          <p style={{ fontSize: 12, fontWeight: 400, color: 'rgba(255,255,255,0.25)' }}>
+        {/* Bottom bar */}
+        <div style={{ paddingTop:24, borderTop:'0.5px solid rgba(10,10,10,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
+          <span className="mono" style={{ fontSize:8.5, fontWeight:300, color:'rgba(10,10,10,0.22)', letterSpacing:'0.08em' }}>
             © {new Date().getFullYear()} GESTALTUNG. All rights reserved.
-          </p>
-          <div style={{ display: 'flex', gap: 32 }}>
-            {[['Privacy', '#'], ['Terms', '#'], ['عربي | EN', '#']].map(([lbl, href]) => (
+          </span>
+          <div style={{ display:'flex', gap:28 }}>
+            {[['Privacy','#'],['Terms','#'],['عربي | EN','#']].map(([lbl,href]) => (
               <a key={lbl} href={href} style={{
-                fontSize: 12, fontWeight: 400,
-                color: 'rgba(255,255,255,0.25)', textDecoration: 'none',
-                transition: 'color 0.25s ease',
+                fontSize:10, fontWeight:300,
+                color:'rgba(10,10,10,0.22)', textDecoration:'none',
+                transition:'color 0.2s ease',
               }}
-              onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.60)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
+              onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.55)'}
+              onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.22)'}
               >{lbl}</a>
             ))}
           </div>
@@ -885,13 +810,17 @@ const Footer = () => {
   );
 };
 
-/* ═══ APP ════════════════════════════════════════════════ */
+/* ═══════════════════════════════
+   APP
+═══════════════════════════════ */
 const App = () => {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal');
     const io  = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
-      { threshold: 0.06 }
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }),
+      { threshold: 0.04 }
     );
     els.forEach(el => io.observe(el));
     return () => io.disconnect();
@@ -901,13 +830,9 @@ const App = () => {
     <>
       <Nav />
       <Hero />
-      <Pillars />
       <Services />
-      <Manifesto />
-      <Workflow />
-      <Capabilities />
       <DesignSpace />
-      <CTA />
+      <Capabilities />
       <Footer />
     </>
   );
