@@ -36,20 +36,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:     #070707;
-      --paper:   #F8F4EF;
-      --white:   #FAFAFA;
-      --dim:     rgba(250,250,250,0.40);
-      --dimmer:  rgba(250,250,250,0.20);
-      --rule:    rgba(250,250,250,0.07);
-      --rule-lt: rgba(0,0,0,0.08);
+      --ink:       #0F0E0D;
+      --charcoal:  #2A2825;
+      --paper:     #FAFAF8;
+      --alabaster: #F5F3EF;
+      --canvas:    #F0EDE8;
+      --rule:      rgba(15, 14, 13, 0.07);
+      --rule-lt:   rgba(15, 14, 13, 0.04);
+      --muted:     rgba(15, 14, 13, 0.38);
+      --dim:       rgba(15, 14, 13, 0.20);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--ink);
-      color: var(--white);
+      background: var(--paper);
+      color: var(--ink);
       font-family: 'Inter', system-ui, sans-serif;
       font-weight: 200;
       overflow-x: hidden;
@@ -58,7 +60,7 @@
 
     /* ─── Scrollbar ─────────────────────────────────────── */
     ::-webkit-scrollbar { width: 1px; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+    ::-webkit-scrollbar-thumb { background: rgba(15,14,13,0.12); }
 
     /* ─── Typography helpers ────────────────────────────── */
     .serif   { font-family: 'Cormorant Garamond', Georgia, serif; }
@@ -68,7 +70,7 @@
       font-weight: 300;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--dimmer);
+      color: var(--dim);
     }
 
     /* ─── Animations ────────────────────────────────────── */
@@ -79,10 +81,6 @@
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
-    }
-    @keyframes slideRight {
-      from { transform: scaleX(0); transform-origin: left; }
-      to   { transform: scaleX(1); transform-origin: left; }
     }
 
     .anim-rise  { opacity: 0; animation: riseUp  1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -97,14 +95,14 @@
     /* ─── Backgrounds ───────────────────────────────────── */
     .bg-blueprint {
       background-image:
-        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+        linear-gradient(rgba(15,14,13,0.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,14,13,0.032) 1px, transparent 1px);
       background-size: 72px 72px;
     }
     .bg-fine {
       background-image:
-        linear-gradient(rgba(255,255,255,0.010) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.010) 1px, transparent 1px);
+        linear-gradient(rgba(15,14,13,0.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,14,13,0.016) 1px, transparent 1px);
       background-size: 18px 18px;
     }
 
@@ -126,18 +124,19 @@
     .hover-line:hover::after { width: 100%; }
 
     .card-g {
-      transition: border-color 0.45s ease, background 0.45s ease;
+      transition: border-color 0.45s ease, background 0.45s ease, box-shadow 0.45s ease;
     }
     .card-g:hover {
-      border-color: rgba(255,255,255,0.14) !important;
-      background: rgba(255,255,255,0.018) !important;
+      border-color: rgba(15,14,13,0.14) !important;
+      background: #FFFFFF !important;
+      box-shadow: 0 8px 48px rgba(15,14,13,0.06) !important;
     }
 
     /* ─── Buttons ───────────────────────────────────────── */
     .btn-primary {
       display: inline-block;
-      background: var(--white);
-      color: var(--ink);
+      background: var(--charcoal);
+      color: #FAFAF8;
       padding: 14px 38px;
       font-family: 'Inter', sans-serif;
       font-size: 9.5px;
@@ -149,12 +148,12 @@
       cursor: pointer;
       transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
     }
-    .btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+    .btn-primary:hover { opacity: 0.80; transform: translateY(-2px); }
 
     .btn-ghost {
       display: inline-block;
       background: transparent;
-      color: var(--white);
+      color: var(--charcoal);
       padding: 13px 37px;
       font-family: 'Inter', sans-serif;
       font-size: 9.5px;
@@ -162,16 +161,20 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.22);
+      border: 1px solid rgba(15,14,13,0.22);
       cursor: pointer;
-      transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+      transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.55); transform: translateY(-2px); }
+    .btn-ghost:hover {
+      border-color: rgba(15,14,13,0.50);
+      background: rgba(15,14,13,0.03);
+      transform: translateY(-2px);
+    }
 
-    .btn-dark {
+    .btn-light {
       display: inline-block;
-      background: var(--ink);
-      color: var(--white);
+      background: #FAFAF8;
+      color: var(--charcoal);
       padding: 14px 38px;
       font-family: 'Inter', sans-serif;
       font-size: 9.5px;
@@ -179,14 +182,16 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       text-decoration: none;
+      border: none;
+      cursor: pointer;
       transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
     }
-    .btn-dark:hover { opacity: 0.78; transform: translateY(-2px); }
+    .btn-light:hover { opacity: 0.80; transform: translateY(-2px); }
 
-    .btn-outline-dark {
+    .btn-outline-light {
       display: inline-block;
       background: transparent;
-      color: var(--ink);
+      color: #FAFAF8;
       padding: 13px 37px;
       font-family: 'Inter', sans-serif;
       font-size: 9.5px;
@@ -194,10 +199,11 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid rgba(0,0,0,0.2);
+      border: 1px solid rgba(250,250,248,0.30);
+      cursor: pointer;
       transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
     }
-    .btn-outline-dark:hover { border-color: rgba(0,0,0,0.55); transform: translateY(-2px); }
+    .btn-outline-light:hover { border-color: rgba(250,250,248,0.65); transform: translateY(-2px); }
 
     /* ─── Nav ───────────────────────────────────────────── */
     #g-nav {
@@ -213,9 +219,9 @@
       transition: background 0.6s ease, border-color 0.6s ease, backdrop-filter 0.6s ease;
     }
     #g-nav.scrolled {
-      background: rgba(7,7,7,0.94);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       border-bottom-color: var(--rule);
     }
 
@@ -225,11 +231,11 @@
       font-weight: 300;
       letter-spacing: 0.20em;
       text-transform: uppercase;
-      color: rgba(250,250,250,0.48);
+      color: rgba(15,14,13,0.40);
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .nav-link:hover { color: rgba(250,250,250,0.88); }
+    .nav-link:hover { color: rgba(15,14,13,0.82); }
 
     /* ─── Dividers ──────────────────────────────────────── */
     .rule-h { width: 100%; height: 1px; background: var(--rule); }
@@ -241,18 +247,22 @@
 
     /* ─── Capability tags ───────────────────────────────── */
     .cap-tag {
-      border: 1px solid rgba(255,255,255,0.09);
+      border: 1px solid rgba(15,14,13,0.10);
       padding: 9px 22px;
       font-family: 'Inter', sans-serif;
       font-size: 9.5px;
       font-weight: 300;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.38);
-      transition: border-color 0.35s ease, color 0.35s ease;
+      color: rgba(15,14,13,0.36);
+      transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease;
       cursor: default;
     }
-    .cap-tag:hover { border-color: rgba(255,255,255,0.30); color: rgba(255,255,255,0.80); }
+    .cap-tag:hover {
+      border-color: rgba(15,14,13,0.28);
+      color: rgba(15,14,13,0.72);
+      background: rgba(15,14,13,0.025);
+    }
 
     /* ─── Annotation ────────────────────────────────────── */
     .ann {
@@ -261,16 +271,16 @@
       font-weight: 300;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.18);
+      color: rgba(15,14,13,0.18);
     }
 
-    /* ─── Grain overlay ─────────────────────────────────── */
+    /* ─── Subtle grain texture ──────────────────────────── */
     #grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 500;
-      opacity: 0.028;
+      opacity: 0.018;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 300px 300px;
     }
@@ -285,28 +295,24 @@
 const { useState, useEffect, useRef } = React;
 
 /* ═══════════════════════════════════════════
-   LOGO PLACEHOLDER
-   ─ Swap this entire block with your <img> tag
+   LOGO
 ═══════════════════════════════════════════ */
-const Logo = ({ dark = false }) => (
+const Logo = () => (
   <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-    {/* ┌── LOGO PLACEHOLDER SVG ──────────────────────────────────────────┐ */}
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="[Insert company logo.png here]">
-      <title>[Insert company logo.png here]</title>
-      <rect x="0.5" y="0.5" width="29" height="29" stroke={dark ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.22)'} strokeWidth="0.6"/>
-      <rect x="5"   y="5"   width="20" height="20" stroke={dark ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.10)'} strokeWidth="0.5"/>
-      <line x1="5"  y1="15" x2="25" y2="15" stroke={dark ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.14)'} strokeWidth="0.5"/>
-      <line x1="15" y1="5"  x2="15" y2="25" stroke={dark ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.14)'} strokeWidth="0.5"/>
-      <circle cx="15" cy="15" r="3.5" stroke={dark ? 'rgba(0,0,0,0.30)' : 'rgba(255,255,255,0.36)'} strokeWidth="0.6" fill="none"/>
-      <circle cx="15" cy="15" r="0.8" fill={dark ? 'rgba(0,0,0,0.40)' : 'rgba(255,255,255,0.55)'}/>
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" y="0.5" width="29" height="29" stroke="rgba(15,14,13,0.22)" strokeWidth="0.6"/>
+      <rect x="5"   y="5"   width="20" height="20" stroke="rgba(15,14,13,0.10)" strokeWidth="0.5"/>
+      <line x1="5"  y1="15" x2="25" y2="15" stroke="rgba(15,14,13,0.12)" strokeWidth="0.5"/>
+      <line x1="15" y1="5"  x2="15" y2="25" stroke="rgba(15,14,13,0.12)" strokeWidth="0.5"/>
+      <circle cx="15" cy="15" r="3.5" stroke="rgba(15,14,13,0.28)" strokeWidth="0.6" fill="none"/>
+      <circle cx="15" cy="15" r="0.8" fill="rgba(15,14,13,0.42)"/>
     </svg>
-    {/* └── END LOGO PLACEHOLDER ──────────────────────────────────────────┘ */}
     <span style={{
       fontFamily: 'Cormorant Garamond, Georgia, serif',
       fontSize: 15,
       fontWeight: 300,
       letterSpacing: '0.38em',
-      color: dark ? 'rgba(0,0,0,0.80)' : 'rgba(250,250,250,0.88)',
+      color: 'rgba(15,14,13,0.78)',
       userSelect: 'none',
     }}>
       GESTALTUNG
@@ -353,38 +359,38 @@ const Hero = () => (
     textAlign: 'center',
     padding: '120px 56px 80px',
     position: 'relative', overflow: 'hidden',
-    background: 'linear-gradient(175deg, #0a0a0a 0%, #070707 100%)',
+    background: 'linear-gradient(170deg, #FFFFFF 0%, #F5F3EF 60%, #EEEBe5 100%)',
   }}>
-    {/* Blueprint grids */}
+    {/* Blueprint grids — faint dark lines on light ground */}
     <div className="bg-blueprint" style={{ position: 'absolute', inset: 0 }} />
-    <div className="bg-fine"      style={{ position: 'absolute', inset: 0, opacity: 0.55 }} />
+    <div className="bg-fine"      style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
 
-    {/* Radial vignette */}
+    {/* Soft radial luminance — brightest at center */}
     <div style={{
       position: 'absolute', inset: 0,
-      background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(7,7,7,0.70) 100%)',
+      background: 'radial-gradient(ellipse 75% 65% at 50% 48%, rgba(255,255,255,0.72) 0%, transparent 100%)',
       pointerEvents: 'none',
     }} />
 
     {/* Corner annotations */}
-    <span className="ann" style={{ position: 'absolute', top: 96, left: 56 }}>36.3N · 51.4E · DOHA, QAT</span>
+    <span className="ann" style={{ position: 'absolute', top: 96, left: 56 }}>25.2N · 51.5E · DOHA, QAT</span>
     <span className="ann" style={{ position: 'absolute', top: 96, right: 56 }}>EST. MMXXIV · REV 1.0</span>
     <span className="ann" style={{ position: 'absolute', bottom: 56, left: 56 }}>ENG. STUDIO — MFG PLATFORM — COMMERCE</span>
     <span className="ann" style={{ position: 'absolute', bottom: 56, right: 56 }}>GESTALTUNG.CO</span>
 
     {/* Corner brackets */}
     {[
-      { top: 80,    left:  56, borderTop: '1px solid rgba(255,255,255,0.12)', borderLeft:  '1px solid rgba(255,255,255,0.12)' },
-      { top: 80,    right: 56, borderTop: '1px solid rgba(255,255,255,0.12)', borderRight: '1px solid rgba(255,255,255,0.12)' },
-      { bottom: 44, left:  56, borderBottom: '1px solid rgba(255,255,255,0.12)', borderLeft:  '1px solid rgba(255,255,255,0.12)' },
-      { bottom: 44, right: 56, borderBottom: '1px solid rgba(255,255,255,0.12)', borderRight: '1px solid rgba(255,255,255,0.12)' },
+      { top: 80,    left:  56, borderTop: '1px solid rgba(15,14,13,0.14)', borderLeft:  '1px solid rgba(15,14,13,0.14)' },
+      { top: 80,    right: 56, borderTop: '1px solid rgba(15,14,13,0.14)', borderRight: '1px solid rgba(15,14,13,0.14)' },
+      { bottom: 44, left:  56, borderBottom: '1px solid rgba(15,14,13,0.14)', borderLeft:  '1px solid rgba(15,14,13,0.14)' },
+      { bottom: 44, right: 56, borderBottom: '1px solid rgba(15,14,13,0.14)', borderRight: '1px solid rgba(15,14,13,0.14)' },
     ].map((s, i) => (
       <div key={i} style={{ position: 'absolute', width: 22, height: 22, ...s }} />
     ))}
 
     {/* Content */}
     <div style={{ position: 'relative', zIndex: 2, maxWidth: 860 }}>
-      <p className="eyebrow anim-rise d1" style={{ marginBottom: 44 }}>
+      <p className="eyebrow anim-rise d1" style={{ marginBottom: 44, color: 'rgba(15,14,13,0.32)' }}>
         Engineering Studio &nbsp;·&nbsp; Manufacturing Platform &nbsp;·&nbsp; Product Commerce
       </p>
 
@@ -393,11 +399,11 @@ const Hero = () => (
         fontWeight: 200,
         lineHeight: 1.04,
         letterSpacing: '-0.01em',
-        color: '#FAFAFA',
+        color: '#0F0E0D',
         margin: '0 0 36px',
       }}>
         From Ideas<br/>
-        <em style={{ fontStyle: 'italic', color: 'rgba(250,250,250,0.50)' }}>to Manufactured</em><br/>
+        <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>to Manufactured</em><br/>
         Products.
       </h1>
 
@@ -405,7 +411,7 @@ const Hero = () => (
         fontSize: 14,
         fontWeight: 200,
         lineHeight: 1.9,
-        color: 'rgba(250,250,250,0.40)',
+        color: 'rgba(15,14,13,0.44)',
         maxWidth: 500,
         margin: '0 auto 60px',
         letterSpacing: '0.02em',
@@ -414,9 +420,9 @@ const Hero = () => (
       </p>
 
       <div className="anim-rise d4" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <a href="/studio/#request"      className="btn-primary">Shape an Idea</a>
+        <a href="/studio/#request"       className="btn-primary">Shape an Idea</a>
         <a href="/manufacturing/#upload" className="btn-ghost">Upload a File</a>
-        <a href="/shop/"                className="btn-ghost" style={{ borderColor: 'rgba(255,255,255,0.12)' }}>Explore Shop</a>
+        <a href="/shop/"                 className="btn-ghost" style={{ borderColor: 'rgba(15,14,13,0.12)' }}>Explore Shop</a>
       </div>
     </div>
 
@@ -426,7 +432,7 @@ const Hero = () => (
       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
     }}>
       <span className="eyebrow" style={{ letterSpacing: '0.28em' }}>Scroll</span>
-      <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)' }} />
+      <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, rgba(15,14,13,0.20), transparent)' }} />
     </div>
   </section>
 );
@@ -436,50 +442,49 @@ const Hero = () => (
 ═══════════════════════════════════════════ */
 const ThreePaths = () => {
   const paths = [
-    { num: '01', slug: 'Studio',        title: 'Bring the idea.',          tag: 'Design & Engineering', desc: 'For sketches, concepts, broken parts, reverse engineering challenges, and products that need to be designed from the ground up.', href: '/studio/' },
-    { num: '02', slug: 'Manufacturing', title: 'Make it real.',             tag: 'Production Platform',  desc: 'For CAD files, STL models, and engineering drawings that need careful quotation, material selection, and production.', href: '/manufacturing/' },
-    { num: '03', slug: 'Shop',          title: 'Live with the result.',     tag: 'Product Commerce',     desc: 'Ready-made engineered products, digital files, educational kits, and small-batch manufactured items — curated and available.', href: '/shop/' },
+    { num: '01', slug: 'Studio',        title: 'Bring the idea.',       tag: 'Design & Engineering', desc: 'For sketches, concepts, broken parts, reverse engineering challenges, and products that need to be designed from the ground up.', href: '/studio/' },
+    { num: '02', slug: 'Manufacturing', title: 'Make it real.',          tag: 'Production Platform',  desc: 'For CAD files, STL models, and engineering drawings that need careful quotation, material selection, and production.', href: '/manufacturing/' },
+    { num: '03', slug: 'Shop',          title: 'Live with the result.',  tag: 'Product Commerce',     desc: 'Ready-made engineered products, digital files, educational kits, and small-batch manufactured items — curated and available.', href: '/shop/' },
   ];
 
   return (
-    <section className="reveal" style={{ padding: '160px 56px', background: '#070707' }}>
+    <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 72, flexWrap: 'wrap', gap: 24 }}>
           <div>
             <p className="eyebrow" style={{ marginBottom: 18 }}>A complete product path</p>
-            <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#FAFAFA', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
+            <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
               Three ways to work<br/>
-              <em style={{ fontStyle: 'italic', color: 'rgba(250,250,250,0.42)' }}>with GESTALTUNG.</em>
+              <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>with GESTALTUNG.</em>
             </h2>
           </div>
           <a href="/about/" className="btn-ghost" style={{ flexShrink: 0, alignSelf: 'flex-end' }}>Our approach</a>
         </div>
 
-        {/* Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(255,255,255,0.055)' }}>
+        {/* Cards — gap of 1px filled with the background colour creates a fine divider */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(15,14,13,0.07)' }}>
           {paths.map((p, i) => (
             <a key={i} href={p.href} className="card-g" style={{
-              background: '#070707',
+              background: '#FAFAF8',
               padding: '56px 48px 52px',
-              textDecoration: 'none', color: 'white',
+              textDecoration: 'none', color: 'inherit',
               display: 'block',
-              border: '1px solid rgba(255,255,255,0.055)',
+              border: '1px solid transparent',
               position: 'relative',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 52 }}>
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.20)' }}>{p.num}</span>
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.10)', padding: '5px 13px' }}>{p.tag}</span>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, letterSpacing: '0.2em', color: 'rgba(15,14,13,0.22)' }}>{p.num}</span>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.28)', border: '1px solid rgba(15,14,13,0.10)', padding: '5px 13px' }}>{p.tag}</span>
               </div>
 
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 14, fontWeight: 300 }}>{p.slug}</p>
-              <h3 className="serif" style={{ fontSize: 30, fontWeight: 200, margin: '0 0 18px', lineHeight: 1.2, color: '#FAFAFA' }}>{p.title}</h3>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(255,255,255,0.36)', margin: '0 0 44px' }}>{p.desc}</p>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.32)', marginBottom: 14, fontWeight: 300 }}>{p.slug}</p>
+              <h3 className="serif" style={{ fontSize: 30, fontWeight: 200, margin: '0 0 18px', lineHeight: 1.2, color: '#0F0E0D' }}>{p.title}</h3>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.44)', margin: '0 0 44px' }}>{p.desc}</p>
 
-              {/* CTA line */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <span className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', fontWeight: 300 }}>Enter</span>
-                <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', width: 36 }} />
+                <span className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.35)', fontWeight: 300 }}>Enter</span>
+                <div style={{ height: 1, background: 'rgba(15,14,13,0.08)', width: 36 }} />
               </div>
             </a>
           ))}
@@ -493,9 +498,9 @@ const ThreePaths = () => {
    MANIFESTO
 ═══════════════════════════════════════════ */
 const Manifesto = () => (
-  <section className="reveal" style={{ padding: '160px 56px', background: '#0A0A0A', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+  <section className="reveal" style={{ padding: '160px 56px', background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
     <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-      <div style={{ width: 1, height: 64, background: 'rgba(255,255,255,0.10)', margin: '0 auto 64px' }} />
+      <div style={{ width: 1, height: 64, background: 'rgba(15,14,13,0.12)', margin: '0 auto 64px' }} />
 
       <p className="eyebrow" style={{ marginBottom: 44, letterSpacing: '0.35em' }}>The Philosophy</p>
 
@@ -504,22 +509,22 @@ const Manifesto = () => (
         fontWeight: 200,
         fontStyle: 'italic',
         lineHeight: 1.55,
-        color: 'rgba(250,250,250,0.80)',
+        color: 'rgba(15,14,13,0.80)',
         margin: '0 0 52px',
         letterSpacing: '0.01em',
       }}>
         "Gestaltung — German for shaping, forming,<br/>and designing with intention."
       </h2>
 
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(250,250,250,0.38)', marginBottom: 28, letterSpacing: '0.015em' }}>
+      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(15,14,13,0.46)', marginBottom: 28, letterSpacing: '0.015em' }}>
         We believe every idea contains the seed of a real, physical product. Our work is to guide that idea through the full arc — from the first rough sketch to a precision-manufactured object you can hold, use, and trust.
       </p>
 
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(250,250,250,0.38)', marginBottom: 0, letterSpacing: '0.015em' }}>
+      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(15,14,13,0.46)', marginBottom: 0, letterSpacing: '0.015em' }}>
         Engineering. Manufacturing. Commerce. Not as separate systems — but as a single, unified discipline rooted in material honesty, technical precision, and the quiet ambition to make things well.
       </p>
 
-      <div style={{ width: 1, height: 64, background: 'rgba(255,255,255,0.10)', margin: '64px auto 0' }} />
+      <div style={{ width: 1, height: 64, background: 'rgba(15,14,13,0.12)', margin: '64px auto 0' }} />
     </div>
   </section>
 );
@@ -537,14 +542,14 @@ const Workflow = () => {
   ];
 
   return (
-    <section className="reveal" style={{ padding: '160px 56px', background: '#070707', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 72, flexWrap: 'wrap', gap: 24 }}>
           <div>
             <p className="eyebrow" style={{ marginBottom: 18 }}>How it flows</p>
-            <h2 className="serif" style={{ fontSize: 'clamp(28px, 3.5vw, 46px)', fontWeight: 200, color: '#FAFAFA', lineHeight: 1.15 }}>
+            <h2 className="serif" style={{ fontSize: 'clamp(28px, 3.5vw, 46px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15 }}>
               A product journey,<br/>
-              <em style={{ fontStyle: 'italic', color: 'rgba(250,250,250,0.42)' }}>told simply.</em>
+              <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>told simply.</em>
             </h2>
           </div>
           <a href="/studio/#request" className="btn-ghost" style={{ alignSelf: 'flex-end', flexShrink: 0 }}>Begin the journey</a>
@@ -554,13 +559,13 @@ const Workflow = () => {
           {steps.map((s, i) => (
             <div key={i} style={{
               padding: '40px 30px',
-              borderLeft:  '1px solid rgba(255,255,255,0.055)',
-              borderTop:   '1px solid rgba(255,255,255,0.055)',
-              borderRight: i === 4 ? '1px solid rgba(255,255,255,0.055)' : 'none',
+              borderLeft:  '1px solid rgba(15,14,13,0.07)',
+              borderTop:   '1px solid rgba(15,14,13,0.07)',
+              borderRight: i === 4 ? '1px solid rgba(15,14,13,0.07)' : 'none',
             }}>
-              <span style={{ display: 'block', fontFamily: 'Inter, sans-serif', fontSize: 9, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.18)', marginBottom: 28, fontWeight: 300 }}>{s.num}</span>
-              <h3 className="serif" style={{ fontSize: 22, fontWeight: 200, color: '#FAFAFA', margin: '0 0 14px', lineHeight: 1.2 }}>{s.name}</h3>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 200, lineHeight: 1.85, color: 'rgba(255,255,255,0.32)', margin: 0 }}>{s.desc}</p>
+              <span style={{ display: 'block', fontFamily: 'Inter, sans-serif', fontSize: 9, letterSpacing: '0.22em', color: 'rgba(15,14,13,0.20)', marginBottom: 28, fontWeight: 300 }}>{s.num}</span>
+              <h3 className="serif" style={{ fontSize: 22, fontWeight: 200, color: '#0F0E0D', margin: '0 0 14px', lineHeight: 1.2 }}>{s.name}</h3>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.40)', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -576,11 +581,11 @@ const Capabilities = () => {
   const caps = ['Engineering Design', 'CAD Modeling', 'Reverse Engineering', '3D Printing', 'CNC Machining', 'Laser Cutting', 'Lathe Work', 'Sheet Metal', 'Product Prototyping', 'Silicone Molding', 'Educational Kits', 'Small-Batch Production', 'Finishing & Assembly', 'Technical Drawings'];
 
   return (
-    <section className="reveal" style={{ padding: '120px 56px', background: '#0A0A0A', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section className="reveal" style={{ padding: '120px 56px', background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 52, flexWrap: 'wrap', gap: 16 }}>
           <p className="eyebrow">Manufacturing Capabilities</p>
-          <a href="/manufacturing/" className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.32)', textDecoration: 'none', fontWeight: 300 }}>All processes</a>
+          <a href="/manufacturing/" className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.35)', textDecoration: 'none', fontWeight: 300 }}>All processes</a>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {caps.map((c, i) => <span key={i} className="cap-tag">{c}</span>)}
@@ -594,24 +599,26 @@ const Capabilities = () => {
    DESIGN SPACE TEASER
 ═══════════════════════════════════════════ */
 const DesignSpace = () => (
-  <section className="reveal" style={{ padding: '160px 56px', background: '#070707', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+  <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
     <div style={{ maxWidth: 1240, margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 24 }}>
         <div>
           <p className="eyebrow" style={{ marginBottom: 18 }}>Coming Soon</p>
-          <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#FAFAFA', lineHeight: 1.15 }}>
+          <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15 }}>
             The Design Atelier<br/>
-            <em style={{ fontStyle: 'italic', color: 'rgba(250,250,250,0.40)' }}>Your product space.</em>
+            <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>Your product space.</em>
           </h2>
         </div>
         <a href="/contact/" className="btn-ghost" style={{ alignSelf: 'flex-end', flexShrink: 0 }}>Register Interest</a>
       </div>
 
-      {/* Blueprint preview card */}
+      {/* Frosted drafting canvas */}
       <div className="bg-blueprint bg-fine" style={{
-        border: '1px solid rgba(255,255,255,0.07)',
+        border: '1px solid rgba(15,14,13,0.08)',
         position: 'relative', overflow: 'hidden',
         height: 500,
+        background: 'linear-gradient(150deg, #FFFFFF 0%, #F8F6F2 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.90), 0 2px 40px rgba(15,14,13,0.04)',
       }}>
         {/* Annotation corners */}
         <span className="ann" style={{ position: 'absolute', top: 24, left: 28  }}>ATELIER · DESIGN SYSTEM · v2.0</span>
@@ -621,10 +628,10 @@ const DesignSpace = () => (
 
         {/* Corner brackets */}
         {[
-          { top: 14,    left:  14, borderTop: '1px solid rgba(255,255,255,0.16)', borderLeft:  '1px solid rgba(255,255,255,0.16)' },
-          { top: 14,    right: 14, borderTop: '1px solid rgba(255,255,255,0.16)', borderRight: '1px solid rgba(255,255,255,0.16)' },
-          { bottom: 14, left:  14, borderBottom: '1px solid rgba(255,255,255,0.16)', borderLeft:  '1px solid rgba(255,255,255,0.16)' },
-          { bottom: 14, right: 14, borderBottom: '1px solid rgba(255,255,255,0.16)', borderRight: '1px solid rgba(255,255,255,0.16)' },
+          { top: 14,    left:  14, borderTop: '1px solid rgba(15,14,13,0.16)', borderLeft:  '1px solid rgba(15,14,13,0.16)' },
+          { top: 14,    right: 14, borderTop: '1px solid rgba(15,14,13,0.16)', borderRight: '1px solid rgba(15,14,13,0.16)' },
+          { bottom: 14, left:  14, borderBottom: '1px solid rgba(15,14,13,0.16)', borderLeft:  '1px solid rgba(15,14,13,0.16)' },
+          { bottom: 14, right: 14, borderBottom: '1px solid rgba(15,14,13,0.16)', borderRight: '1px solid rgba(15,14,13,0.16)' },
         ].map((s, i) => <div key={i} style={{ position: 'absolute', width: 22, height: 22, ...s }} />)}
 
         {/* Center content */}
@@ -634,27 +641,27 @@ const DesignSpace = () => (
           justifyContent: 'center', alignItems: 'center',
           textAlign: 'center',
         }}>
-          {/* Blueprint diagram */}
+          {/* Architectural diagram */}
           <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: 44 }}>
             {/* Outer dashed */}
-            <circle cx="110" cy="110" r="95" stroke="rgba(255,255,255,0.055)" strokeWidth="0.5" strokeDasharray="5 5"/>
+            <circle cx="110" cy="110" r="95" stroke="rgba(15,14,13,0.06)"  strokeWidth="0.5" strokeDasharray="5 5"/>
             {/* Mid solid */}
-            <circle cx="110" cy="110" r="70" stroke="rgba(255,255,255,0.08)"  strokeWidth="0.6"/>
+            <circle cx="110" cy="110" r="70" stroke="rgba(15,14,13,0.10)"  strokeWidth="0.6"/>
             {/* Inner dashed */}
-            <circle cx="110" cy="110" r="44" stroke="rgba(255,255,255,0.055)" strokeWidth="0.5" strokeDasharray="3 5"/>
+            <circle cx="110" cy="110" r="44" stroke="rgba(15,14,13,0.06)"  strokeWidth="0.5" strokeDasharray="3 5"/>
             {/* Center dot */}
-            <circle cx="110" cy="110" r="4"  stroke="rgba(255,255,255,0.35)"  strokeWidth="0.6" fill="none"/>
-            <circle cx="110" cy="110" r="1.2" fill="rgba(255,255,255,0.55)"/>
+            <circle cx="110" cy="110" r="4"  stroke="rgba(15,14,13,0.32)"  strokeWidth="0.6" fill="none"/>
+            <circle cx="110" cy="110" r="1.2" fill="rgba(15,14,13,0.45)"/>
             {/* Axis lines */}
-            <line x1="15"  y1="110" x2="205" y2="110" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5"/>
-            <line x1="110" y1="15"  x2="110" y2="205" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5"/>
+            <line x1="15"  y1="110" x2="205" y2="110" stroke="rgba(15,14,13,0.08)" strokeWidth="0.5"/>
+            <line x1="110" y1="15"  x2="110" y2="205" stroke="rgba(15,14,13,0.08)" strokeWidth="0.5"/>
             {/* 45° lines */}
-            <line x1="42" y1="42"   x2="178" y2="178" stroke="rgba(255,255,255,0.035)" strokeWidth="0.5"/>
-            <line x1="178" y1="42"  x2="42"  y2="178" stroke="rgba(255,255,255,0.035)" strokeWidth="0.5"/>
+            <line x1="42"  y1="42"  x2="178" y2="178" stroke="rgba(15,14,13,0.04)" strokeWidth="0.5"/>
+            <line x1="178" y1="42"  x2="42"  y2="178" stroke="rgba(15,14,13,0.04)" strokeWidth="0.5"/>
             {/* Dimension line */}
-            <line x1="15"  y1="188" x2="205" y2="188" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>
-            <line x1="15"  y1="183" x2="15"  y2="193" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>
-            <line x1="205" y1="183" x2="205" y2="193" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>
+            <line x1="15"  y1="188" x2="205" y2="188" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
+            <line x1="15"  y1="183" x2="15"  y2="193" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
+            <line x1="205" y1="183" x2="205" y2="193" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
             {/* Tick marks on circle */}
             {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => {
               const rad = (deg * Math.PI) / 180;
@@ -662,19 +669,19 @@ const DesignSpace = () => (
               const y1 = 110 + 70 * Math.sin(rad);
               const x2 = 110 + 76 * Math.cos(rad);
               const y2 = 110 + 76 * Math.sin(rad);
-              return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>;
+              return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>;
             })}
           </svg>
 
           <p className="eyebrow" style={{ marginBottom: 14, letterSpacing: '0.32em' }}>Prototype · Customize · Commission</p>
-          <h3 className="serif" style={{ fontSize: 38, fontWeight: 200, color: 'rgba(250,250,250,0.70)', margin: '0 0 14px' }}>The Design Atelier</h3>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 200, color: 'rgba(255,255,255,0.30)', lineHeight: 1.85, maxWidth: 400, margin: '0 0 40px' }}>
+          <h3 className="serif" style={{ fontSize: 38, fontWeight: 200, color: 'rgba(15,14,13,0.72)', margin: '0 0 14px' }}>The Design Atelier</h3>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 200, color: 'rgba(15,14,13,0.40)', lineHeight: 1.85, maxWidth: 400, margin: '0 0 40px' }}>
             A digital workspace where clients will configure, visualize, and commission bespoke products — directly from the studio.
           </p>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="/contact/" className="btn-ghost" style={{ fontSize: 9, padding: '10px 24px' }}>Register Interest</a>
-            <a href="/studio/"  className="btn-ghost" style={{ fontSize: 9, padding: '10px 24px', borderColor: 'rgba(255,255,255,0.08)' }}>Visit Studio</a>
+            <a href="/contact/" className="btn-ghost"  style={{ fontSize: 9, padding: '10px 24px' }}>Register Interest</a>
+            <a href="/studio/"  className="btn-ghost"  style={{ fontSize: 9, padding: '10px 24px', borderColor: 'rgba(15,14,13,0.10)' }}>Visit Studio</a>
           </div>
         </div>
       </div>
@@ -683,31 +690,31 @@ const DesignSpace = () => (
 );
 
 /* ═══════════════════════════════════════════
-   CTA — CREAM SECTION
+   CTA — DEEP CHARCOAL CONTRAST SECTION
 ═══════════════════════════════════════════ */
 const CTA = () => (
-  <section className="reveal" style={{ padding: '180px 56px', background: '#F2EDE6', textAlign: 'center' }}>
+  <section className="reveal" style={{ padding: '180px 56px', background: '#1A1916', textAlign: 'center' }}>
     <div style={{ maxWidth: 580, margin: '0 auto' }}>
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.28)', marginBottom: 36 }}>
+      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'rgba(250,250,248,0.24)', marginBottom: 36 }}>
         Start
       </p>
       <h2 className="serif" style={{
         fontSize: 'clamp(38px, 5.5vw, 68px)',
         fontWeight: 200,
-        color: '#0A0A0A',
+        color: '#F5F3EF',
         margin: '0 0 28px',
         lineHeight: 1.08,
         letterSpacing: '-0.01em',
       }}>
         Have something<br/>
-        <em style={{ fontStyle: 'italic' }}>worth shaping?</em>
+        <em style={{ fontStyle: 'italic', color: 'rgba(245,243,239,0.48)' }}>worth shaping?</em>
       </h2>
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 1.9, color: 'rgba(0,0,0,0.42)', marginBottom: 52, letterSpacing: '0.01em' }}>
+      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 1.9, color: 'rgba(250,250,248,0.38)', marginBottom: 52, letterSpacing: '0.01em' }}>
         Bring the concept, sketch, CAD file, or product requirement. GESTALTUNG will help it become a real, usable object.
       </p>
       <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <a href="/studio/#request"       className="btn-dark">Begin in Studio</a>
-        <a href="/manufacturing/#upload" className="btn-outline-dark">Upload a File</a>
+        <a href="/studio/#request"       className="btn-light">Begin in Studio</a>
+        <a href="/manufacturing/#upload" className="btn-outline-light">Upload a File</a>
       </div>
     </div>
   </section>
@@ -724,17 +731,17 @@ const Footer = () => {
   ];
 
   return (
-    <footer style={{ background: '#070707', borderTop: '1px solid rgba(255,255,255,0.055)', padding: '88px 56px 56px' }}>
+    <footer style={{ background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.07)', padding: '88px 56px 56px' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         {/* Main grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 64, marginBottom: 88 }}>
           {/* Brand col */}
           <div>
             <div style={{ marginBottom: 28 }}><Logo /></div>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(255,255,255,0.28)', maxWidth: 240, margin: '0 0 20px' }}>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.40)', maxWidth: 240, margin: '0 0 20px' }}>
               The place where ideas become real products.
             </p>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.26)' }}>
               Doha, Qatar
             </span>
           </div>
@@ -742,16 +749,16 @@ const Footer = () => {
           {/* Link cols */}
           {cols.map((col, i) => (
             <div key={i}>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)', marginBottom: 28 }}>{col.label}</p>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.26)', marginBottom: 28 }}>{col.label}</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {col.links.map(([name, href]) => (
                   <a key={name} href={href} className="hover-line" style={{
                     fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200,
-                    color: 'rgba(255,255,255,0.36)', textDecoration: 'none',
+                    color: 'rgba(15,14,13,0.44)', textDecoration: 'none',
                     transition: 'color 0.3s ease', width: 'fit-content',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.75)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.36)'}
+                  onMouseEnter={e => e.currentTarget.style.color = 'rgba(15,14,13,0.82)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(15,14,13,0.44)'}
                   >{name}</a>
                 ))}
               </div>
@@ -762,18 +769,18 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="rule-h" style={{ marginBottom: 36 }} />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, color: 'rgba(255,255,255,0.18)', letterSpacing: '0.05em' }}>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, color: 'rgba(15,14,13,0.26)', letterSpacing: '0.05em' }}>
             © {new Date().getFullYear()} GESTALTUNG. All rights reserved.
           </p>
           <div style={{ display: 'flex', gap: 36 }}>
             {[['Privacy', '#'], ['Terms', '#'], ['عربي | EN', '#']].map(([lbl, href]) => (
               <a key={lbl} href={href} style={{
                 fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200,
-                color: 'rgba(255,255,255,0.18)', textDecoration: 'none', letterSpacing: '0.05em',
+                color: 'rgba(15,14,13,0.26)', textDecoration: 'none', letterSpacing: '0.05em',
                 transition: 'color 0.3s ease',
               }}
-              onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.18)'}
+              onMouseEnter={e => e.currentTarget.style.color = 'rgba(15,14,13,0.60)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(15,14,13,0.26)'}
               >{lbl}</a>
             ))}
           </div>
@@ -787,7 +794,6 @@ const Footer = () => {
    APP
 ═══════════════════════════════════════════ */
 const App = () => {
-  // Scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll('.reveal');
     const io  = new IntersectionObserver(
