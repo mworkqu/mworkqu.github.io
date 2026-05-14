@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,8 +18,8 @@
       theme: {
         extend: {
           fontFamily: {
-            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
             sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
           }
         }
       }
@@ -32,178 +32,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 
   <style>
-    /* ─── Reset & Base ──────────────────────────────────── */
+    /* ─── Reset ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:       #0F0E0D;
-      --charcoal:  #2A2825;
-      --paper:     #FAFAF8;
-      --alabaster: #F5F3EF;
-      --canvas:    #F0EDE8;
-      --rule:      rgba(15, 14, 13, 0.07);
-      --rule-lt:   rgba(15, 14, 13, 0.04);
-      --muted:     rgba(15, 14, 13, 0.38);
-      --dim:       rgba(15, 14, 13, 0.20);
+      --navy:       #0C1B2E;
+      --navy-mid:   #122035;
+      --navy-light: #1A2F48;
+      --blue:       #1B53BE;
+      --blue-hover: #1647A8;
+      --blue-light: #E8EFFC;
+      --text:       #0F1923;
+      --muted:      #5C6B7A;
+      --muted-lt:   #8A99A8;
+      --border:     #DDE1E7;
+      --bg-soft:    #F3F5F8;
+      --white:      #FFFFFF;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--paper);
-      color: var(--ink);
+      background: var(--white);
+      color: var(--text);
       font-family: 'Inter', system-ui, sans-serif;
-      font-weight: 200;
+      font-weight: 400;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── Scrollbar ─────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 1px; }
-    ::-webkit-scrollbar-thumb { background: rgba(15,14,13,0.12); }
-
-    /* ─── Typography helpers ────────────────────────────── */
-    .serif   { font-family: 'Cormorant Garamond', Georgia, serif; }
-    .eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 9px;
-      font-weight: 300;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--dim);
-    }
-
-    /* ─── Animations ────────────────────────────────────── */
-    @keyframes riseUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0);    }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    .anim-rise  { opacity: 0; animation: riseUp  1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .anim-fade  { opacity: 0; animation: fadeIn  2.0s ease forwards; }
-    .d1 { animation-delay: 0.10s; }
-    .d2 { animation-delay: 0.35s; }
-    .d3 { animation-delay: 0.60s; }
-    .d4 { animation-delay: 0.90s; }
-    .d5 { animation-delay: 1.20s; }
-    .d6 { animation-delay: 1.50s; }
-
-    /* ─── Backgrounds ───────────────────────────────────── */
-    .bg-blueprint {
-      background-image:
-        linear-gradient(rgba(15,14,13,0.032) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15,14,13,0.032) 1px, transparent 1px);
-      background-size: 72px 72px;
-    }
-    .bg-fine {
-      background-image:
-        linear-gradient(rgba(15,14,13,0.016) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15,14,13,0.016) 1px, transparent 1px);
-      background-size: 18px 18px;
-    }
-
-    /* ─── Interactive ───────────────────────────────────── */
-    .hover-line {
-      position: relative;
-      display: inline-block;
-    }
-    .hover-line::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: currentColor;
-      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .hover-line:hover::after { width: 100%; }
-
-    .card-g {
-      transition: border-color 0.45s ease, background 0.45s ease, box-shadow 0.45s ease;
-    }
-    .card-g:hover {
-      border-color: rgba(15,14,13,0.14) !important;
-      background: #FFFFFF !important;
-      box-shadow: 0 8px 48px rgba(15,14,13,0.06) !important;
-    }
-
-    /* ─── Buttons ───────────────────────────────────────── */
-    .btn-primary {
-      display: inline-block;
-      background: var(--charcoal);
-      color: #FAFAF8;
-      padding: 14px 38px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    .btn-primary:hover { opacity: 0.80; transform: translateY(-2px); }
-
-    .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      color: var(--charcoal);
-      padding: 13px 37px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid rgba(15,14,13,0.22);
-      cursor: pointer;
-      transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
-    }
-    .btn-ghost:hover {
-      border-color: rgba(15,14,13,0.50);
-      background: rgba(15,14,13,0.03);
-      transform: translateY(-2px);
-    }
-
-    .btn-light {
-      display: inline-block;
-      background: #FAFAF8;
-      color: var(--charcoal);
-      padding: 14px 38px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    .btn-light:hover { opacity: 0.80; transform: translateY(-2px); }
-
-    .btn-outline-light {
-      display: inline-block;
-      background: transparent;
-      color: #FAFAF8;
-      padding: 13px 37px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid rgba(250,250,248,0.30);
-      cursor: pointer;
-      transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    .btn-outline-light:hover { border-color: rgba(250,250,248,0.65); transform: translateY(-2px); }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(27,83,190,0.25); border-radius: 2px; }
 
     /* ─── Nav ───────────────────────────────────────────── */
     #g-nav {
@@ -214,121 +73,285 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 56px;
-      border-bottom: 1px solid transparent;
-      transition: background 0.6s ease, border-color 0.6s ease, backdrop-filter 0.6s ease;
+      padding: 0 60px;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.4s ease;
     }
     #g-nav.scrolled {
-      background: rgba(250,250,248,0.92);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border-bottom-color: var(--rule);
+      box-shadow: 0 2px 24px rgba(12,27,46,0.10);
     }
 
     .nav-link {
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: rgba(15,14,13,0.40);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
       text-decoration: none;
-      transition: color 0.3s ease;
+      letter-spacing: 0.01em;
+      transition: color 0.25s ease;
     }
-    .nav-link:hover { color: rgba(15,14,13,0.82); }
+    .nav-link:hover { color: var(--navy); }
 
-    /* ─── Dividers ──────────────────────────────────────── */
-    .rule-h { width: 100%; height: 1px; background: var(--rule); }
-    .rule-v { width: 1px; background: var(--rule); }
+    /* ─── Buttons ───────────────────────────────────────── */
+    .btn-blue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue);
+      color: #fff;
+      padding: 14px 30px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-blue:hover {
+      background: var(--blue-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(27,83,190,0.30);
+    }
 
-    /* ─── Section reveal (JS-powered) ──────────────────── */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .btn-blue-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--blue);
+      padding: 13px 29px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1.5px solid var(--blue);
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+    .btn-blue-outline:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-navy {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy);
+      color: #fff;
+      padding: 14px 30px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+    .btn-navy:hover { background: var(--navy-light); transform: translateY(-1px); }
+
+    .btn-white-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      padding: 13px 29px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.30);
+      cursor: pointer;
+      transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+    .btn-white-outline:hover {
+      border-color: rgba(255,255,255,0.70);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ─── Section reveal ────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
-    /* ─── Capability tags ───────────────────────────────── */
-    .cap-tag {
-      border: 1px solid rgba(15,14,13,0.10);
-      padding: 9px 22px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5px;
-      font-weight: 300;
-      letter-spacing: 0.18em;
+    /* ─── Card hover ────────────────────────────────────── */
+    .service-card {
+      transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+    }
+    .service-card:hover {
+      box-shadow: 0 12px 48px rgba(12,27,46,0.10);
+      transform: translateY(-4px);
+      border-color: var(--blue) !important;
+    }
+
+    .pillar-col {
+      transition: background 0.3s ease;
+    }
+    .pillar-col:hover {
+      background: #EAF0FB;
+    }
+
+    /* ─── Section separator ─────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(15,14,13,0.36);
-      transition: border-color 0.35s ease, color 0.35s ease, background 0.35s ease;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+
+    /* ─── Step number ───────────────────────────────────── */
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-bottom: 20px;
+    }
+
+    /* ─── Cap tag ───────────────────────────────────────── */
+    .cap-tag {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
       cursor: default;
+      border-radius: 2px;
     }
     .cap-tag:hover {
-      border-color: rgba(15,14,13,0.28);
-      color: rgba(15,14,13,0.72);
-      background: rgba(15,14,13,0.025);
+      background: var(--blue-light);
+      border-color: rgba(27,83,190,0.25);
+      color: var(--blue);
     }
 
-    /* ─── Annotation ────────────────────────────────────── */
-    .ann {
-      font-family: 'Inter', sans-serif;
-      font-size: 8px;
-      font-weight: 300;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(15,14,13,0.18);
+    /* ─── Blueprint bg for accent sections ──────────────── */
+    .bg-grid-subtle {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
-    /* ─── Subtle grain texture ──────────────────────────── */
-    #grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 500;
-      opacity: 0.018;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 300px 300px;
+    /* ─── Hover underline link ──────────────────────────── */
+    .link-arrow {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.25s ease, opacity 0.25s ease;
     }
+    .link-arrow:hover { gap: 10px; opacity: 0.80; }
   </style>
 </head>
 <body>
-
-<div id="grain" aria-hidden="true"></div>
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect } = React;
 
-/* ═══════════════════════════════════════════
-   LOGO
-═══════════════════════════════════════════ */
-const Logo = () => (
-  <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0.5" y="0.5" width="29" height="29" stroke="rgba(15,14,13,0.22)" strokeWidth="0.6"/>
-      <rect x="5"   y="5"   width="20" height="20" stroke="rgba(15,14,13,0.10)" strokeWidth="0.5"/>
-      <line x1="5"  y1="15" x2="25" y2="15" stroke="rgba(15,14,13,0.12)" strokeWidth="0.5"/>
-      <line x1="15" y1="5"  x2="15" y2="25" stroke="rgba(15,14,13,0.12)" strokeWidth="0.5"/>
-      <circle cx="15" cy="15" r="3.5" stroke="rgba(15,14,13,0.28)" strokeWidth="0.6" fill="none"/>
-      <circle cx="15" cy="15" r="0.8" fill="rgba(15,14,13,0.42)"/>
+/* ═══ ICONS ═════════════════════════════════════════════ */
+const ArrowRight = ({ size = 14 }) => (
+  <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
+    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const IconHandshake = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 22l-4 4M26 22l4 4M14 22l6-6 6 6"/>
+    <path d="M8 26l4-4 6 4 6-4 4 4"/>
+    <path d="M4 18l4 8M36 18l-4 8"/>
+    <circle cx="20" cy="12" r="3"/>
+  </svg>
+);
+
+const IconGear = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="20" cy="20" r="5"/>
+    <path d="M20 6v4M20 30v4M6 20h4M30 20h4M9.17 9.17l2.83 2.83M27.17 27.17l2.83 2.83M30.83 9.17l-2.83 2.83M12.83 27.17l-2.83 2.83"/>
+  </svg>
+);
+
+const IconChart = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="6"  y="24" width="7" height="10" rx="1"/>
+    <rect x="16" y="16" width="7" height="18" rx="1"/>
+    <rect x="26" y="8"  width="7" height="26" rx="1"/>
+    <path d="M4 36h32"/>
+  </svg>
+);
+
+const IconShield = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 4l12 4v12c0 8-5 13-12 16C13 33 8 28 8 20V8l12-4z"/>
+    <path d="M14 20l4 4 8-8"/>
+  </svg>
+);
+
+const IconBulb = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1B53BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6a10 10 0 0 1 7 17l-1 3H14l-1-3A10 10 0 0 1 20 6z"/>
+    <path d="M15 30h10M16 34h8"/>
+  </svg>
+);
+
+/* ═══ LOGO ═══════════════════════════════════════════════ */
+const Logo = ({ light = false }) => (
+  <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect x="0.5" y="0.5" width="27" height="27"
+        stroke={light ? 'rgba(255,255,255,0.35)' : 'rgba(12,27,46,0.30)'} strokeWidth="0.8"/>
+      <rect x="4.5" y="4.5" width="19" height="19"
+        stroke={light ? 'rgba(255,255,255,0.18)' : 'rgba(12,27,46,0.14)'} strokeWidth="0.6"/>
+      <line x1="4.5" y1="14" x2="23.5" y2="14"
+        stroke={light ? 'rgba(255,255,255,0.22)' : '#1B53BE'} strokeWidth="0.7"/>
+      <line x1="14" y1="4.5" x2="14" y2="23.5"
+        stroke={light ? 'rgba(255,255,255,0.22)' : '#1B53BE'} strokeWidth="0.7"/>
+      <circle cx="14" cy="14" r="3.2"
+        stroke={light ? 'rgba(255,255,255,0.40)' : '#1B53BE'} strokeWidth="0.7" fill="none"/>
+      <circle cx="14" cy="14" r="0.9"
+        fill={light ? 'rgba(255,255,255,0.70)' : '#1B53BE'}/>
     </svg>
     <span style={{
-      fontFamily: 'Cormorant Garamond, Georgia, serif',
-      fontSize: 15,
-      fontWeight: 300,
-      letterSpacing: '0.38em',
-      color: 'rgba(15,14,13,0.78)',
-      userSelect: 'none',
+      fontFamily: 'Inter, sans-serif',
+      fontSize: 14,
+      fontWeight: 700,
+      letterSpacing: '0.20em',
+      color: light ? '#FFFFFF' : 'var(--navy)',
     }}>
       GESTALTUNG
     </span>
   </a>
 );
 
-/* ═══════════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════════ */
+/* ═══ NAVIGATION ═════════════════════════════════════════ */
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 56);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const fn = () => setScrolled(window.scrollY > 48);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
   const links = ['Studio', 'Manufacturing', 'Shop', 'Projects', 'About', 'Contact'];
@@ -336,155 +359,262 @@ const Nav = () => {
   return (
     <nav id="g-nav" className={scrolled ? 'scrolled' : ''}>
       <Logo />
-      <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
         {links.map(l => (
           <a key={l} href={`/${l.toLowerCase()}/`} className="nav-link">{l}</a>
         ))}
       </div>
-      <a href="/studio/#request" className="btn-primary" style={{ fontSize: 9, padding: '11px 26px' }}>
-        Start a Project
+      <a href="/studio/#request" className="btn-blue" style={{ fontSize: 11, padding: '10px 22px' }}>
+        Start a Project <ArrowRight />
       </a>
     </nav>
   );
 };
 
-/* ═══════════════════════════════════════════
-   HERO
-═══════════════════════════════════════════ */
+/* ═══ HERO ═══════════════════════════════════════════════ */
 const Hero = () => (
   <section style={{
     minHeight: '100vh',
-    display: 'flex', flexDirection: 'column',
-    justifyContent: 'center', alignItems: 'center',
-    textAlign: 'center',
-    padding: '120px 56px 80px',
-    position: 'relative', overflow: 'hidden',
-    background: 'linear-gradient(170deg, #FFFFFF 0%, #F5F3EF 60%, #EEEBe5 100%)',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    position: 'relative',
+    overflow: 'hidden',
   }}>
-    {/* Blueprint grids — faint dark lines on light ground */}
-    <div className="bg-blueprint" style={{ position: 'absolute', inset: 0 }} />
-    <div className="bg-fine"      style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+    {/* ── Left panel ── */}
+    <div className="bg-grid-subtle" style={{
+      background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: '120px 72px 80px 72px',
+      position: 'relative',
+      zIndex: 1,
+    }}>
+      {/* Blue accent line */}
+      <div style={{ width: 56, height: 3, background: 'var(--blue)', marginBottom: 36 }} />
 
-    {/* Soft radial luminance — brightest at center */}
-    <div style={{
-      position: 'absolute', inset: 0,
-      background: 'radial-gradient(ellipse 75% 65% at 50% 48%, rgba(255,255,255,0.72) 0%, transparent 100%)',
-      pointerEvents: 'none',
-    }} />
-
-    {/* Corner annotations */}
-    <span className="ann" style={{ position: 'absolute', top: 96, left: 56 }}>25.2N · 51.5E · DOHA, QAT</span>
-    <span className="ann" style={{ position: 'absolute', top: 96, right: 56 }}>EST. MMXXIV · REV 1.0</span>
-    <span className="ann" style={{ position: 'absolute', bottom: 56, left: 56 }}>ENG. STUDIO — MFG PLATFORM — COMMERCE</span>
-    <span className="ann" style={{ position: 'absolute', bottom: 56, right: 56 }}>GESTALTUNG.CO</span>
-
-    {/* Corner brackets */}
-    {[
-      { top: 80,    left:  56, borderTop: '1px solid rgba(15,14,13,0.14)', borderLeft:  '1px solid rgba(15,14,13,0.14)' },
-      { top: 80,    right: 56, borderTop: '1px solid rgba(15,14,13,0.14)', borderRight: '1px solid rgba(15,14,13,0.14)' },
-      { bottom: 44, left:  56, borderBottom: '1px solid rgba(15,14,13,0.14)', borderLeft:  '1px solid rgba(15,14,13,0.14)' },
-      { bottom: 44, right: 56, borderBottom: '1px solid rgba(15,14,13,0.14)', borderRight: '1px solid rgba(15,14,13,0.14)' },
-    ].map((s, i) => (
-      <div key={i} style={{ position: 'absolute', width: 22, height: 22, ...s }} />
-    ))}
-
-    {/* Content */}
-    <div style={{ position: 'relative', zIndex: 2, maxWidth: 860 }}>
-      <p className="eyebrow anim-rise d1" style={{ marginBottom: 44, color: 'rgba(15,14,13,0.32)' }}>
-        Engineering Studio &nbsp;·&nbsp; Manufacturing Platform &nbsp;·&nbsp; Product Commerce
-      </p>
-
-      <h1 className="serif anim-rise d2" style={{
-        fontSize: 'clamp(52px, 7.5vw, 100px)',
-        fontWeight: 200,
-        lineHeight: 1.04,
-        letterSpacing: '-0.01em',
-        color: '#0F0E0D',
-        margin: '0 0 36px',
+      <h1 style={{
+        fontFamily: 'Inter, sans-serif',
+        fontSize: 'clamp(36px, 4.5vw, 62px)',
+        fontWeight: 800,
+        lineHeight: 1.12,
+        color: '#FFFFFF',
+        margin: '0 0 28px',
+        letterSpacing: '-0.02em',
       }}>
         From Ideas<br/>
-        <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>to Manufactured</em><br/>
-        Products.
+        to Manufactured<br/>
+        <span style={{ color: 'rgba(255,255,255,0.55)' }}>Products.</span>
       </h1>
 
-      <p className="anim-rise d3" style={{
-        fontSize: 14,
-        fontWeight: 200,
-        lineHeight: 1.9,
-        color: 'rgba(15,14,13,0.44)',
-        maxWidth: 500,
-        margin: '0 auto 60px',
-        letterSpacing: '0.02em',
+      <p style={{
+        fontSize: 15,
+        fontWeight: 300,
+        lineHeight: 1.80,
+        color: 'rgba(255,255,255,0.62)',
+        maxWidth: 380,
+        margin: '0 0 44px',
       }}>
-        GESTALTUNG is where engineering, manufacturing, and product commerce converge — turning early ideas and technical challenges into real, usable objects.
+        GESTALTUNG partners with innovators to turn concepts, sketches, and engineering challenges into precision-manufactured, real-world products.
       </p>
 
-      <div className="anim-rise d4" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <a href="/studio/#request"       className="btn-primary">Shape an Idea</a>
-        <a href="/manufacturing/#upload" className="btn-ghost">Upload a File</a>
-        <a href="/shop/"                 className="btn-ghost" style={{ borderColor: 'rgba(15,14,13,0.12)' }}>Explore Shop</a>
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+        <a href="/studio/#request" className="btn-blue">
+          Learn More <ArrowRight />
+        </a>
+        <a href="/manufacturing/" className="btn-white-outline">
+          Upload a File
+        </a>
+      </div>
+
+      {/* Bottom meta */}
+      <div style={{
+        position: 'absolute',
+        bottom: 44,
+        left: 72,
+        display: 'flex',
+        gap: 28,
+      }}>
+        {[['Doha, Qatar', 'Location'], ['Est. 2024', 'Founded'], ['End-to-End', 'Service']].map(([val, lbl]) => (
+          <div key={lbl}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.80)', lineHeight: 1.3 }}>{val}</div>
+            <div style={{ fontSize: 10, fontWeight: 400, color: 'rgba(255,255,255,0.32)', letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 2 }}>{lbl}</div>
+          </div>
+        ))}
       </div>
     </div>
 
-    {/* Scroll cue */}
-    <div className="anim-fade d6" style={{
-      position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)',
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+    {/* ── Right panel — hero image placeholder ── */}
+    {/*
+      HERO IMAGE: Replace this div with:
+      <div style={{ backgroundImage: 'url(your-hero-image.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+    */}
+    <div style={{
+      background: 'linear-gradient(160deg, #162840 0%, #0C1B2E 50%, #1A3050 100%)',
+      position: 'relative',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     }}>
-      <span className="eyebrow" style={{ letterSpacing: '0.28em' }}>Scroll</span>
-      <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, rgba(15,14,13,0.20), transparent)' }} />
+      {/* Technical illustration placeholder */}
+      <svg width="360" height="360" viewBox="0 0 360 360" fill="none" style={{ opacity: 0.14 }}>
+        {/* Grid */}
+        {Array.from({ length: 7 }, (_, i) => (
+          <g key={i}>
+            <line x1={i * 60} y1="0" x2={i * 60} y2="360" stroke="white" strokeWidth="0.5"/>
+            <line x1="0" y1={i * 60} x2="360" y2={i * 60} stroke="white" strokeWidth="0.5"/>
+          </g>
+        ))}
+        {/* Central geometry */}
+        <circle cx="180" cy="180" r="120" stroke="white" strokeWidth="0.8" strokeDasharray="6 6"/>
+        <circle cx="180" cy="180" r="80"  stroke="white" strokeWidth="1.0"/>
+        <circle cx="180" cy="180" r="40"  stroke="white" strokeWidth="0.8" strokeDasharray="4 4"/>
+        <circle cx="180" cy="180" r="6"   stroke="white" strokeWidth="1.0" fill="none"/>
+        <circle cx="180" cy="180" r="2"   fill="white"/>
+        {/* Crosshairs */}
+        <line x1="60"  y1="180" x2="300" y2="180" stroke="white" strokeWidth="0.6"/>
+        <line x1="180" y1="60"  x2="180" y2="300" stroke="white" strokeWidth="0.6"/>
+        {/* Dimension arcs */}
+        <path d="M 180 60 A 120 120 0 0 1 300 180" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="3 6"/>
+        {/* Tick marks */}
+        {[0,45,90,135,180,225,270,315].map(deg => {
+          const r = (deg * Math.PI) / 180;
+          return (
+            <line key={deg}
+              x1={180 + 76 * Math.cos(r)} y1={180 + 76 * Math.sin(r)}
+              x2={180 + 84 * Math.cos(r)} y2={180 + 84 * Math.sin(r)}
+              stroke="white" strokeWidth="0.8"/>
+          );
+        })}
+        {/* Corner brackets */}
+        <path d="M 20 20 h 30 M 20 20 v 30" stroke="white" strokeWidth="1"/>
+        <path d="M 340 20 h -30 M 340 20 v 30" stroke="white" strokeWidth="1"/>
+        <path d="M 20 340 h 30 M 20 340 v -30" stroke="white" strokeWidth="1"/>
+        <path d="M 340 340 h -30 M 340 340 v -30" stroke="white" strokeWidth="1"/>
+      </svg>
+
+      {/* Subtle vertical label */}
+      <span style={{
+        position: 'absolute',
+        right: 28,
+        top: '50%',
+        transform: 'translateY(-50%) rotate(90deg)',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: 9,
+        fontWeight: 500,
+        letterSpacing: '0.24em',
+        textTransform: 'uppercase',
+        color: 'rgba(255,255,255,0.22)',
+        whiteSpace: 'nowrap',
+      }}>
+        Engineering · Manufacturing · Commerce
+      </span>
     </div>
   </section>
 );
 
-/* ═══════════════════════════════════════════
-   THREE PATHS
-═══════════════════════════════════════════ */
-const ThreePaths = () => {
-  const paths = [
-    { num: '01', slug: 'Studio',        title: 'Bring the idea.',       tag: 'Design & Engineering', desc: 'For sketches, concepts, broken parts, reverse engineering challenges, and products that need to be designed from the ground up.', href: '/studio/' },
-    { num: '02', slug: 'Manufacturing', title: 'Make it real.',          tag: 'Production Platform',  desc: 'For CAD files, STL models, and engineering drawings that need careful quotation, material selection, and production.', href: '/manufacturing/' },
-    { num: '03', slug: 'Shop',          title: 'Live with the result.',  tag: 'Product Commerce',     desc: 'Ready-made engineered products, digital files, educational kits, and small-batch manufactured items — curated and available.', href: '/shop/' },
+/* ═══ FOUR PILLARS ═══════════════════════════════════════ */
+const Pillars = () => {
+  const pillars = [
+    { Icon: IconHandshake, title: 'Client Focused',       desc: 'We build strong partnerships and deliver exceptional value on every project we take on.' },
+    { Icon: IconBulb,      title: 'Innovation Driven',    desc: 'We embrace new ideas, cutting-edge processes, and technology to solve complex challenges.' },
+    { Icon: IconChart,     title: 'Results Oriented',     desc: 'We are committed to delivering measurable, real-world results that move your product forward.' },
+    { Icon: IconShield,    title: 'Integrity First',      desc: 'We operate with full transparency, accountability, and the highest professional standards.' },
   ];
 
   return (
-    <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8' }}>
+    <section className="reveal" style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+        {pillars.map(({ Icon, title, desc }, i) => (
+          <div key={i} className="pillar-col" style={{
+            padding: '60px 40px',
+            borderRight: i < 3 ? '1px solid var(--border)' : 'none',
+            textAlign: 'center',
+          }}>
+            <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
+              <Icon />
+            </div>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 12, letterSpacing: '-0.01em' }}>{title}</h3>
+            <p style={{ fontSize: 13.5, fontWeight: 400, lineHeight: 1.75, color: 'var(--muted)' }}>{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+/* ═══ SERVICES ═══════════════════════════════════════════ */
+const Services = () => {
+  const services = [
+    {
+      num: '01',
+      tag: 'Design & Engineering',
+      title: 'Studio',
+      headline: 'Bring the idea.',
+      desc: 'For sketches, concepts, broken parts, reverse engineering challenges, and products that need to be designed from the ground up.',
+      href: '/studio/',
+      cta: 'Explore Studio',
+    },
+    {
+      num: '02',
+      tag: 'Production Platform',
+      title: 'Manufacturing',
+      headline: 'Make it real.',
+      desc: 'For CAD files, STL models, and engineering drawings that need careful quotation, material selection, and production oversight.',
+      href: '/manufacturing/',
+      cta: 'Explore Manufacturing',
+    },
+    {
+      num: '03',
+      tag: 'Product Commerce',
+      title: 'Shop',
+      headline: 'Live with the result.',
+      desc: 'Ready-made engineered products, digital files, educational kits, and small-batch manufactured items — curated and available now.',
+      href: '/shop/',
+      cta: 'Explore Shop',
+    },
+  ];
+
+  return (
+    <section className="reveal" style={{ padding: '120px 60px', background: '#fff' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 72, flexWrap: 'wrap', gap: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 60, flexWrap: 'wrap', gap: 20 }}>
           <div>
-            <p className="eyebrow" style={{ marginBottom: 18 }}>A complete product path</p>
-            <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
-              Three ways to work<br/>
-              <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>with GESTALTUNG.</em>
+            <p className="section-label">What We Do</p>
+            <h2 style={{ fontSize: 'clamp(28px, 3.2vw, 44px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 480 }}>
+              A complete path from concept to finished product.
             </h2>
           </div>
-          <a href="/about/" className="btn-ghost" style={{ flexShrink: 0, alignSelf: 'flex-end' }}>Our approach</a>
+          <a href="/about/" className="link-arrow">
+            Our Full Approach <ArrowRight />
+          </a>
         </div>
 
-        {/* Cards — gap of 1px filled with the background colour creates a fine divider */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(15,14,13,0.07)' }}>
-          {paths.map((p, i) => (
-            <a key={i} href={p.href} className="card-g" style={{
-              background: '#FAFAF8',
-              padding: '56px 48px 52px',
-              textDecoration: 'none', color: 'inherit',
-              display: 'block',
-              border: '1px solid transparent',
-              position: 'relative',
+        {/* Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+          {services.map((s, i) => (
+            <a key={i} href={s.href} className="service-card" style={{
+              background: '#fff',
+              border: '1px solid var(--border)',
+              padding: '44px 40px 40px',
+              textDecoration: 'none',
+              color: 'inherit',
+              display: 'flex',
+              flexDirection: 'column',
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 52 }}>
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, letterSpacing: '0.2em', color: 'rgba(15,14,13,0.22)' }}>{p.num}</span>
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.28)', border: '1px solid rgba(15,14,13,0.10)', padding: '5px 13px' }}>{p.tag}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 36 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--muted-lt)', textTransform: 'uppercase' }}>{s.num}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--blue)', background: 'var(--blue-light)', padding: '4px 12px', borderRadius: '2px' }}>{s.tag}</span>
               </div>
 
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.32)', marginBottom: 14, fontWeight: 300 }}>{p.slug}</p>
-              <h3 className="serif" style={{ fontSize: 30, fontWeight: 200, margin: '0 0 18px', lineHeight: 1.2, color: '#0F0E0D' }}>{p.title}</h3>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.44)', margin: '0 0 44px' }}>{p.desc}</p>
+              <p style={{ fontSize: 10.5, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 10 }}>{s.title}</p>
+              <h3 style={{ fontSize: 26, fontWeight: 700, color: 'var(--navy)', margin: '0 0 14px', lineHeight: 1.20, letterSpacing: '-0.01em' }}>{s.headline}</h3>
+              <p style={{ fontSize: 13.5, fontWeight: 400, lineHeight: 1.80, color: 'var(--muted)', flex: 1, margin: '0 0 32px' }}>{s.desc}</p>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <span className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.35)', fontWeight: 300 }}>Enter</span>
-                <div style={{ height: 1, background: 'rgba(15,14,13,0.08)', width: 36 }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--blue)', fontSize: 12, fontWeight: 600 }}>
+                {s.cta} <ArrowRight />
               </div>
             </a>
           ))}
@@ -494,78 +624,87 @@ const ThreePaths = () => {
   );
 };
 
-/* ═══════════════════════════════════════════
-   MANIFESTO
-═══════════════════════════════════════════ */
+/* ═══ MANIFESTO STRIP ════════════════════════════════════ */
 const Manifesto = () => (
-  <section className="reveal" style={{ padding: '160px 56px', background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
-    <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-      <div style={{ width: 1, height: 64, background: 'rgba(15,14,13,0.12)', margin: '0 auto 64px' }} />
-
-      <p className="eyebrow" style={{ marginBottom: 44, letterSpacing: '0.35em' }}>The Philosophy</p>
-
-      <h2 className="serif" style={{
-        fontSize: 'clamp(26px, 3.2vw, 42px)',
-        fontWeight: 200,
+  <section className="reveal" style={{
+    background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
+    padding: '100px 60px',
+  }}>
+    <div className="bg-grid-subtle" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.5 }} />
+    <div style={{ maxWidth: 820, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+      <div style={{ width: 48, height: 3, background: 'var(--blue)', margin: '0 auto 36px' }} />
+      <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', marginBottom: 28 }}>
+        The Philosophy
+      </p>
+      <h2 style={{
+        fontFamily: 'Cormorant Garamond, Georgia, serif',
+        fontSize: 'clamp(26px, 3.5vw, 46px)',
+        fontWeight: 300,
         fontStyle: 'italic',
         lineHeight: 1.55,
-        color: 'rgba(15,14,13,0.80)',
-        margin: '0 0 52px',
-        letterSpacing: '0.01em',
+        color: 'rgba(255,255,255,0.90)',
+        margin: '0 0 36px',
       }}>
         "Gestaltung — German for shaping, forming,<br/>and designing with intention."
       </h2>
-
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(15,14,13,0.46)', marginBottom: 28, letterSpacing: '0.015em' }}>
-        We believe every idea contains the seed of a real, physical product. Our work is to guide that idea through the full arc — from the first rough sketch to a precision-manufactured object you can hold, use, and trust.
-      </p>
-
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 2.0, color: 'rgba(15,14,13,0.46)', marginBottom: 0, letterSpacing: '0.015em' }}>
+      <p style={{ fontSize: 14.5, fontWeight: 300, lineHeight: 1.90, color: 'rgba(255,255,255,0.52)', maxWidth: 620, margin: '0 auto 40px' }}>
         Engineering. Manufacturing. Commerce. Not as separate systems — but as a single, unified discipline rooted in material honesty, technical precision, and the quiet ambition to make things well.
       </p>
-
-      <div style={{ width: 1, height: 64, background: 'rgba(15,14,13,0.12)', margin: '64px auto 0' }} />
+      <a href="/about/" className="btn-white-outline">
+        Our Story <ArrowRight />
+      </a>
     </div>
   </section>
 );
 
-/* ═══════════════════════════════════════════
-   WORKFLOW
-═══════════════════════════════════════════ */
+/* ═══ WORKFLOW ═══════════════════════════════════════════ */
 const Workflow = () => {
   const steps = [
-    { num: '01', name: 'Discover', desc: 'The idea, file, part, or product need is understood in full context and documented.' },
-    { num: '02', name: 'Shape',    desc: 'Design direction, CAD structure, and material + production logic are refined.' },
-    { num: '03', name: 'Test',     desc: 'Decisions are validated through 3D printing, CNC milling, or physical assembly.' },
-    { num: '04', name: 'Produce',  desc: 'The final object moves through internal or partner manufacturing workflows.' },
-    { num: '05', name: 'Launch',   desc: 'The result is delivered, put to use, or prepared as a product for the shop.' },
+    { num: '01', name: 'Discover',  desc: 'The idea, file, part, or product need is understood in full context and documented.' },
+    { num: '02', name: 'Shape',     desc: 'Design direction, CAD structure, and material + production logic are refined together.' },
+    { num: '03', name: 'Validate',  desc: 'Decisions are tested through 3D printing, CNC prototypes, or physical assembly.' },
+    { num: '04', name: 'Produce',   desc: 'The final object moves through internal or partner manufacturing workflows.' },
+    { num: '05', name: 'Deliver',   desc: 'The result is delivered, put to use, or prepared as a product for the shop.' },
   ];
 
   return (
-    <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
+    <section className="reveal" style={{ padding: '120px 60px', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 72, flexWrap: 'wrap', gap: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 64, flexWrap: 'wrap', gap: 20 }}>
           <div>
-            <p className="eyebrow" style={{ marginBottom: 18 }}>How it flows</p>
-            <h2 className="serif" style={{ fontSize: 'clamp(28px, 3.5vw, 46px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15 }}>
-              A product journey,<br/>
-              <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>told simply.</em>
+            <p className="section-label">How We Work</p>
+            <h2 style={{ fontSize: 'clamp(26px, 3.2vw, 42px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+              A clear process,<br/>start to finish.
             </h2>
           </div>
-          <a href="/studio/#request" className="btn-ghost" style={{ alignSelf: 'flex-end', flexShrink: 0 }}>Begin the journey</a>
+          <a href="/studio/#request" className="btn-blue">
+            Begin Your Project <ArrowRight />
+          </a>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
           {steps.map((s, i) => (
             <div key={i} style={{
-              padding: '40px 30px',
-              borderLeft:  '1px solid rgba(15,14,13,0.07)',
-              borderTop:   '1px solid rgba(15,14,13,0.07)',
-              borderRight: i === 4 ? '1px solid rgba(15,14,13,0.07)' : 'none',
+              padding: '36px 28px',
+              borderLeft:  '1px solid var(--border)',
+              borderTop:   '3px solid ' + (i === 0 ? 'var(--blue)' : 'transparent'),
+              borderRight: i === 4 ? '1px solid var(--border)' : 'none',
+              background: i === 0 ? 'rgba(27,83,190,0.03)' : 'transparent',
+              transition: 'border-top-color 0.3s ease, background 0.3s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderTopColor = 'var(--blue)';
+              e.currentTarget.style.background = 'rgba(27,83,190,0.03)';
+            }}
+            onMouseLeave={e => {
+              if (i !== 0) {
+                e.currentTarget.style.borderTopColor = 'transparent';
+                e.currentTarget.style.background = 'transparent';
+              }
             }}>
-              <span style={{ display: 'block', fontFamily: 'Inter, sans-serif', fontSize: 9, letterSpacing: '0.22em', color: 'rgba(15,14,13,0.20)', marginBottom: 28, fontWeight: 300 }}>{s.num}</span>
-              <h3 className="serif" style={{ fontSize: 22, fontWeight: 200, color: '#0F0E0D', margin: '0 0 14px', lineHeight: 1.2 }}>{s.name}</h3>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.40)', margin: 0 }}>{s.desc}</p>
+              <div className="step-num">{s.num}</div>
+              <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--navy)', margin: '0 0 10px' }}>{s.name}</h3>
+              <p style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.75, color: 'var(--muted)', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -574,18 +713,19 @@ const Workflow = () => {
   );
 };
 
-/* ═══════════════════════════════════════════
-   CAPABILITIES
-═══════════════════════════════════════════ */
+/* ═══ CAPABILITIES ═══════════════════════════════════════ */
 const Capabilities = () => {
   const caps = ['Engineering Design', 'CAD Modeling', 'Reverse Engineering', '3D Printing', 'CNC Machining', 'Laser Cutting', 'Lathe Work', 'Sheet Metal', 'Product Prototyping', 'Silicone Molding', 'Educational Kits', 'Small-Batch Production', 'Finishing & Assembly', 'Technical Drawings'];
 
   return (
-    <section className="reveal" style={{ padding: '120px 56px', background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
+    <section className="reveal" style={{ padding: '100px 60px', background: '#fff', borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 52, flexWrap: 'wrap', gap: 16 }}>
-          <p className="eyebrow">Manufacturing Capabilities</p>
-          <a href="/manufacturing/" className="hover-line" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.35)', textDecoration: 'none', fontWeight: 300 }}>All processes</a>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <p className="section-label">Our Capabilities</p>
+            <h2 style={{ fontSize: 'clamp(24px, 2.8vw, 36px)', fontWeight: 800, color: 'var(--navy)', letterSpacing: '-0.02em' }}>Manufacturing Processes</h2>
+          </div>
+          <a href="/manufacturing/" className="link-arrow">View All Processes <ArrowRight /></a>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {caps.map((c, i) => <span key={i} className="cap-tag">{c}</span>)}
@@ -595,93 +735,59 @@ const Capabilities = () => {
   );
 };
 
-/* ═══════════════════════════════════════════
-   DESIGN SPACE TEASER
-═══════════════════════════════════════════ */
+/* ═══ DESIGN SPACE ═══════════════════════════════════════ */
 const DesignSpace = () => (
-  <section className="reveal" style={{ padding: '160px 56px', background: '#FAFAF8', borderTop: '1px solid rgba(15,14,13,0.06)' }}>
+  <section className="reveal" style={{ padding: '120px 60px', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
     <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+        {/* Text */}
         <div>
-          <p className="eyebrow" style={{ marginBottom: 18 }}>Coming Soon</p>
-          <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.8vw, 50px)', fontWeight: 200, color: '#0F0E0D', lineHeight: 1.15 }}>
-            The Design Atelier<br/>
-            <em style={{ fontStyle: 'italic', color: 'rgba(15,14,13,0.36)' }}>Your product space.</em>
+          <p className="section-label">Coming Soon</p>
+          <h2 style={{ fontSize: 'clamp(28px, 3.2vw, 44px)', fontWeight: 800, color: 'var(--navy)', lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 0 20px' }}>
+            The Design Atelier —<br/>Your Product Space.
           </h2>
+          <p style={{ fontSize: 14.5, fontWeight: 400, lineHeight: 1.85, color: 'var(--muted)', margin: '0 0 32px', maxWidth: 440 }}>
+            A digital workspace where clients will configure, visualize, and commission bespoke products directly from the studio. Design meets production in a single, seamless environment.
+          </p>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <a href="/contact/" className="btn-blue">Register Interest <ArrowRight /></a>
+            <a href="/studio/"  className="btn-blue-outline">Visit Studio</a>
+          </div>
         </div>
-        <a href="/contact/" className="btn-ghost" style={{ alignSelf: 'flex-end', flexShrink: 0 }}>Register Interest</a>
-      </div>
 
-      {/* Frosted drafting canvas */}
-      <div className="bg-blueprint bg-fine" style={{
-        border: '1px solid rgba(15,14,13,0.08)',
-        position: 'relative', overflow: 'hidden',
-        height: 500,
-        background: 'linear-gradient(150deg, #FFFFFF 0%, #F8F6F2 100%)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.90), 0 2px 40px rgba(15,14,13,0.04)',
-      }}>
-        {/* Annotation corners */}
-        <span className="ann" style={{ position: 'absolute', top: 24, left: 28  }}>ATELIER · DESIGN SYSTEM · v2.0</span>
-        <span className="ann" style={{ position: 'absolute', top: 24, right: 28, textAlign: 'right' }}>STATUS: IN DEVELOPMENT</span>
-        <span className="ann" style={{ position: 'absolute', bottom: 24, left: 28  }}>GESTALTUNG · DOHA, QAT</span>
-        <span className="ann" style={{ position: 'absolute', bottom: 24, right: 28, textAlign: 'right' }}>SCALE 1:1 · CONFID.</span>
-
-        {/* Corner brackets */}
-        {[
-          { top: 14,    left:  14, borderTop: '1px solid rgba(15,14,13,0.16)', borderLeft:  '1px solid rgba(15,14,13,0.16)' },
-          { top: 14,    right: 14, borderTop: '1px solid rgba(15,14,13,0.16)', borderRight: '1px solid rgba(15,14,13,0.16)' },
-          { bottom: 14, left:  14, borderBottom: '1px solid rgba(15,14,13,0.16)', borderLeft:  '1px solid rgba(15,14,13,0.16)' },
-          { bottom: 14, right: 14, borderBottom: '1px solid rgba(15,14,13,0.16)', borderRight: '1px solid rgba(15,14,13,0.16)' },
-        ].map((s, i) => <div key={i} style={{ position: 'absolute', width: 22, height: 22, ...s }} />)}
-
-        {/* Center content */}
+        {/* Blueprint preview */}
         <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', flexDirection: 'column',
-          justifyContent: 'center', alignItems: 'center',
-          textAlign: 'center',
+          background: 'linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%)',
+          border: '1px solid rgba(27,83,190,0.25)',
+          position: 'relative',
+          overflow: 'hidden',
+          height: 380,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 20px 60px rgba(12,27,46,0.16)',
         }}>
-          {/* Architectural diagram */}
-          <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: 44 }}>
-            {/* Outer dashed */}
-            <circle cx="110" cy="110" r="95" stroke="rgba(15,14,13,0.06)"  strokeWidth="0.5" strokeDasharray="5 5"/>
-            {/* Mid solid */}
-            <circle cx="110" cy="110" r="70" stroke="rgba(15,14,13,0.10)"  strokeWidth="0.6"/>
-            {/* Inner dashed */}
-            <circle cx="110" cy="110" r="44" stroke="rgba(15,14,13,0.06)"  strokeWidth="0.5" strokeDasharray="3 5"/>
-            {/* Center dot */}
-            <circle cx="110" cy="110" r="4"  stroke="rgba(15,14,13,0.32)"  strokeWidth="0.6" fill="none"/>
-            <circle cx="110" cy="110" r="1.2" fill="rgba(15,14,13,0.45)"/>
-            {/* Axis lines */}
-            <line x1="15"  y1="110" x2="205" y2="110" stroke="rgba(15,14,13,0.08)" strokeWidth="0.5"/>
-            <line x1="110" y1="15"  x2="110" y2="205" stroke="rgba(15,14,13,0.08)" strokeWidth="0.5"/>
-            {/* 45° lines */}
-            <line x1="42"  y1="42"  x2="178" y2="178" stroke="rgba(15,14,13,0.04)" strokeWidth="0.5"/>
-            <line x1="178" y1="42"  x2="42"  y2="178" stroke="rgba(15,14,13,0.04)" strokeWidth="0.5"/>
-            {/* Dimension line */}
-            <line x1="15"  y1="188" x2="205" y2="188" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
-            <line x1="15"  y1="183" x2="15"  y2="193" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
-            <line x1="205" y1="183" x2="205" y2="193" stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>
-            {/* Tick marks on circle */}
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => {
-              const rad = (deg * Math.PI) / 180;
-              const x1 = 110 + 70 * Math.cos(rad);
-              const y1 = 110 + 70 * Math.sin(rad);
-              const x2 = 110 + 76 * Math.cos(rad);
-              const y2 = 110 + 76 * Math.sin(rad);
-              return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(15,14,13,0.14)" strokeWidth="0.5"/>;
+          <svg width="280" height="280" viewBox="0 0 280 280" fill="none" style={{ opacity: 0.22 }}>
+            <circle cx="140" cy="140" r="100" stroke="white" strokeWidth="0.6" strokeDasharray="5 5"/>
+            <circle cx="140" cy="140" r="70"  stroke="white" strokeWidth="0.8"/>
+            <circle cx="140" cy="140" r="38"  stroke="white" strokeWidth="0.6" strokeDasharray="3 5"/>
+            <circle cx="140" cy="140" r="5"   stroke="white" strokeWidth="0.8" fill="none"/>
+            <circle cx="140" cy="140" r="1.5" fill="white"/>
+            <line x1="20" y1="140" x2="260" y2="140" stroke="white" strokeWidth="0.5"/>
+            <line x1="140" y1="20" x2="140" y2="260" stroke="white" strokeWidth="0.5"/>
+            {[0,30,60,90,120,150,180,210,240,270,300,330].map(d => {
+              const r = d * Math.PI / 180;
+              return <line key={d}
+                x1={140 + 66 * Math.cos(r)} y1={140 + 66 * Math.sin(r)}
+                x2={140 + 74 * Math.cos(r)} y2={140 + 74 * Math.sin(r)}
+                stroke="white" strokeWidth="0.6"/>;
             })}
           </svg>
-
-          <p className="eyebrow" style={{ marginBottom: 14, letterSpacing: '0.32em' }}>Prototype · Customize · Commission</p>
-          <h3 className="serif" style={{ fontSize: 38, fontWeight: 200, color: 'rgba(15,14,13,0.72)', margin: '0 0 14px' }}>The Design Atelier</h3>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 200, color: 'rgba(15,14,13,0.40)', lineHeight: 1.85, maxWidth: 400, margin: '0 0 40px' }}>
-            A digital workspace where clients will configure, visualize, and commission bespoke products — directly from the studio.
-          </p>
-
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="/contact/" className="btn-ghost"  style={{ fontSize: 9, padding: '10px 24px' }}>Register Interest</a>
-            <a href="/studio/"  className="btn-ghost"  style={{ fontSize: 9, padding: '10px 24px', borderColor: 'rgba(15,14,13,0.10)' }}>Visit Studio</a>
+          <div style={{ position: 'absolute', top: 18, left: 20, fontSize: 8, fontWeight: 500, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>
+            ATELIER · v2.0 · IN DEVELOPMENT
+          </div>
+          <div style={{ position: 'absolute', bottom: 18, right: 20, fontSize: 8, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(27,83,190,0.55)' }}>
+            GESTALTUNG · DOHA
           </div>
         </div>
       </div>
@@ -689,40 +795,30 @@ const DesignSpace = () => (
   </section>
 );
 
-/* ═══════════════════════════════════════════
-   CTA — DEEP CHARCOAL CONTRAST SECTION
-═══════════════════════════════════════════ */
+/* ═══ CTA BANNER ═════════════════════════════════════════ */
 const CTA = () => (
-  <section className="reveal" style={{ padding: '180px 56px', background: '#1A1916', textAlign: 'center' }}>
-    <div style={{ maxWidth: 580, margin: '0 auto' }}>
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'rgba(250,250,248,0.24)', marginBottom: 36 }}>
-        Start
-      </p>
-      <h2 className="serif" style={{
-        fontSize: 'clamp(38px, 5.5vw, 68px)',
-        fontWeight: 200,
-        color: '#F5F3EF',
-        margin: '0 0 28px',
-        lineHeight: 1.08,
-        letterSpacing: '-0.01em',
-      }}>
-        Have something<br/>
-        <em style={{ fontStyle: 'italic', color: 'rgba(245,243,239,0.48)' }}>worth shaping?</em>
+  <section className="reveal" style={{
+    background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)',
+    padding: '100px 60px',
+    textAlign: 'center',
+  }}>
+    <div style={{ maxWidth: 620, margin: '0 auto' }}>
+      <div style={{ width: 48, height: 3, background: 'var(--blue)', margin: '0 auto 32px' }} />
+      <h2 style={{ fontSize: 'clamp(32px, 4.5vw, 58px)', fontWeight: 800, color: '#fff', lineHeight: 1.12, letterSpacing: '-0.02em', margin: '0 0 20px' }}>
+        Have something<br/>worth building?
       </h2>
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 200, lineHeight: 1.9, color: 'rgba(250,250,248,0.38)', marginBottom: 52, letterSpacing: '0.01em' }}>
-        Bring the concept, sketch, CAD file, or product requirement. GESTALTUNG will help it become a real, usable object.
+      <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.55)', margin: '0 0 44px' }}>
+        Bring the concept, sketch, CAD file, or requirement. GESTALTUNG will take it from idea to manufactured reality.
       </p>
       <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <a href="/studio/#request"       className="btn-light">Begin in Studio</a>
-        <a href="/manufacturing/#upload" className="btn-outline-light">Upload a File</a>
+        <a href="/studio/#request"       className="btn-blue">Begin in Studio <ArrowRight /></a>
+        <a href="/manufacturing/#upload" className="btn-white-outline">Upload a File</a>
       </div>
     </div>
   </section>
 );
 
-/* ═══════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════ */
+/* ═══ FOOTER ═════════════════════════════════════════════ */
 const Footer = () => {
   const cols = [
     { label: 'Systems',  links: [['Studio', '/studio/'], ['Manufacturing', '/manufacturing/'], ['Shop', '/shop/']] },
@@ -731,34 +827,33 @@ const Footer = () => {
   ];
 
   return (
-    <footer style={{ background: '#F5F3EF', borderTop: '1px solid rgba(15,14,13,0.07)', padding: '88px 56px 56px' }}>
+    <footer style={{ background: 'var(--navy)', padding: '80px 60px 44px' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        {/* Main grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 64, marginBottom: 88 }}>
-          {/* Brand col */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1fr 1fr', gap: 60, marginBottom: 72 }}>
+          {/* Brand */}
           <div>
-            <div style={{ marginBottom: 28 }}><Logo /></div>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200, lineHeight: 1.85, color: 'rgba(15,14,13,0.40)', maxWidth: 240, margin: '0 0 20px' }}>
-              The place where ideas become real products.
+            <div style={{ marginBottom: 24 }}><Logo light /></div>
+            <p style={{ fontSize: 13.5, fontWeight: 300, lineHeight: 1.80, color: 'rgba(255,255,255,0.38)', maxWidth: 240, margin: '0 0 20px' }}>
+              The place where ideas become real, precision-manufactured products.
             </p>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 300, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.26)' }}>
+            <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>
               Doha, Qatar
             </span>
           </div>
 
-          {/* Link cols */}
+          {/* Cols */}
           {cols.map((col, i) => (
             <div key={i}>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 300, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(15,14,13,0.26)', marginBottom: 28 }}>{col.label}</p>
+              <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: 24 }}>{col.label}</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {col.links.map(([name, href]) => (
-                  <a key={name} href={href} className="hover-line" style={{
-                    fontFamily: 'Inter, sans-serif', fontSize: 12.5, fontWeight: 200,
-                    color: 'rgba(15,14,13,0.44)', textDecoration: 'none',
-                    transition: 'color 0.3s ease', width: 'fit-content',
+                  <a key={name} href={href} style={{
+                    fontSize: 13.5, fontWeight: 400,
+                    color: 'rgba(255,255,255,0.48)', textDecoration: 'none',
+                    transition: 'color 0.25s ease',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'rgba(15,14,13,0.82)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(15,14,13,0.44)'}
+                  onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}
                   >{name}</a>
                 ))}
               </div>
@@ -766,21 +861,21 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="rule-h" style={{ marginBottom: 36 }} />
+        {/* Bottom */}
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 32 }} />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200, color: 'rgba(15,14,13,0.26)', letterSpacing: '0.05em' }}>
+          <p style={{ fontSize: 12, fontWeight: 400, color: 'rgba(255,255,255,0.25)' }}>
             © {new Date().getFullYear()} GESTALTUNG. All rights reserved.
           </p>
-          <div style={{ display: 'flex', gap: 36 }}>
+          <div style={{ display: 'flex', gap: 32 }}>
             {[['Privacy', '#'], ['Terms', '#'], ['عربي | EN', '#']].map(([lbl, href]) => (
               <a key={lbl} href={href} style={{
-                fontFamily: 'Inter, sans-serif', fontSize: 10, fontWeight: 200,
-                color: 'rgba(15,14,13,0.26)', textDecoration: 'none', letterSpacing: '0.05em',
-                transition: 'color 0.3s ease',
+                fontSize: 12, fontWeight: 400,
+                color: 'rgba(255,255,255,0.25)', textDecoration: 'none',
+                transition: 'color 0.25s ease',
               }}
-              onMouseEnter={e => e.currentTarget.style.color = 'rgba(15,14,13,0.60)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(15,14,13,0.26)'}
+              onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.60)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
               >{lbl}</a>
             ))}
           </div>
@@ -790,15 +885,13 @@ const Footer = () => {
   );
 };
 
-/* ═══════════════════════════════════════════
-   APP
-═══════════════════════════════════════════ */
+/* ═══ APP ════════════════════════════════════════════════ */
 const App = () => {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal');
     const io  = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
-      { threshold: 0.08 }
+      { threshold: 0.06 }
     );
     els.forEach(el => io.observe(el));
     return () => io.disconnect();
@@ -808,7 +901,8 @@ const App = () => {
     <>
       <Nav />
       <Hero />
-      <ThreePaths />
+      <Pillars />
+      <Services />
       <Manifesto />
       <Workflow />
       <Capabilities />
