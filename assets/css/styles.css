@@ -9,12 +9,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #F8F8F6;
+  --bg:      #F5F5F3;
   --surface: #FFFFFF;
   --ink:     #0A0A0A;
-  --rule:    rgba(10,10,10,0.07);
-  --muted:   rgba(10,10,10,0.38);
-  --dim:     rgba(10,10,10,0.20);
+  --rule:    rgba(10,10,10,0.11);
+  --muted:   rgba(10,10,10,0.52);
+  --dim:     rgba(10,10,10,0.34);
   --px:      72px;
   --max:     1440px;
 }
@@ -124,12 +124,12 @@ body {
   letter-spacing: 0.10em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 0.5px solid rgba(10,10,10,0.14);
+  border: 0.5px solid rgba(10,10,10,0.24);
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 }
-.btn-ghost:hover { border-color: rgba(10,10,10,0.40); color: var(--ink); }
+.btn-ghost:hover { border-color: rgba(10,10,10,0.50); color: var(--ink); }
 
 /* ── Page structure ──────────────────────────────────────── */
 .page-header {
@@ -164,7 +164,7 @@ body {
   font-size: 14px;
   font-weight: 300;
   line-height: 1.80;
-  color: rgba(10,10,10,0.44);
+  color: rgba(10,10,10,0.58);
   max-width: 480px;
   margin: 0 0 30px;
 }
@@ -194,7 +194,7 @@ body {
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(10,10,10,0.28);
+  color: rgba(10,10,10,0.46);
 }
 
 .section-title {
@@ -284,7 +284,7 @@ body {
 }
 
 .service-item {
-  background: var(--bg);
+  background: var(--surface);
   padding: 26px 28px;
   display: grid;
   grid-template-columns: 36px 1fr;
@@ -293,7 +293,7 @@ body {
   border-bottom: 0.5px solid var(--rule);
   transition: background 0.18s ease;
 }
-.service-item:hover { background: var(--surface); }
+.service-item:hover { background: #FAFAF9; }
 
 /* ── Tags ────────────────────────────────────────────────── */
 .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -302,17 +302,17 @@ body {
   font-family: 'Inter', sans-serif;
   font-size: 11.5px;
   font-weight: 300;
-  color: rgba(10,10,10,0.44);
+  color: rgba(10,10,10,0.58);
   padding: 5px 14px;
-  border: 0.5px solid rgba(10,10,10,0.10);
+  border: 0.5px solid rgba(10,10,10,0.18);
   background: transparent;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
   cursor: default;
 }
 .tag:hover {
-  color: rgba(10,10,10,0.78);
-  border-color: rgba(10,10,10,0.22);
-  background: rgba(10,10,10,0.025);
+  color: rgba(10,10,10,0.82);
+  border-color: rgba(10,10,10,0.32);
+  background: rgba(10,10,10,0.032);
 }
 
 /* ── Forms ───────────────────────────────────────────────── */
@@ -329,10 +329,10 @@ body {
 .field label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 8.5px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(10,10,10,0.36);
+  color: rgba(10,10,10,0.52);
 }
 
 .field input,
@@ -343,7 +343,7 @@ body {
   font-weight: 300;
   color: var(--ink);
   background: var(--surface);
-  border: 0.5px solid rgba(10,10,10,0.14);
+  border: 0.5px solid rgba(10,10,10,0.22);
   padding: 10px 14px;
   outline: none;
   transition: border-color 0.2s ease;
@@ -354,7 +354,7 @@ body {
 }
 .field input:focus,
 .field textarea:focus,
-.field select:focus { border-color: rgba(10,10,10,0.44); }
+.field select:focus { border-color: rgba(10,10,10,0.55); }
 .field textarea { min-height: 96px; resize: vertical; }
 
 /* ── Step strip (workflow) ───────────────────────────────── */
@@ -399,7 +399,7 @@ body {
 }
 
 .access-card {
-  background: var(--bg);
+  background: var(--surface);
   padding: 44px 36px;
   text-decoration: none;
   color: inherit;
@@ -407,9 +407,9 @@ body {
   flex-direction: column;
   gap: 32px;
   justify-content: space-between;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-.access-card:hover { background: var(--surface); }
+.access-card:hover { background: var(--surface); box-shadow: inset 0 0 0 1px rgba(10,10,10,0.08); }
 .access-card:hover .access-cta { color: var(--ink); }
 
 .access-role {
@@ -451,28 +451,31 @@ body {
 }
 
 .project-card {
-  background: var(--bg);
+  background: var(--surface);
   text-decoration: none;
   color: inherit;
   display: block;
   transition: background 0.2s ease;
 }
-.project-card:hover { background: var(--surface); }
+.project-card:hover { background: #FAFAF9; }
 
 .project-image {
   height: 180px;
-  background: rgba(10,10,10,0.03);
+  background: #F0F0EE;
   border-bottom: 0.5px solid var(--rule);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .project-image::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(10,10,10,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10,10,10,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(10,10,10,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.055) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -508,28 +511,31 @@ body {
 }
 
 .product-card {
-  background: var(--bg);
+  background: var(--surface);
   text-decoration: none;
   color: inherit;
   transition: background 0.2s ease;
   display: block;
 }
-.product-card:hover { background: var(--surface); }
+.product-card:hover { background: #FAFAF9; }
 
 .product-image {
   height: 200px;
-  background: rgba(10,10,10,0.03);
+  background: #F0F0EE;
   border-bottom: 0.5px solid var(--rule);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .product-image::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(10,10,10,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10,10,10,0.035) 1px, transparent 1px);
+    linear-gradient(rgba(10,10,10,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.055) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -639,16 +645,16 @@ body {
   padding: 10px 24px;
   font-size: 12px;
   font-weight: 300;
-  color: rgba(10,10,10,0.40);
+  color: rgba(10,10,10,0.52);
   text-decoration: none;
   border-left: 1.5px solid transparent;
   transition: color 0.2s, background 0.2s, border-color 0.2s;
 }
-.dash-nav-link:hover { color: var(--ink); background: rgba(10,10,10,0.022); }
+.dash-nav-link:hover { color: var(--ink); background: rgba(10,10,10,0.030); }
 .dash-nav-link.active {
   color: var(--ink);
   border-left-color: var(--ink);
-  background: rgba(10,10,10,0.030);
+  background: rgba(10,10,10,0.044);
   font-weight: 400;
 }
 
@@ -677,7 +683,7 @@ body {
   margin-bottom: 36px;
 }
 
-.metric-card { background: var(--bg); padding: 26px 22px; }
+.metric-card { background: var(--surface); padding: 26px 22px; }
 
 .metric-label {
   font-family: 'JetBrains Mono', monospace;
@@ -704,10 +710,10 @@ body {
 .g-table th {
   font-family: 'JetBrains Mono', monospace;
   font-size: 8.5px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(10,10,10,0.30);
+  color: rgba(10,10,10,0.46);
   padding: 10px 16px;
   border-bottom: 0.5px solid var(--rule);
   text-align: left;
@@ -716,12 +722,12 @@ body {
 .g-table td {
   font-size: 12.5px;
   font-weight: 300;
-  color: rgba(10,10,10,0.65);
+  color: rgba(10,10,10,0.74);
   padding: 12px 16px;
   border-bottom: 0.5px solid var(--rule);
 }
 
-.g-table tr:hover td { background: rgba(10,10,10,0.016); }
+.g-table tr:hover td { background: rgba(10,10,10,0.022); }
 
 .badge {
   font-family: 'JetBrains Mono', monospace;
@@ -730,26 +736,29 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 3px 10px;
-  border: 0.5px solid rgba(10,10,10,0.12);
-  color: rgba(10,10,10,0.45);
+  border: 0.5px solid rgba(10,10,10,0.20);
+  color: rgba(10,10,10,0.56);
 }
-.badge.active { color: rgba(10,10,10,0.68); border-color: rgba(10,10,10,0.22); }
-.badge.pending { color: rgba(10,10,10,0.38); }
+.badge.active { color: rgba(10,10,10,0.78); border-color: rgba(10,10,10,0.30); }
+.badge.complete { color: rgba(10,10,10,0.44); border-color: rgba(10,10,10,0.14); }
+.badge.pending { color: rgba(10,10,10,0.46); }
 
 .btn-table {
   font-family: 'JetBrains Mono', monospace;
   font-size: 8.5px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(10,10,10,0.38);
+  color: rgba(10,10,10,0.50);
   background: transparent;
-  border: 0.5px solid rgba(10,10,10,0.10);
+  border: 0.5px solid rgba(10,10,10,0.18);
   padding: 5px 12px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
-.btn-table:hover { border-color: rgba(10,10,10,0.35); color: var(--ink); }
+.btn-table:hover { border-color: rgba(10,10,10,0.44); color: var(--ink); }
+.btn-table.danger { color: rgba(160,30,30,0.60); border-color: rgba(160,30,30,0.20); }
+.btn-table.danger:hover { color: rgba(160,30,30,0.90); border-color: rgba(160,30,30,0.40); }
 
 /* ── Footer ──────────────────────────────────────────────── */
 .g-footer {
@@ -828,11 +837,11 @@ body {
 .link-muted {
   font-size: 11px;
   font-weight: 300;
-  color: rgba(10,10,10,0.34);
+  color: rgba(10,10,10,0.50);
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.link-muted:hover { color: rgba(10,10,10,0.75); }
+.link-muted:hover { color: rgba(10,10,10,0.82); }
 
 .text-mono-sm {
   font-family: 'JetBrains Mono', monospace;
