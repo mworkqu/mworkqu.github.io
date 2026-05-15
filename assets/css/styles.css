@@ -3,7 +3,8 @@
    Ultra-fine lines · JetBrains Mono metadata · Light palette
 ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap');
+/* Fonts are loaded via <link> in each page's <head> for non-blocking parallel fetch.
+   Inter (200/300/400/500) and JetBrains Mono (200/300/400). */
 
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1608,6 +1609,66 @@ body:has(.demo-strip) .dash-sidebar { top: 94px; height: calc(100vh - 94px); }
   max-width: 880px;
 }
 @media (max-width: 640px) { .error-index { grid-template-columns: 1fr; gap: 0; } }
+
+/* ── FAQ accordion ─────────────────────────────────────── */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.5px solid var(--rule);
+}
+.faq-item {
+  border-bottom: 0.5px solid var(--rule);
+}
+.faq-item > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 4px;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.18s ease;
+}
+.faq-item > summary::-webkit-details-marker { display: none; }
+.faq-item > summary:hover { background: rgba(10,10,10,0.020); }
+.faq-q {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.faq-toggle {
+  position: relative;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+}
+.faq-toggle::before,
+.faq-toggle::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.faq-toggle::before {
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+}
+.faq-toggle::after {
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+}
+.faq-item[open] > summary .faq-toggle::after { transform: scaleY(0); }
+.faq-item[open] > summary { background: rgba(10,10,10,0.022); }
+.faq-item > p,
+.faq-item > div {
+  padding: 0 4px 24px;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.80;
+  color: var(--muted);
+  max-width: 760px;
+}
+.faq-item p a { color: rgba(10,10,10,0.70); }
 
 /* ── Focus rings (a11y baseline) ────────────────────────── */
 a:focus-visible,
