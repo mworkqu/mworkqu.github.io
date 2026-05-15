@@ -30,6 +30,65 @@ const io = new IntersectionObserver(
 );
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
+/* ── Stat counter (animate up on scroll) ───────────────── */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+document.querySelectorAll('.stat-value').forEach((el) => {
+  if (prefersReducedMotion) return;
+
+  // The number text lives as a direct text node before the .stat-unit child.
+  // Find that text node, parse its number, and animate it without disturbing the unit.
+  const textNode = Array.from(el.childNodes).find(
+    (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim()
+  );
+  if (!textNode) return;
+
+  const raw = textNode.textContent;
+  const m   = raw.match(/^(\D*)(-?\d+(?:\.\d+)?)(.*)$/s);
+  if (!m) return;
+  const [, prefix, numStr, suffix] = m;
+  const target   = parseFloat(numStr);
+  const decimals = (numStr.split('.')[1] || '').length;
+  const format   = (v) => `${prefix}${v.toFixed(decimals)}${suffix}`;
+
+  textNode.textContent = format(0);
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const duration = 1400;
+      const start    = performance.now();
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        textNode.textContent = format(target * eased);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      obs.disconnect();
+    });
+  }, { threshold: 0.3 });
+  obs.observe(el);
+});
+
+/* ── CAD layer toggles (Design Space demo) ─────────────── */
+document.querySelectorAll('.cad-layer').forEach((row) => {
+  row.setAttribute('role', 'button');
+  row.setAttribute('tabindex', '0');
+  const toggle = () => {
+    const off = row.classList.toggle('dim');
+    const eye = row.querySelector('.layer-eye');
+    if (eye) {
+      eye.classList.toggle('off', off);
+      eye.textContent = off ? '○' : '●';
+    }
+  };
+  row.addEventListener('click', toggle);
+  row.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+});
+
 /* ── Tag filtering (Shop / Projects) ───────────────────── */
 document.querySelectorAll('[data-filter-group]').forEach((group) => {
   const groupName = group.dataset.filterGroup;
