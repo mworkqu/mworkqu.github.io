@@ -3,842 +3,641 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GESTALTUNG — Engineering Studio</title>
-  <meta name="description" content="GESTALTUNG is an engineering studio, manufacturing platform, and product-commerce system — Doha, Qatar.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: { extend: {
-        fontFamily: {
-          sans: ['Inter', 'system-ui', 'sans-serif'],
-          mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        }
-      }}
-    }
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:      #F8F8F6;
-      --surface: #FFFFFF;
-      --ink:     #0A0A0A;
-      --rule:    rgba(10,10,10,0.07);
-      --muted:   rgba(10,10,10,0.38);
-      --dim:     rgba(10,10,10,0.20);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
-
-    /* ── The only high-contrast element ── */
-    .btn-machine {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--ink);
-      color: var(--bg);
-      padding: 12px 24px;
-      font-family: 'Inter', sans-serif;
-      font-size: 10.5px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1);
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    .btn-machine:hover { opacity: 0.75; transform: translateY(-1px); }
-
-    /* ── Nav ── */
-    #g-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 72px;
-      background: rgba(248,248,246,0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 0.5px solid var(--rule);
-      transition: box-shadow 0.4s ease;
-    }
-    #g-nav.scrolled { box-shadow: 0 1px 32px rgba(10,10,10,0.07); }
-
-    .nav-link {
-      font-size: 10.5px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .nav-link:hover { color: var(--ink); }
-
-    /* ── CAD grid ── */
-    .cad-grid {
-      background-color: #FAFAF9;
-      background-image:
-        linear-gradient(rgba(10,10,10,0.048) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(10,10,10,0.048) 1px, transparent 1px),
-        linear-gradient(rgba(10,10,10,0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(10,10,10,0.022) 1px, transparent 1px);
-      background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
-    }
-
-    /* ── Service row ── */
-    .service-row {
-      display: grid;
-      grid-template-columns: 52px 200px 1fr auto;
-      align-items: center;
-      gap: 32px;
-      padding: 26px 0;
-      border-top: 0.5px solid var(--rule);
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s ease;
-    }
-    .service-row:last-child { border-bottom: 0.5px solid var(--rule); }
-    .service-row:hover { background: rgba(10,10,10,0.018); }
-    .service-row:hover .row-arrow { transform: translate(3px, -3px); color: var(--ink); }
-    .row-arrow { transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), color 0.2s ease; color: var(--dim); }
-
-    /* ── Reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-
-    ::-webkit-scrollbar { width: 2px; }
-    ::-webkit-scrollbar-thumb { background: rgba(10,10,10,0.10); }
-  </style>
+  <title>GESTALTUNG — Engineering, Manufacturing & Commerce</title>
+  <meta name="description" content="An engineering studio, manufacturing platform, and product commerce system based in Doha, Qatar.">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const { useState, useEffect } = React;
-
-/* ── Icons  (Lucide SVG paths — lucide.dev ISC License) ── */
-const Icon = ({ name, size = 14, strokeWidth = 1.5 }) => {
-  const d = {
-    'arrow-right':    'M5 12h14M12 5l7 7-7 7',
-    'arrow-up-right': 'M7 17L17 7M7 7h10v10',
-    'chevron-right':  'M9 18l6-6-6-6',
-    'minus':          'M5 12h14',
-    'plus':           'M12 5v14M5 12h14',
-  };
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth={strokeWidth}
-      strokeLinecap="round" strokeLinejoin="round">
-      <path d={d[name]}/>
-    </svg>
-  );
-};
-
-/* ── Logo ── */
-const Logo = () => (
-  <a href="/" style={{ display:'flex', alignItems:'center', gap:10, textDecoration:'none' }}>
+<!-- ── Navigation ─────────────────────────────────────── -->
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="./">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" strokeWidth=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" strokeWidth=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" strokeWidth=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" strokeWidth=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" strokeWidth=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.32)" stroke-width=".6"/>
+      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.14)" stroke-width=".5"/>
+      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
+      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
+      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.40)" stroke-width=".5" fill="none"/>
+      <circle cx="10" cy="10" r=".7" fill="rgba(10,10,10,0.65)"/>
     </svg>
-    <span className="mono" style={{
-      fontSize: 11.5,
-      fontWeight: 400,
-      letterSpacing: '0.26em',
-      color: 'rgba(10,10,10,0.72)',
-    }}>
-      GESTALTUNG
-    </span>
+    <span class="g-logo-text">GESTALTUNG</span>
   </a>
-);
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="studio/">Studio</a>
+    <a class="g-nav-link" href="manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="shop/">Shop</a>
+    <a class="g-nav-link" href="login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+</header>
 
-/* ═══════════════════════════════
-   NAV
-═══════════════════════════════ */
-const Nav = () => {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
-  }, []);
+<main>
 
-  return (
-    <nav id="g-nav" className={scrolled ? 'scrolled' : ''}>
-      <Logo />
-      <div style={{ display:'flex', gap:36, alignItems:'center' }}>
-        {[
-          ['Studio',        '/studio/'],
-          ['Manufacturing', '/manufacturing/'],
-          ['Shop',          '/shop/'],
-          ['Access',        '/login/'],
-        ].map(([label, href]) => (
-          <a key={label} href={href} className="nav-link">{label}</a>
-        ))}
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 01 · HERO with technical drawing                          -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="hero-machine">
+
+    <!-- Top coordinate strip -->
+    <div class="hero-coords top">
+      <span class="mono">N 25°17′12″ &nbsp;·&nbsp; E 51°31′30″</span>
+      <span class="mono">DOHA &nbsp;/&nbsp; QA</span>
+      <span class="mono"><span class="dot-live"></span> SYSTEM ONLINE</span>
+    </div>
+
+    <div class="hero-body">
+
+      <div class="hero-left">
+        <p class="hero-eyebrow mono">01 &nbsp;—&nbsp; Operating system for hardware</p>
+        <h1 class="hero-headline">
+          Engineering,<br>
+          manufacturing,<br>
+          and commerce — <em>one system.</em>
+        </h1>
+        <p class="hero-lead">
+          GESTALTUNG is a single platform connecting industrial design, precision
+          manufacturing, and product commerce. From first sketch to delivered part.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-machine" href="studio/#request">
+            Start a project
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 1l4.5 4.5L6 10" stroke="currentColor" stroke-width="1"/></svg>
+          </a>
+          <a class="btn-ghost" href="manufacturing/#quote">Request a quote</a>
+        </div>
       </div>
-      <a href="/studio/#request" className="btn-machine">
-        Start a Project <Icon name="arrow-right" size={12}/>
-      </a>
-    </nav>
-  );
-};
 
-/* ═══════════════════════════════
-   HERO
-═══════════════════════════════ */
-const Hero = () => (
-  <section style={{
-    minHeight: '100vh',
-    padding: '0 72px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    paddingBottom: 72,
-    paddingTop: 60,
-    maxWidth: 1440,
-    margin: '0 auto',
-    width: '100%',
-    position: 'relative',
-  }}>
+      <div class="hero-right">
+        <!-- Technical drawing of a bracket -->
+        <svg class="tech-drawing" viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Drawing frame -->
+          <rect x="20" y="20" width="400" height="400" stroke="rgba(10,10,10,0.18)" stroke-width="0.6"/>
+          <rect x="28" y="28" width="384" height="384" stroke="rgba(10,10,10,0.08)" stroke-width="0.5" stroke-dasharray="2 2"/>
 
-    {/* Top metadata strip */}
-    <div className="mono" style={{
-      position: 'absolute',
-      top: 80, left: 72, right: 72,
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      fontSize: 8.5,
-      fontWeight: 300,
-      letterSpacing: '0.20em',
-      textTransform: 'uppercase',
-      color: 'rgba(10,10,10,0.22)',
-    }}>
-      <span>Gestaltung — Engineering Studio</span>
-      <span style={{ borderLeft:'0.5px solid rgba(10,10,10,0.10)', paddingLeft:20 }}>
-        25.2N · 51.5E · Doha, QAT
-      </span>
-      <span style={{ borderLeft:'0.5px solid rgba(10,10,10,0.10)', paddingLeft:20 }}>
-        Est. MMXXIV · Rev 1.0
-      </span>
+          <!-- Crosshairs / corner ticks -->
+          <g stroke="rgba(10,10,10,0.40)" stroke-width="0.7">
+            <line x1="20" y1="44" x2="36" y2="44"/><line x1="36" y1="20" x2="36" y2="44"/>
+            <line x1="404" y1="44" x2="420" y2="44"/><line x1="404" y1="20" x2="404" y2="44"/>
+            <line x1="20" y1="396" x2="36" y2="396"/><line x1="36" y1="396" x2="36" y2="420"/>
+            <line x1="404" y1="396" x2="420" y2="396"/><line x1="404" y1="396" x2="404" y2="420"/>
+          </g>
+
+          <!-- Main bracket geometry (front view) -->
+          <g stroke="rgba(10,10,10,0.88)" stroke-width="1.1" fill="none" stroke-linejoin="round">
+            <path d="M120 130 L320 130 L320 180 L280 180 L280 290 L160 290 L160 180 L120 180 Z"/>
+            <circle cx="220" cy="155" r="14"/>
+            <circle cx="220" cy="155" r="2" fill="rgba(10,10,10,0.88)"/>
+          </g>
+
+          <!-- Hidden detail lines -->
+          <g stroke="rgba(10,10,10,0.35)" stroke-width="0.6" stroke-dasharray="4 3" fill="none">
+            <line x1="160" y1="180" x2="280" y2="180"/>
+            <circle cx="190" cy="260" r="8"/>
+            <circle cx="250" cy="260" r="8"/>
+          </g>
+
+          <!-- Centerlines -->
+          <g stroke="rgba(10,10,10,0.45)" stroke-width="0.5" stroke-dasharray="6 2 2 2">
+            <line x1="220" y1="115" x2="220" y2="305"/>
+            <line x1="105" y1="155" x2="335" y2="155"/>
+          </g>
+
+          <!-- Dimension lines · TOP (width) -->
+          <g stroke="rgba(10,10,10,0.55)" stroke-width="0.6">
+            <line x1="120" y1="90" x2="320" y2="90"/>
+            <line x1="120" y1="86" x2="120" y2="94"/>
+            <line x1="320" y1="86" x2="320" y2="94"/>
+            <line x1="120" y1="100" x2="120" y2="125"/>
+            <line x1="320" y1="100" x2="320" y2="125"/>
+          </g>
+          <text x="220" y="82" font-family="JetBrains Mono" font-size="9.5" fill="rgba(10,10,10,0.78)" text-anchor="middle" letter-spacing="0.5">200.00</text>
+
+          <!-- Dimension line · LEFT (height) -->
+          <g stroke="rgba(10,10,10,0.55)" stroke-width="0.6">
+            <line x1="80" y1="130" x2="80" y2="290"/>
+            <line x1="76" y1="130" x2="84" y2="130"/>
+            <line x1="76" y1="290" x2="84" y2="290"/>
+            <line x1="90" y1="130" x2="115" y2="130"/>
+            <line x1="90" y1="290" x2="115" y2="290"/>
+          </g>
+          <text x="65" y="213" font-family="JetBrains Mono" font-size="9.5" fill="rgba(10,10,10,0.78)" text-anchor="middle" letter-spacing="0.5" transform="rotate(-90 65 213)">160.00</text>
+
+          <!-- Diameter callout -->
+          <g stroke="rgba(10,10,10,0.55)" stroke-width="0.6" fill="none">
+            <line x1="234" y1="141" x2="370" y2="55"/>
+            <circle cx="370" cy="55" r="11"/>
+          </g>
+          <text x="370" y="58" font-family="JetBrains Mono" font-size="9" fill="rgba(10,10,10,0.78)" text-anchor="middle">⌀28</text>
+
+          <!-- Balloon callouts -->
+          <g>
+            <line x1="160" y1="290" x2="135" y2="335" stroke="rgba(10,10,10,0.55)" stroke-width="0.6"/>
+            <circle cx="125" cy="345" r="11" stroke="rgba(10,10,10,0.70)" stroke-width="0.7" fill="var(--surface)"/>
+            <text x="125" y="349" font-family="JetBrains Mono" font-size="10" font-weight="500" fill="rgba(10,10,10,0.85)" text-anchor="middle">1</text>
+          </g>
+          <g>
+            <line x1="280" y1="290" x2="315" y2="335" stroke="rgba(10,10,10,0.55)" stroke-width="0.6"/>
+            <circle cx="325" cy="345" r="11" stroke="rgba(10,10,10,0.70)" stroke-width="0.7" fill="var(--surface)"/>
+            <text x="325" y="349" font-family="JetBrains Mono" font-size="10" font-weight="500" fill="rgba(10,10,10,0.85)" text-anchor="middle">2</text>
+          </g>
+
+          <!-- Title block -->
+          <g>
+            <rect x="240" y="370" width="170" height="36" stroke="rgba(10,10,10,0.40)" stroke-width="0.6" fill="none"/>
+            <line x1="240" y1="382" x2="410" y2="382" stroke="rgba(10,10,10,0.40)" stroke-width="0.5"/>
+            <line x1="300" y1="370" x2="300" y2="406" stroke="rgba(10,10,10,0.40)" stroke-width="0.5"/>
+            <line x1="358" y1="370" x2="358" y2="406" stroke="rgba(10,10,10,0.40)" stroke-width="0.5"/>
+            <text x="244" y="380" font-family="JetBrains Mono" font-size="6.5" fill="rgba(10,10,10,0.45)" letter-spacing="0.8">DWG NO.</text>
+            <text x="304" y="380" font-family="JetBrains Mono" font-size="6.5" fill="rgba(10,10,10,0.45)" letter-spacing="0.8">MATERIAL</text>
+            <text x="362" y="380" font-family="JetBrains Mono" font-size="6.5" fill="rgba(10,10,10,0.45)" letter-spacing="0.8">SCALE</text>
+            <text x="244" y="397" font-family="JetBrains Mono" font-size="9" fill="rgba(10,10,10,0.85)" font-weight="500">GST-0001</text>
+            <text x="304" y="397" font-family="JetBrains Mono" font-size="9" fill="rgba(10,10,10,0.85)">AL6061-T6</text>
+            <text x="362" y="397" font-family="JetBrains Mono" font-size="9" fill="rgba(10,10,10,0.85)">1:2</text>
+          </g>
+
+          <!-- View label -->
+          <text x="40" y="408" font-family="JetBrains Mono" font-size="8" fill="rgba(10,10,10,0.55)" letter-spacing="1">FRONT · ISO 128</text>
+          <text x="40" y="40" font-family="JetBrains Mono" font-size="8" fill="rgba(10,10,10,0.55)" letter-spacing="1">DIMENSIONS · MM</text>
+        </svg>
+      </div>
+
     </div>
 
-    {/* Headline */}
-    <h1 style={{
-      fontSize: 'clamp(58px, 8.5vw, 120px)',
-      fontWeight: 200,
-      lineHeight: 0.98,
-      letterSpacing: '-0.03em',
-      color: '#0A0A0A',
-      margin: '0 0 48px',
-      maxWidth: 900,
-    }}>
-      From Ideas<br/>
-      to Manufactured<br/>
-      Products.
-    </h1>
+    <!-- Bottom coordinate strip -->
+    <div class="hero-coords bottom">
+      <span class="mono">REV. 02.04 &nbsp;/&nbsp; <span data-year></span></span>
+      <span class="mono">PRECISION · 0.005 MM</span>
+      <span class="mono">v1.0 — STABLE</span>
+    </div>
+  </section>
 
-    {/* Description + CTA row */}
-    <div style={{ display:'flex', alignItems:'center', gap:52, flexWrap:'wrap' }}>
-      <p style={{
-        fontSize: 14,
-        fontWeight: 300,
-        lineHeight: 1.80,
-        color: 'rgba(10,10,10,0.44)',
-        maxWidth: 360,
-        margin: 0,
-      }}>
-        An engineering studio, manufacturing platform, and product-commerce system — end to end.
-      </p>
-      <a href="/studio/#request" className="btn-machine">
-        Start a Project <Icon name="arrow-right" size={13}/>
-      </a>
+
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 02 · SERVICE INDEX                                       -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">02 · Service index</span>
+      <a class="link-muted mono" href="about/" style="font-size:11px">Our approach &rarr;</a>
     </div>
 
-    {/* Bottom rule + tripartite label */}
-    <div style={{ marginTop:60, paddingTop:20, borderTop:'0.5px solid rgba(10,10,10,0.08)' }}>
-      <div className="mono" style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3,1fr)',
-        fontSize: 8.5,
-        fontWeight: 300,
-        letterSpacing: '0.20em',
-        textTransform: 'uppercase',
-        color: 'rgba(10,10,10,0.22)',
-      }}>
-        <span>Engineering Studio</span>
-        <span style={{ textAlign:'center' }}>Manufacturing Platform</span>
-        <span style={{ textAlign:'right' }}>Product Commerce</span>
+    <a href="studio/" class="row-item c4">
+      <span class="mono" style="font-size:10px;color:rgba(10,10,10,0.42);letter-spacing:0.14em">01</span>
+      <div>
+        <p style="font-size:18px;font-weight:400;letter-spacing:-0.01em;margin-bottom:4px">Studio</p>
+        <p class="mono" style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.42)">Design &amp; engineering</p>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;max-width:520px;margin:0">Concepts, sketches, reverse engineering, and full product design — from first principles to production-ready files.</p>
+      <span style="font-size:18px;color:var(--dim);line-height:1">&#8599;</span>
+    </a>
+
+    <a href="manufacturing/" class="row-item c4">
+      <span class="mono" style="font-size:10px;color:rgba(10,10,10,0.42);letter-spacing:0.14em">02</span>
+      <div>
+        <p style="font-size:18px;font-weight:400;letter-spacing:-0.01em;margin-bottom:4px">Manufacturing</p>
+        <p class="mono" style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.42)">Production platform</p>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;max-width:520px;margin:0">CAD files, STL models, and technical drawings — quoted, produced, and delivered through a single coordinated workflow.</p>
+      <span style="font-size:18px;color:var(--dim);line-height:1">&#8599;</span>
+    </a>
+
+    <a href="shop/" class="row-item c4">
+      <span class="mono" style="font-size:10px;color:rgba(10,10,10,0.42);letter-spacing:0.14em">03</span>
+      <div>
+        <p style="font-size:18px;font-weight:400;letter-spacing:-0.01em;margin-bottom:4px">Shop</p>
+        <p class="mono" style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.42)">Product commerce</p>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;max-width:520px;margin:0">Engineered products, digital files, educational kits, and small-batch manufactured items — curated and ready to ship.</p>
+      <span style="font-size:18px;color:var(--dim);line-height:1">&#8599;</span>
+    </a>
+  </section>
+
+
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 03 · CAPABILITY MATRIX                                   -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">03 · Capability matrix</span>
+      <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.18em">12 PROCESSES · 40+ MATERIALS</p>
+    </div>
+
+    <div class="capability-matrix">
+      <div class="capability-cell">
+        <span class="mono cap-num">01</span>
+        <h4>Industrial design</h4>
+        <p>Form &amp; function</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">02</span>
+        <h4>Mechanical eng.</h4>
+        <p>FEA · GD&amp;T · tolerance</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">03</span>
+        <h4>3D modelling</h4>
+        <p>Parametric · surface</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">04</span>
+        <h4>Technical drawing</h4>
+        <p>ISO · ASME · BOM</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">05</span>
+        <h4>CNC machining</h4>
+        <p>3 / 5-axis · ±0.005 mm</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">06</span>
+        <h4>Laser cutting</h4>
+        <p>CO₂ · fibre · engraving</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">07</span>
+        <h4>3D printing</h4>
+        <p>FDM · SLA · SLS</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">08</span>
+        <h4>Sheet metal</h4>
+        <p>Cut · bend · weld</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">09</span>
+        <h4>Injection moulding</h4>
+        <p>Low-volume tooling</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">10</span>
+        <h4>Vacuum casting</h4>
+        <p>PU · silicone</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">11</span>
+        <h4>Surface finishing</h4>
+        <p>Anodise · plate · coat</p>
+      </div>
+      <div class="capability-cell">
+        <span class="mono cap-num">12</span>
+        <h4>Assembly &amp; QC</h4>
+        <p>Inspection · CoC</p>
       </div>
     </div>
   </section>
-);
 
-/* ═══════════════════════════════
-   SERVICE INDEX
-═══════════════════════════════ */
-const Services = () => {
-  const rows = [
-    {
-      num: '01',
-      title: 'Studio',
-      sub: 'Design & Engineering',
-      desc: 'Concepts, sketches, reverse engineering, and full product design — from first principles to production-ready files.',
-      href: '/studio/',
-    },
-    {
-      num: '02',
-      title: 'Manufacturing',
-      sub: 'Production Platform',
-      desc: 'CAD files, STL models, and technical drawings — quoted, produced, and delivered through a single workflow.',
-      href: '/manufacturing/',
-    },
-    {
-      num: '03',
-      title: 'Shop',
-      sub: 'Product Commerce',
-      desc: 'Engineered products, digital files, educational kits, and small-batch manufactured items — curated and ready.',
-      href: '/shop/',
-    },
-  ];
 
-  return (
-    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
-      <div style={{ maxWidth:1440, margin:'0 auto', padding:'0 72px' }}>
-
-        {/* Section label row */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          padding: '28px 0 4px',
-        }}>
-          <span className="mono" style={{
-            fontSize: 8.5,
-            fontWeight: 300,
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: 'rgba(10,10,10,0.28)',
-          }}>
-            Service Index
-          </span>
-          <a href="/about/" style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: 11,
-            fontWeight: 300,
-            color: 'rgba(10,10,10,0.36)',
-            textDecoration: 'none',
-            letterSpacing: '0.03em',
-            transition: 'color 0.2s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.36)'}
-          >
-            Our approach →
-          </a>
-        </div>
-
-        {/* Rows */}
-        {rows.map((r, i) => (
-          <a key={i} href={r.href} className="service-row">
-            <span className="mono" style={{
-              fontSize: 9,
-              fontWeight: 300,
-              letterSpacing: '0.14em',
-              color: 'rgba(10,10,10,0.22)',
-            }}>
-              {r.num}
-            </span>
-
-            <div>
-              <div style={{ fontSize:17, fontWeight:400, letterSpacing:'-0.01em', marginBottom:4 }}>
-                {r.title}
-              </div>
-              <div className="mono" style={{
-                fontSize: 8.5,
-                fontWeight: 300,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                color: 'rgba(10,10,10,0.28)',
-              }}>
-                {r.sub}
-              </div>
-            </div>
-
-            <p style={{
-              fontSize: 13,
-              fontWeight: 300,
-              lineHeight: 1.75,
-              color: 'rgba(10,10,10,0.44)',
-              maxWidth: 440,
-              margin: 0,
-            }}>
-              {r.desc}
-            </p>
-
-            <span className="row-arrow">
-              <Icon name="arrow-up-right" size={17} strokeWidth={1.2}/>
-            </span>
-          </a>
-        ))}
-
-        <div style={{ padding:'40px 0 72px' }}/>
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 04 · DESIGN SPACE (fake CAD interface)                   -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="g-section reveal">
+    <div class="section-row">
+      <div>
+        <span class="section-label mono">04 · Design space</span>
+        <h2 class="ds-title">Cloud CAD &mdash; for every project.</h2>
+        <p class="ds-lead">Review geometry, annotate parts, and approve drawings in the browser. Every project file lives in a single workspace, accessible from anywhere.</p>
       </div>
-    </section>
-  );
-};
+      <a class="btn-ghost" href="login/">Open Design Space</a>
+    </div>
 
-/* ═══════════════════════════════
-   DESIGN SPACE — CAD Interface
-═══════════════════════════════ */
-const DesignSpace = () => {
-  const [activeLayer, setActiveLayer] = useState('assembly');
+    <!-- Fake CAD application window -->
+    <div class="cad-window">
+      <div class="cad-titlebar">
+        <div style="display:flex;gap:7px">
+          <span class="cad-dot"></span><span class="cad-dot"></span><span class="cad-dot"></span>
+        </div>
+        <span class="mono" style="font-size:10px;color:rgba(10,10,10,0.50);letter-spacing:0.14em">DESIGN SPACE &nbsp;·&nbsp; bracket-assembly-v3.step</span>
+        <span class="mono" style="font-size:10px;color:rgba(10,10,10,0.36)">SAVED 2 MIN AGO</span>
+      </div>
+      <div class="cad-menubar">
+        <span class="cad-menu">File</span>
+        <span class="cad-menu">Edit</span>
+        <span class="cad-menu">View</span>
+        <span class="cad-menu">Insert</span>
+        <span class="cad-menu">Tools</span>
+        <span class="cad-menu active">Window</span>
+        <span class="cad-menu">Help</span>
+      </div>
+      <div class="cad-body">
+        <!-- Left: layers panel -->
+        <aside class="cad-panel">
+          <p class="cad-panel-label mono">Layers</p>
+          <div class="cad-layer active">
+            <span class="layer-eye">●</span>
+            <span>Body geometry</span>
+            <span class="mono cad-tag">SOLID</span>
+          </div>
+          <div class="cad-layer">
+            <span class="layer-eye">●</span>
+            <span>Hidden lines</span>
+            <span class="mono cad-tag">DASH</span>
+          </div>
+          <div class="cad-layer">
+            <span class="layer-eye">●</span>
+            <span>Centerlines</span>
+            <span class="mono cad-tag">CL</span>
+          </div>
+          <div class="cad-layer">
+            <span class="layer-eye">●</span>
+            <span>Dimensions</span>
+            <span class="mono cad-tag">DIM</span>
+          </div>
+          <div class="cad-layer dim">
+            <span class="layer-eye off">○</span>
+            <span>Construction</span>
+            <span class="mono cad-tag">REF</span>
+          </div>
+        </aside>
 
-  const layers = [
-    { id:'assembly',   label:'Assembly View', on:true  },
-    { id:'structural', label:'Structural',    on:false },
-    { id:'surface',    label:'Surface Mesh',  on:false },
-    { id:'dims',       label:'Dimensions',    on:true  },
-    { id:'notes',      label:'Annotations',   on:false },
-  ];
+        <!-- Center: viewport with technical view -->
+        <div class="cad-viewport">
+          <svg viewBox="0 0 600 360" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+            <!-- Grid background -->
+            <defs>
+              <pattern id="cadgrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(10,10,10,0.04)" stroke-width="0.5"/>
+              </pattern>
+              <pattern id="cadgrid-bold" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(10,10,10,0.08)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="360" fill="url(#cadgrid)"/>
+            <rect width="600" height="360" fill="url(#cadgrid-bold)"/>
 
-  const props = [
-    ['Material',   'Aluminium 6061'],
-    ['Process',    '5-axis CNC'],
-    ['Tolerance',  '±0.05 mm'],
-    ['Finish',     'Anodised Type II'],
-    ['Scale',      '1 : 1'],
-  ];
+            <!-- Origin marker -->
+            <g stroke="rgba(180,30,30,0.55)" stroke-width="1">
+              <line x1="290" y1="180" x2="310" y2="180"/>
+              <line x1="300" y1="170" x2="300" y2="190"/>
+            </g>
+            <text x="313" y="174" font-family="JetBrains Mono" font-size="8" fill="rgba(180,30,30,0.65)">0,0</text>
 
-  return (
-    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
-      <div style={{ maxWidth:1440, margin:'0 auto', padding:'0 72px 80px' }}>
+            <!-- Part: bracket -->
+            <g stroke="rgba(10,10,10,0.88)" stroke-width="1.2" fill="none" stroke-linejoin="round">
+              <path d="M180 130 L420 130 L420 175 L370 175 L370 250 L230 250 L230 175 L180 175 Z"/>
+              <circle cx="300" cy="152" r="14"/>
+              <circle cx="300" cy="152" r="2" fill="rgba(10,10,10,0.88)"/>
+            </g>
 
-        {/* Section header */}
-        <div style={{
-          display:'flex', justifyContent:'space-between',
-          alignItems:'baseline', padding:'28px 0 20px',
-        }}>
-          <span className="mono" style={{
-            fontSize:8.5, fontWeight:300,
-            letterSpacing:'0.22em', textTransform:'uppercase',
-            color:'rgba(10,10,10,0.28)',
-          }}>
-            Design Atelier — Status: In Development
-          </span>
-          <a href="/contact/" style={{
-            fontFamily:'Inter, sans-serif', fontSize:11, fontWeight:300,
-            color:'rgba(10,10,10,0.36)', textDecoration:'none',
-            letterSpacing:'0.03em', transition:'color 0.2s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.36)'}
-          >
-            Register interest →
-          </a>
+            <!-- Hidden lines -->
+            <g stroke="rgba(10,10,10,0.40)" stroke-width="0.6" stroke-dasharray="4 3" fill="none">
+              <line x1="230" y1="175" x2="370" y2="175"/>
+              <circle cx="270" cy="220" r="9"/>
+              <circle cx="330" cy="220" r="9"/>
+            </g>
+
+            <!-- Centerlines -->
+            <g stroke="rgba(10,10,10,0.50)" stroke-width="0.5" stroke-dasharray="6 2 2 2">
+              <line x1="300" y1="115" x2="300" y2="265"/>
+            </g>
+
+            <!-- Dimensions -->
+            <g stroke="rgba(10,10,10,0.55)" stroke-width="0.5">
+              <line x1="180" y1="100" x2="420" y2="100"/>
+              <line x1="180" y1="96" x2="180" y2="104"/>
+              <line x1="420" y1="96" x2="420" y2="104"/>
+            </g>
+            <text x="300" y="93" font-family="JetBrains Mono" font-size="8.5" fill="rgba(10,10,10,0.78)" text-anchor="middle">240.00</text>
+
+            <!-- Selection highlight -->
+            <circle cx="300" cy="152" r="20" stroke="rgba(40,80,180,0.75)" stroke-width="1" fill="rgba(40,80,180,0.06)" stroke-dasharray="3 2"/>
+          </svg>
+
+          <!-- Floating cursor coords -->
+          <div class="cad-cursor mono">x: 247.5 &nbsp; y: 132.0 &nbsp; z: 0.0</div>
+          <!-- View cube -->
+          <div class="cad-viewcube">
+            <span class="mono">ISO</span>
+          </div>
         </div>
 
-        {/* CAD window */}
-        <div style={{ border:'0.5px solid rgba(10,10,10,0.12)', background:'#FDFDFC' }}>
-
-          {/* ── Title bar ── */}
-          <div className="mono" style={{
-            height:32, padding:'0 14px',
-            display:'flex', alignItems:'center', justifyContent:'space-between',
-            borderBottom:'0.5px solid rgba(10,10,10,0.07)',
-            background:'rgba(10,10,10,0.022)',
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-              <div style={{ display:'flex', gap:5 }}>
-                {[0.14,0.09,0.06].map((o,i) => (
-                  <div key={i} style={{ width:9, height:9, borderRadius:'50%', background:`rgba(10,10,10,${o})` }}/>
-                ))}
-              </div>
-              <span style={{ fontSize:9.5, fontWeight:400, letterSpacing:'0.12em', color:'rgba(10,10,10,0.42)', textTransform:'uppercase' }}>
-                Gestaltung Design Atelier — Untitled.gst
-              </span>
-            </div>
-            <span style={{ fontSize:8.5, fontWeight:300, letterSpacing:'0.08em', color:'rgba(10,10,10,0.24)' }}>
-              v2.0 · in development
-            </span>
+        <!-- Right: properties panel -->
+        <aside class="cad-panel right">
+          <p class="cad-panel-label mono">Properties</p>
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Material</span>
+            <span class="cad-prop-val">AL 6061-T6</span>
           </div>
-
-          {/* ── Menu bar ── */}
-          <div className="mono" style={{
-            height:26, padding:'0 14px',
-            display:'flex', alignItems:'center',
-            borderBottom:'0.5px solid rgba(10,10,10,0.055)',
-            gap:2,
-          }}>
-            {['File','Edit','View','Insert','Select','Tools','Help'].map(m => (
-              <span key={m} style={{
-                padding:'0 11px', fontSize:10.5, fontWeight:300,
-                color:'rgba(10,10,10,0.38)', cursor:'default',
-                letterSpacing:'0.02em',
-              }}>{m}</span>
-            ))}
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Process</span>
+            <span class="cad-prop-val">CNC · 3-axis</span>
           </div>
-
-          {/* ── Workspace ── */}
-          <div style={{ display:'grid', gridTemplateColumns:'168px 1fr', height:460 }}>
-
-            {/* Layer panel */}
-            <div style={{ borderRight:'0.5px solid rgba(10,10,10,0.07)', display:'flex', flexDirection:'column' }}>
-
-              <div className="mono" style={{
-                padding:'10px 14px 8px',
-                borderBottom:'0.5px solid rgba(10,10,10,0.055)',
-                fontSize:8.5, fontWeight:400,
-                letterSpacing:'0.18em', textTransform:'uppercase',
-                color:'rgba(10,10,10,0.32)',
-              }}>
-                Layers
-              </div>
-
-              {layers.map(l => (
-                <div key={l.id} onClick={() => setActiveLayer(l.id)} style={{
-                  padding:'8px 14px',
-                  display:'flex', alignItems:'center', gap:8,
-                  cursor:'pointer',
-                  background: activeLayer===l.id ? 'rgba(10,10,10,0.032)' : 'transparent',
-                  borderLeft: activeLayer===l.id ? '1.5px solid rgba(10,10,10,0.48)' : '1.5px solid transparent',
-                  transition:'background 0.15s ease',
-                }}>
-                  <div style={{
-                    width:5.5, height:5.5, borderRadius:'50%', flexShrink:0,
-                    background: l.on ? 'rgba(10,10,10,0.42)' : 'transparent',
-                    border:'0.5px solid rgba(10,10,10,0.22)',
-                  }}/>
-                  <span className="mono" style={{
-                    fontSize:9.5,
-                    fontWeight: l.on ? 400 : 300,
-                    color: l.on ? 'rgba(10,10,10,0.65)' : 'rgba(10,10,10,0.30)',
-                    letterSpacing:'0.02em',
-                  }}>
-                    {l.label}
-                  </span>
-                </div>
-              ))}
-
-              {/* Properties */}
-              <div style={{ marginTop:'auto', padding:'12px 14px', borderTop:'0.5px solid rgba(10,10,10,0.055)' }}>
-                <div className="mono" style={{
-                  fontSize:8.5, fontWeight:300,
-                  letterSpacing:'0.16em', textTransform:'uppercase',
-                  color:'rgba(10,10,10,0.25)', marginBottom:10,
-                }}>
-                  Properties
-                </div>
-                {props.map(([k,v]) => (
-                  <div key={k} style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
-                    <span className="mono" style={{ fontSize:8.5, fontWeight:300, color:'rgba(10,10,10,0.30)', letterSpacing:'0.02em' }}>{k}</span>
-                    <span className="mono" style={{ fontSize:8.5, fontWeight:400, color:'rgba(10,10,10,0.52)', letterSpacing:'0.02em' }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Viewport */}
-            <div className="cad-grid" style={{ position:'relative', overflow:'hidden' }}>
-
-              {/* Corner brackets */}
-              {[
-                { top:10, left:10,  borderTop:'0.5px solid rgba(10,10,10,0.18)', borderLeft: '0.5px solid rgba(10,10,10,0.18)' },
-                { top:10, right:10, borderTop:'0.5px solid rgba(10,10,10,0.18)', borderRight:'0.5px solid rgba(10,10,10,0.18)' },
-                { bottom:10, left:10,  borderBottom:'0.5px solid rgba(10,10,10,0.18)', borderLeft: '0.5px solid rgba(10,10,10,0.18)' },
-                { bottom:10, right:10, borderBottom:'0.5px solid rgba(10,10,10,0.18)', borderRight:'0.5px solid rgba(10,10,10,0.18)' },
-              ].map((s,i) => <div key={i} style={{ position:'absolute', width:14, height:14, ...s }}/>)}
-
-              {/* Viewport label */}
-              <div className="mono" style={{
-                position:'absolute', top:14, left:22,
-                fontSize:8.5, fontWeight:300,
-                letterSpacing:'0.14em', textTransform:'uppercase',
-                color:'rgba(10,10,10,0.20)',
-              }}>
-                Top View · Orthographic
-              </div>
-
-              {/* Technical drawing SVG */}
-              <svg
-                style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}
-                viewBox="0 0 680 460"
-                fill="none"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                {/* Outer dashed */}
-                <circle cx="340" cy="230" r="150" stroke="rgba(10,10,10,0.06)" strokeWidth="0.6" strokeDasharray="9 7"/>
-                {/* Primary */}
-                <circle cx="340" cy="230" r="108" stroke="rgba(10,10,10,0.11)" strokeWidth="0.8"/>
-                {/* Inner dashed */}
-                <circle cx="340" cy="230" r="62"  stroke="rgba(10,10,10,0.06)" strokeWidth="0.6" strokeDasharray="4 6"/>
-                {/* Center mark */}
-                <circle cx="340" cy="230" r="5.5" stroke="rgba(10,10,10,0.28)" strokeWidth="0.7" fill="none"/>
-                <circle cx="340" cy="230" r="1.4" fill="rgba(10,10,10,0.38)"/>
-                {/* Crosshairs */}
-                <line x1="100" y1="230" x2="580" y2="230" stroke="rgba(10,10,10,0.09)" strokeWidth="0.5"/>
-                <line x1="340" y1="50"  x2="340" y2="410" stroke="rgba(10,10,10,0.09)" strokeWidth="0.5"/>
-                {/* 45° lines */}
-                <line x1="188" y1="78"  x2="492" y2="382" stroke="rgba(10,10,10,0.04)" strokeWidth="0.5"/>
-                <line x1="492" y1="78"  x2="188" y2="382" stroke="rgba(10,10,10,0.04)" strokeWidth="0.5"/>
-                {/* Dimension baseline */}
-                <line x1="100" y1="418" x2="580" y2="418" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
-                <line x1="100" y1="410" x2="100" y2="426" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
-                <line x1="580" y1="410" x2="580" y2="426" stroke="rgba(10,10,10,0.13)" strokeWidth="0.5"/>
-                {/* Radius leader */}
-                <line x1="340" y1="230" x2="432" y2="148" stroke="rgba(10,10,10,0.10)" strokeWidth="0.5"/>
-                {/* Tick marks at 30° */}
-                {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => {
-                  const r = deg * Math.PI / 180;
-                  return (
-                    <line key={deg}
-                      x1={340 + 104*Math.cos(r)} y1={230 + 104*Math.sin(r)}
-                      x2={340 + 113*Math.cos(r)} y2={230 + 113*Math.sin(r)}
-                      stroke="rgba(10,10,10,0.16)" strokeWidth="0.6"/>
-                  );
-                })}
-                {/* Dimension text */}
-                <text x="438" y="144" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">R 108.000</text>
-                <text x="348" y="225" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">⌀ 11.000</text>
-                <text x="318" y="440" fontFamily="JetBrains Mono,monospace" fontSize="8" fill="rgba(10,10,10,0.22)" letterSpacing="0.5">480.000</text>
-              </svg>
-            </div>
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Tolerance</span>
+            <span class="cad-prop-val">±0.05 mm</span>
           </div>
-
-          {/* ── Status bar ── */}
-          <div className="mono" style={{
-            height:27, padding:'0 14px',
-            display:'flex', alignItems:'center', justifyContent:'space-between',
-            borderTop:'0.5px solid rgba(10,10,10,0.065)',
-            background:'rgba(10,10,10,0.016)',
-          }}>
-            <div style={{ display:'flex', gap:24 }}>
-              {[['X','0.000'],['Y','0.000'],['Z','0.000']].map(([ax,val]) => (
-                <span key={ax} style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.38)', letterSpacing:'0.04em' }}>
-                  <span style={{ color:'rgba(10,10,10,0.26)' }}>{ax}:</span> {val}
-                </span>
-              ))}
-            </div>
-            <div style={{ display:'flex', gap:24 }}>
-              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.28)' }}>Scale 1:1</span>
-              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.28)' }}>Zoom 100%</span>
-              <span style={{ fontSize:9.5, fontWeight:300, color:'rgba(10,10,10,0.35)', letterSpacing:'0.06em' }}>
-                GESTALTUNG.CO · DOHA, QAT
-              </span>
-            </div>
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Finish</span>
+            <span class="cad-prop-val">Anodise · clear</span>
           </div>
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Mass</span>
+            <span class="cad-prop-val">0.184 kg</span>
+          </div>
+          <div class="cad-prop">
+            <span class="cad-prop-key mono">Quantity</span>
+            <span class="cad-prop-val">×12</span>
+          </div>
+        </aside>
+      </div>
+      <div class="cad-statusbar">
+        <span class="mono"><span class="dot-live"></span> CONNECTED</span>
+        <span class="mono">UNITS: MM &nbsp;·&nbsp; STD: ISO 128</span>
+        <span class="mono">ZOOM 1:2 &nbsp;·&nbsp; GRID 10MM</span>
+      </div>
+    </div>
+  </section>
 
+
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 05 · STATS STRIP                                         -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">05 · Operations</span>
+    </div>
+    <div class="stats-strip">
+      <div class="stat-cell">
+        <p class="mono stat-label">Discipline</p>
+        <p class="stat-value">12<span class="stat-unit">/processes</span></p>
+        <p class="stat-desc">Coordinated manufacturing capability under one platform.</p>
+      </div>
+      <div class="stat-cell">
+        <p class="mono stat-label">Precision</p>
+        <p class="stat-value">±0.005<span class="stat-unit">mm</span></p>
+        <p class="stat-desc">CNC tolerance on critical features. Verified per part.</p>
+      </div>
+      <div class="stat-cell">
+        <p class="mono stat-label">Response</p>
+        <p class="stat-value">&lt; 24<span class="stat-unit">hrs</span></p>
+        <p class="stat-desc">From brief to fixed-scope quotation, working days.</p>
+      </div>
+      <div class="stat-cell">
+        <p class="mono stat-label">Coverage</p>
+        <p class="stat-value">QA<span class="stat-unit">→ GCC → INTL</span></p>
+        <p class="stat-desc">Doha workshop. GCC overnight. International courier.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 06 · SELECTED WORK                                       -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="g-section reveal">
+    <div class="section-row">
+      <div>
+        <span class="section-label mono">06 · Selected work</span>
+      </div>
+      <a class="link-muted mono" href="projects/" style="font-size:11px">All projects &rarr;</a>
+    </div>
+
+    <div class="project-grid">
+
+      <a class="project-card" href="projects/">
+        <div class="project-image">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="position:relative;z-index:1">
+            <rect x="20" y="20" width="80" height="80" stroke="rgba(10,10,10,0.50)" stroke-width="0.8" fill="rgba(255,255,255,0.6)"/>
+            <circle cx="60" cy="60" r="22" stroke="rgba(10,10,10,0.65)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="60" r="3" fill="rgba(10,10,10,0.70)"/>
+            <line x1="20" y1="60" x2="100" y2="60" stroke="rgba(10,10,10,0.30)" stroke-width="0.5" stroke-dasharray="4 2"/>
+            <line x1="60" y1="20" x2="60" y2="100" stroke="rgba(10,10,10,0.30)" stroke-width="0.5" stroke-dasharray="4 2"/>
+          </svg>
+        </div>
+        <div style="padding:24px 26px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px">
+            <p class="mono" style="font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim)">2024 · Design</p>
+            <span class="tag" style="font-size:10px;padding:3px 9px">Confidential</span>
+          </div>
+          <h3 style="font-size:16px;font-weight:400;letter-spacing:-0.01em;margin-bottom:8px">Precision Metrology Device</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7">Full industrial design and mechanical engineering for a handheld metrology instrument. IP67, calibrated optics.</p>
+        </div>
+      </a>
+
+      <a class="project-card" href="projects/">
+        <div class="project-image">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="position:relative;z-index:1">
+            <path d="M30 40 L90 40 L90 80 L30 80 Z" stroke="rgba(10,10,10,0.50)" stroke-width="0.8" fill="rgba(255,255,255,0.6)"/>
+            <path d="M40 30 L80 30 L80 40 L40 40 Z" stroke="rgba(10,10,10,0.50)" stroke-width="0.8" fill="rgba(255,255,255,0.6)"/>
+            <circle cx="45" cy="90" r="7" stroke="rgba(10,10,10,0.60)" stroke-width="0.7" fill="none"/>
+            <circle cx="75" cy="90" r="7" stroke="rgba(10,10,10,0.60)" stroke-width="0.7" fill="none"/>
+            <line x1="30" y1="60" x2="90" y2="60" stroke="rgba(10,10,10,0.30)" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div style="padding:24px 26px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px">
+            <p class="mono" style="font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim)">2024 · Manufacturing</p>
+            <span class="tag" style="font-size:10px;padding:3px 9px">340 parts</span>
+          </div>
+          <h3 style="font-size:16px;font-weight:400;letter-spacing:-0.01em;margin-bottom:8px">Architectural Facade System</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7">CNC-machined and powder-coated aluminium facade components for a commercial development in West Bay.</p>
+        </div>
+      </a>
+
+      <a class="project-card" href="projects/">
+        <div class="project-image">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="position:relative;z-index:1">
+            <polygon points="60,20 100,90 20,90" stroke="rgba(10,10,10,0.50)" stroke-width="0.8" fill="rgba(255,255,255,0.6)"/>
+            <line x1="60" y1="20" x2="60" y2="90" stroke="rgba(10,10,10,0.50)" stroke-width="0.7"/>
+            <line x1="40" y1="55" x2="80" y2="55" stroke="rgba(10,10,10,0.40)" stroke-width="0.5" stroke-dasharray="3 2"/>
+            <circle cx="60" cy="70" r="6" stroke="rgba(10,10,10,0.55)" stroke-width="0.6" fill="none"/>
+          </svg>
+        </div>
+        <div style="padding:24px 26px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px">
+            <p class="mono" style="font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim)">2023 · Research</p>
+            <span class="tag" style="font-size:10px;padding:3px 9px">FEA · SLM</span>
+          </div>
+          <h3 style="font-size:16px;font-weight:400;letter-spacing:-0.01em;margin-bottom:8px">Topology-Optimised Node</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7">Titanium structural node for a modular framework. FEA-validated, SLM-printed, load-tested to 40 kN.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────────────────────────── -->
+  <!-- 07 · CLOSING CTA                                         -->
+  <!-- ─────────────────────────────────────────────────────── -->
+  <section class="cta-final">
+    <div class="cta-inner">
+      <p class="mono cta-label">07 &nbsp;—&nbsp; Engage</p>
+      <h2 class="cta-headline">From the first sketch to the finished part &mdash; in one platform.</h2>
+      <div class="cta-actions">
+        <a class="btn-machine" href="studio/#request">
+          Start a project
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 1l4.5 4.5L6 10" stroke="currentColor" stroke-width="1"/></svg>
+        </a>
+        <a class="btn-ghost" href="contact/">Contact the studio</a>
+      </div>
+
+      <div class="cta-meta">
+        <div>
+          <p class="mono cta-meta-label">Location</p>
+          <p class="cta-meta-value">Doha, Qatar</p>
+        </div>
+        <div>
+          <p class="mono cta-meta-label">Hours</p>
+          <p class="cta-meta-value">Sun – Thu · 09:00 – 18:00</p>
+        </div>
+        <div>
+          <p class="mono cta-meta-label">Response</p>
+          <p class="cta-meta-value">Within 24 hours</p>
+        </div>
+        <div>
+          <p class="mono cta-meta-label">Coverage</p>
+          <p class="cta-meta-value">QA · GCC · International</p>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
 
-/* ═══════════════════════════════
-   PROCESS INDEX
-═══════════════════════════════ */
-const Capabilities = () => {
-  const caps = [
-    'Engineering Design','CAD Modeling','Reverse Engineering',
-    '3D Printing','CNC Machining','Laser Cutting',
-    'Lathe Work','Sheet Metal','Product Prototyping',
-    'Silicone Molding','Small-Batch Production','Technical Drawings',
-  ];
+</main>
 
-  return (
-    <section className="reveal" style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
-      <div style={{ maxWidth:1440, margin:'0 auto', padding:'44px 72px 64px' }}>
-        <div style={{ display:'flex', alignItems:'baseline', gap:48, flexWrap:'wrap' }}>
-          <span className="mono" style={{
-            fontSize:8.5, fontWeight:300,
-            letterSpacing:'0.22em', textTransform:'uppercase',
-            color:'rgba(10,10,10,0.28)', flexShrink:0,
-          }}>
-            Process Index
-          </span>
-          <div style={{ display:'flex', flexWrap:'wrap', gap:7, flex:1 }}>
-            {caps.map((c,i) => (
-              <span key={i} style={{
-                fontFamily:'Inter, sans-serif',
-                fontSize:11.5, fontWeight:300,
-                color:'rgba(10,10,10,0.42)',
-                padding:'5px 14px',
-                border:'0.5px solid rgba(10,10,10,0.09)',
-                background:'transparent',
-                transition:'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
-                cursor:'default',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color='rgba(10,10,10,0.78)';
-                e.currentTarget.style.borderColor='rgba(10,10,10,0.22)';
-                e.currentTarget.style.background='rgba(10,10,10,0.025)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color='rgba(10,10,10,0.42)';
-                e.currentTarget.style.borderColor='rgba(10,10,10,0.09)';
-                e.currentTarget.style.background='transparent';
-              }}>
-                {c}
-              </span>
-            ))}
-          </div>
-          <a href="/manufacturing/" style={{
-            fontFamily:'Inter, sans-serif', fontSize:11, fontWeight:300,
-            color:'rgba(10,10,10,0.32)', textDecoration:'none',
-            flexShrink:0, letterSpacing:'0.03em',
-            transition:'color 0.2s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.72)'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.32)'}
-          >
-            All processes →
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-};
 
-/* ═══════════════════════════════
-   FOOTER
-═══════════════════════════════ */
-const Footer = () => {
-  const cols = [
-    { label:'Systems', links:[['Studio','/studio/'],['Manufacturing','/manufacturing/'],['Shop','/shop/']] },
-    { label:'Company', links:[['Projects','/projects/'],['About','/about/'],['Contact','/contact/']] },
-    { label:'Access',  links:[['Client','/login/client/'],['Admin','/login/admin/'],['Vendor','/login/vendor/']] },
-  ];
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="g-footer">
+  <div class="footer-grid">
+    <div>
+      <a class="g-logo" href="./" style="margin-bottom:14px;display:inline-flex">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.32)" stroke-width=".6"/>
+          <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.14)" stroke-width=".5"/>
+          <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
+          <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
+          <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.40)" stroke-width=".5" fill="none"/>
+          <circle cx="10" cy="10" r=".7" fill="rgba(10,10,10,0.65)"/>
+        </svg>
+        <span class="g-logo-text">GESTALTUNG</span>
+      </a>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;max-width:220px;margin-bottom:14px">An engineering studio, manufacturing platform, and product commerce system. Doha, Qatar.</p>
+      <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.12em">N 25°17′12″ · E 51°31′30″</p>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:10px">
+      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Platform</p>
+      <a class="link-muted" href="studio/" style="font-size:13px">Studio</a>
+      <a class="link-muted" href="manufacturing/" style="font-size:13px">Manufacturing</a>
+      <a class="link-muted" href="shop/" style="font-size:13px">Shop</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column;gap:10px">
+      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Studio</p>
+      <a class="link-muted" href="projects/" style="font-size:13px">Projects</a>
+      <a class="link-muted" href="about/" style="font-size:13px">About</a>
+      <a class="link-muted" href="contact/" style="font-size:13px">Contact</a>
+    </nav>
+    <nav style="display:flex;flex-direction:column;gap:10px">
+      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Access</p>
+      <a class="link-muted" href="login/client/" style="font-size:13px">Client</a>
+      <a class="link-muted" href="login/admin/" style="font-size:13px">Admin</a>
+      <a class="link-muted" href="login/vendor/" style="font-size:13px">Vendor</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.10em">&copy; <span data-year></span> GESTALTUNG · ALL RIGHTS RESERVED</p>
+    <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.10em">v1.0 · STABLE</p>
+  </div>
+</footer>
 
-  return (
-    <footer style={{ borderTop:'0.5px solid rgba(10,10,10,0.07)' }}>
-      <div style={{ maxWidth:1440, margin:'0 auto', padding:'60px 72px 44px' }}>
-
-        <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:64, marginBottom:60 }}>
-          {/* Brand */}
-          <div>
-            <div style={{ marginBottom:18 }}><Logo /></div>
-            <p style={{ fontSize:12.5, fontWeight:300, lineHeight:1.80, color:'rgba(10,10,10,0.36)', maxWidth:210, margin:'0 0 14px' }}>
-              The place where ideas become real, precision-manufactured products.
-            </p>
-            <span className="mono" style={{ fontSize:8.5, fontWeight:300, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(10,10,10,0.22)' }}>
-              Doha, Qatar · MMXXIV
-            </span>
-          </div>
-
-          {/* Link cols */}
-          {cols.map((col,i) => (
-            <div key={i}>
-              <p className="mono" style={{
-                fontSize:8.5, fontWeight:300,
-                letterSpacing:'0.22em', textTransform:'uppercase',
-                color:'rgba(10,10,10,0.26)', marginBottom:18,
-              }}>
-                {col.label}
-              </p>
-              <div style={{ display:'flex', flexDirection:'column', gap:11 }}>
-                {col.links.map(([name,href]) => (
-                  <a key={name} href={href} style={{
-                    fontSize:12.5, fontWeight:300,
-                    color:'rgba(10,10,10,0.38)', textDecoration:'none',
-                    transition:'color 0.2s ease',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.80)'}
-                  onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.38)'}
-                  >{name}</a>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom bar */}
-        <div style={{ paddingTop:24, borderTop:'0.5px solid rgba(10,10,10,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
-          <span className="mono" style={{ fontSize:8.5, fontWeight:300, color:'rgba(10,10,10,0.22)', letterSpacing:'0.08em' }}>
-            © {new Date().getFullYear()} GESTALTUNG. All rights reserved.
-          </span>
-          <div style={{ display:'flex', gap:28 }}>
-            {[['Privacy','#'],['Terms','#'],['عربي | EN','#']].map(([lbl,href]) => (
-              <a key={lbl} href={href} style={{
-                fontSize:10, fontWeight:300,
-                color:'rgba(10,10,10,0.22)', textDecoration:'none',
-                transition:'color 0.2s ease',
-              }}
-              onMouseEnter={e => e.currentTarget.style.color='rgba(10,10,10,0.55)'}
-              onMouseLeave={e => e.currentTarget.style.color='rgba(10,10,10,0.22)'}
-              >{lbl}</a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-/* ═══════════════════════════════
-   APP
-═══════════════════════════════ */
-const App = () => {
-  useEffect(() => {
-    const els = document.querySelectorAll('.reveal');
-    const io  = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      }),
-      { threshold: 0.04 }
-    );
-    els.forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <>
-      <Nav />
-      <Hero />
-      <Services />
-      <DesignSpace />
-      <Capabilities />
-      <Footer />
-    </>
-  );
-};
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-</script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
