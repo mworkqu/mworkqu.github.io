@@ -71,22 +71,48 @@ body {
 
 .g-nav-links {
   display: flex;
-  gap: 36px;
+  gap: 22px;
   list-style: none;
   align-items: center;
 }
 
 .g-nav-link {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.2s ease;
+  position: relative;
+  padding: 4px 0;
 }
 .g-nav-link:hover,
 .g-nav-link.active { color: var(--ink); }
+.g-nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: var(--ink);
+}
+/* Access — visually separated as portal entry */
+.g-nav-link.access {
+  padding: 6px 12px;
+  border: 0.5px solid rgba(10,10,10,0.22);
+  margin-left: 6px;
+}
+.g-nav-link.access:hover { border-color: rgba(10,10,10,0.55); }
+.g-nav-link.access::after { display: none; }
+
+@media (max-width: 1100px) {
+  .g-nav-links { gap: 16px; }
+  .g-nav-link { font-size: 9.5px; letter-spacing: 0.11em; }
+}
+@media (max-width: 900px) {
+  .g-nav-links { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
 
 /* ── The only high-contrast element ─────────────────────── */
 .btn-machine {
@@ -308,7 +334,14 @@ body {
   background: transparent;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
   cursor: default;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
 }
+button.tag { font-family: 'Inter', sans-serif; }
 .tag:hover {
   color: rgba(10,10,10,0.82);
   border-color: rgba(10,10,10,0.32);
@@ -730,6 +763,9 @@ body {
 .g-table tr:hover td { background: rgba(10,10,10,0.022); }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 8px;
   font-weight: 400;
@@ -739,9 +775,28 @@ body {
   border: 0.5px solid rgba(10,10,10,0.20);
   color: rgba(10,10,10,0.56);
 }
-.badge.active { color: rgba(10,10,10,0.78); border-color: rgba(10,10,10,0.30); }
-.badge.complete { color: rgba(10,10,10,0.44); border-color: rgba(10,10,10,0.14); }
-.badge.pending { color: rgba(10,10,10,0.46); }
+.badge::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+.badge.active     { color: #1F8B52; border-color: rgba(31,139,82,0.32); }
+.badge.complete   { color: rgba(10,10,10,0.55); border-color: rgba(10,10,10,0.18); }
+.badge.complete::before { background: rgba(10,10,10,0.45); }
+.badge.pending    { color: #B07A0E; border-color: rgba(176,122,14,0.30); }
+.badge.warning    { color: #B07A0E; border-color: rgba(176,122,14,0.30); }
+.badge.danger     { color: #B23030; border-color: rgba(178,48,48,0.30); }
+
+/* Interactive tag (filter button) */
+.tag.is-filter { cursor: pointer; user-select: none; }
+.tag.is-filter[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: rgba(10,10,10,0.05);
+}
 
 .btn-table {
   font-family: 'JetBrains Mono', monospace;

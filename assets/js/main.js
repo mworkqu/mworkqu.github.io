@@ -30,6 +30,35 @@ const io = new IntersectionObserver(
 );
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
+/* ── Tag filtering (Shop / Projects) ───────────────────── */
+document.querySelectorAll('[data-filter-group]').forEach((group) => {
+  const groupName = group.dataset.filterGroup;
+  const target    = document.querySelector(`[data-filter-target="${groupName}"]`);
+  const counter   = document.querySelector(`[data-filter-count="${groupName}"]`);
+  if (!target) return;
+
+  const cards = Array.from(target.children);
+  const total = cards.length;
+
+  group.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+
+    group.querySelectorAll('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+
+    const filter = btn.dataset.filter;
+    let shown = 0;
+    cards.forEach((card) => {
+      const tags = (card.dataset.tags || '').split(/\s+/);
+      const match = filter === 'all' || tags.includes(filter);
+      card.style.display = match ? '' : 'none';
+      if (match) shown++;
+    });
+    if (counter) counter.textContent = `${shown} of ${total}`;
+  });
+});
+
 /* ── Demo form interception ────────────────────────────── */
 /* Public forms (studio brief / manufacturing quote / contact) post to '#'.
    Until a real backend is wired up, swap them for a success panel so the

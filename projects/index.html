@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects — GESTALTUNG</title>
+  <meta name="description" content="Selected projects across industrial design, mechanical engineering, and precision manufacturing — completed by GESTALTUNG in Qatar and the GCC.">
+  <meta property="og:title" content="Projects — GESTALTUNG">
+  <meta property="og:description" content="Selected work in design, engineering, manufacturing, and research.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mworkqu.github.io/favicon.svg">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -22,10 +27,13 @@
     <span class="g-logo-text">GESTALTUNG</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="../studio/">Studio</a>
-    <a class="g-nav-link" href="../manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="../shop/">Shop</a>
-    <a class="g-nav-link" href="../login/">Access</a>
+    <a class="g-nav-link" href="/studio/">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/">Shop</a>
+    <a class="g-nav-link active" href="/projects/">Projects</a>
+    <a class="g-nav-link" href="/about/">About</a>
+    <a class="g-nav-link" href="/contact/">Contact</a>
+    <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
 </header>
@@ -40,18 +48,19 @@
 
   <section class="g-section reveal">
     <div class="section-row">
-      <div class="tag-list">
-        <span class="tag">All</span>
-        <span class="tag">Design</span>
-        <span class="tag">Engineering</span>
-        <span class="tag">Manufacturing</span>
-        <span class="tag">Research</span>
+      <div class="tag-list" data-filter-group="projects">
+        <button class="tag is-filter" data-filter="all" aria-pressed="true">All</button>
+        <button class="tag is-filter" data-filter="design" aria-pressed="false">Design</button>
+        <button class="tag is-filter" data-filter="engineering" aria-pressed="false">Engineering</button>
+        <button class="tag is-filter" data-filter="manufacturing" aria-pressed="false">Manufacturing</button>
+        <button class="tag is-filter" data-filter="research" aria-pressed="false">Research</button>
       </div>
+      <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.18em" data-filter-count="projects">6 of 6</p>
     </div>
 
-    <div class="project-grid">
+    <div class="project-grid" data-filter-target="projects">
 
-      <div class="project-card">
+      <div class="project-card" data-tags="design">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <rect x="10" y="10" width="60" height="60" stroke="currentColor" stroke-width=".8"/>
@@ -74,7 +83,7 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" data-tags="manufacturing">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <rect x="15" y="25" width="50" height="30" stroke="currentColor" stroke-width=".8"/>
@@ -97,7 +106,7 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" data-tags="engineering research">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <polygon points="40,10 70,60 10,60" stroke="currentColor" stroke-width=".8" fill="none"/>
@@ -118,7 +127,7 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" data-tags="design">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <rect x="20" y="20" width="40" height="40" stroke="currentColor" stroke-width=".8"/>
@@ -139,7 +148,7 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" data-tags="manufacturing">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <ellipse cx="40" cy="40" rx="30" ry="20" stroke="currentColor" stroke-width=".8" fill="none"/>
@@ -160,7 +169,7 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" data-tags="design engineering">
         <div class="project-image">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
             <rect x="10" y="30" width="60" height="20" stroke="currentColor" stroke-width=".8"/>
