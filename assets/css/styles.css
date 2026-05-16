@@ -243,14 +243,16 @@ input, textarea, select { font: inherit; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 3px 8px;
-  margin-right: 2px;
-  margin-left: -6px;
+  margin-left: -10px;
   border: 1px solid currentColor;
   opacity: 0.65;
   line-height: 1;
+  flex-shrink: 0;
 }
 .btn-primary .btn-tag { color: var(--surface-hi); }
 .btn-ghost   .btn-tag { color: var(--ink); }
+/* Label after the chip — its own flex item so the .btn gap applies */
+.btn-label { display: inline-block; }
 
 .btn-text:hover { color: var(--ink); }
 
