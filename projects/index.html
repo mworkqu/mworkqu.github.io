@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects — GESTALTUNG</title>
   <meta name="description" content="Selected projects across industrial design, mechanical engineering, and precision manufacturing — completed by GESTALTUNG in Qatar and the GCC.">
+  <meta name="theme-color" content="#ECEAE3">
   <meta property="og:title" content="Projects — GESTALTUNG">
   <meta property="og:description" content="Selected work in design, engineering, manufacturing, and research.">
   <meta property="og:type" content="website">
@@ -18,16 +19,15 @@
 <body>
 
 <header class="g-nav" data-nav>
-  <a class="g-logo" href="../">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
     </svg>
-    <span class="g-logo-text">GESTALTUNG</span>
+    <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
     <a class="g-nav-link" href="/studio/">Studio</a>
@@ -38,194 +38,313 @@
     <a class="g-nav-link" href="/contact/">Contact</a>
     <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
 
-  <section class="page-header">
-    <p class="page-label mono">Projects</p>
-    <h1 class="page-title">Selected work.</h1>
-    <p class="page-lead">A record of completed projects across industrial design, mechanical engineering, and precision manufacturing.</p>
-  </section>
-
-  <section class="g-section reveal">
-    <div class="section-row">
-      <div class="tag-list" data-filter-group="projects">
-        <button class="tag is-filter" data-filter="all" aria-pressed="true">All</button>
-        <button class="tag is-filter" data-filter="design" aria-pressed="false">Design</button>
-        <button class="tag is-filter" data-filter="engineering" aria-pressed="false">Engineering</button>
-        <button class="tag is-filter" data-filter="manufacturing" aria-pressed="false">Manufacturing</button>
-        <button class="tag is-filter" data-filter="research" aria-pressed="false">Research</button>
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div>
+        <p class="page-overline">Selected Work</p>
+        <h1 class="page-title reveal">
+          Projects.
+        </h1>
       </div>
-      <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.18em" data-filter-count="projects">6 of 6</p>
+      <div class="reveal" style="transition-delay:.1s">
+        <p class="page-lead">
+          A selection of design, engineering, and manufacturing projects
+          completed for clients across Qatar and the GCC. Each one started
+          with a problem and ended with something built.
+        </p>
+      </div>
     </div>
+  </header>
 
-    <div class="project-grid" data-filter-target="projects">
+  <!-- Filter toolbar -->
+  <div class="shop-toolbar">
+    <div class="filter-bar" role="group" aria-label="Filter by discipline" data-filter-group="projects">
+      <button class="tag" data-filter="all" aria-pressed="true">All</button>
+      <button class="tag" data-filter="design" aria-pressed="false">Design</button>
+      <button class="tag" data-filter="engineering" aria-pressed="false">Engineering</button>
+      <button class="tag" data-filter="manufacturing" aria-pressed="false">Manufacturing</button>
+      <button class="tag" data-filter="research" aria-pressed="false">Research</button>
+    </div>
+    <p class="shop-count" data-filter-count="projects">12 projects</p>
+  </div>
 
-      <div class="project-card" data-tags="design">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <rect x="10" y="10" width="60" height="60" stroke="currentColor" stroke-width=".8"/>
-            <circle cx="40" cy="40" r="20" stroke="currentColor" stroke-width=".6" fill="none"/>
-            <line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width=".5"/>
-            <line x1="40" y1="10" x2="40" y2="70" stroke="currentColor" stroke-width=".5"/>
-            <circle cx="40" cy="40" r="3" fill="currentColor" opacity=".3"/>
+  <!-- Project grid -->
+  <div style="max-width:var(--max);margin:0 auto;padding:clamp(32px,5vh,56px) var(--px)">
+    <div class="grid-3" data-filter-target="projects" style="gap:clamp(20px,3vw,36px)">
+
+      <article class="project-card reveal" data-tags="design engineering" style="transition-delay:.04s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="25" y="18" width="90" height="57" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <rect x="40" y="28" width="24" height="37" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <rect x="76" y="28" width="24" height="37" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <line x1="25" y1="46" x2="115" y2="46" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
+            <line x1="70" y1="18" x2="70" y2="75" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Design · 2024</p>
-            <span class="tag">Confidential</span>
-          </div>
-          <h3>Precision Measuring Instrument</h3>
-          <p>Full industrial design and mechanical engineering for a handheld metrology device. Aluminium housing, IP67, calibrated optics assembly.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">Industrial design</span><span class="tag">GD&amp;T</span><span class="tag">Aluminium</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Design &amp; Engineering</p>
+          <h3 class="project-title">Precision Instrument Housing</h3>
+          <p class="project-meta">Aluminium 6061 · CNC 5-axis · 2024</p>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card" data-tags="manufacturing">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <rect x="15" y="25" width="50" height="30" stroke="currentColor" stroke-width=".8"/>
-            <rect x="25" y="15" width="30" height="10" stroke="currentColor" stroke-width=".5"/>
-            <line x1="15" y1="40" x2="65" y2="40" stroke="currentColor" stroke-width=".5"/>
-            <circle cx="30" cy="55" r="5" stroke="currentColor" stroke-width=".5" fill="none"/>
-            <circle cx="50" cy="55" r="5" stroke="currentColor" stroke-width=".5" fill="none"/>
+      <article class="project-card reveal" data-tags="manufacturing" style="transition-delay:.08s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <circle cx="70" cy="46" r="30" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <circle cx="70" cy="46" r="16" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <circle cx="70" cy="46" r="4" fill="rgba(25,23,20,.3)"/>
+            <line x1="70" y1="16" x2="70" y2="76" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
+            <line x1="40" y1="46" x2="100" y2="46" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
+            <circle cx="70" cy="22" r="2.5" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
+            <circle cx="70" cy="70" r="2.5" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
+            <circle cx="46" cy="46" r="2.5" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
+            <circle cx="94" cy="46" r="2.5" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Manufacturing · 2024</p>
-            <span class="tag">Qatar</span>
-          </div>
-          <h3>Architectural Facade Components</h3>
-          <p>CNC-machined and powder-coated aluminium facade elements for a commercial development in West Bay. 340 unique parts.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">CNC</span><span class="tag">Aluminium</span><span class="tag">Powder coat</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Manufacturing</p>
+          <h3 class="project-title">Flanged Hub Assembly</h3>
+          <p class="project-meta">Steel 4140 · CNC Turning · 2024</p>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card" data-tags="engineering research">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <polygon points="40,10 70,60 10,60" stroke="currentColor" stroke-width=".8" fill="none"/>
-            <line x1="40" y1="10" x2="40" y2="60" stroke="currentColor" stroke-width=".5"/>
-            <line x1="25" y1="35" x2="55" y2="35" stroke="currentColor" stroke-width=".5"/>
+      <article class="project-card reveal" data-tags="design" style="transition-delay:.12s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <polygon points="70,12 110,76 30,76" stroke="rgba(25,23,20,.35)" stroke-width=".8" fill="none"/>
+            <polygon points="70,30 95,72 45,72" stroke="rgba(25,23,20,.15)" stroke-width=".5" fill="none"/>
+            <line x1="70" y1="12" x2="70" y2="76" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="4 3"/>
+            <line x1="30" y1="76" x2="110" y2="76" stroke="rgba(25,23,20,.2)" stroke-width=".7"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Engineering · 2023</p>
-            <span class="tag">Research</span>
-          </div>
-          <h3>Lightweight Structural Node</h3>
-          <p>Topology-optimised titanium node for a modular structural system. FEA-validated, SLM-printed, and load-tested to 40 kN.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">FEA</span><span class="tag">Titanium</span><span class="tag">SLM</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Industrial Design</p>
+          <h3 class="project-title">Structural Panel Series</h3>
+          <p class="project-meta">Sheet Metal · Laser + Bend · 2023</p>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card" data-tags="design">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <rect x="20" y="20" width="40" height="40" stroke="currentColor" stroke-width=".8"/>
-            <rect x="28" y="28" width="24" height="24" stroke="currentColor" stroke-width=".5"/>
-            <circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width=".5" fill="none"/>
+      <article class="project-card reveal" data-tags="engineering manufacturing" style="transition-delay:.04s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="20" y="30" width="100" height="33" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <rect x="35" y="38" width="16" height="17" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <rect x="62" y="38" width="16" height="17" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <rect x="89" y="38" width="16" height="17" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <line x1="20" y1="46" x2="120" y2="46" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Design · 2023</p>
-            <span class="tag">Product</span>
-          </div>
-          <h3>Industrial Control Panel</h3>
-          <p>HMI enclosure design for an industrial automation client. Sheet metal, IP54 rating, integrated cable management, and operator ergonomics.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">Sheet metal</span><span class="tag">HMI</span><span class="tag">IP54</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Engineering &amp; Manufacturing</p>
+          <h3 class="project-title">Multi-Channel Manifold Block</h3>
+          <p class="project-meta">Aluminium 7075 · CNC · 2023</p>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card" data-tags="manufacturing">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <ellipse cx="40" cy="40" rx="30" ry="20" stroke="currentColor" stroke-width=".8" fill="none"/>
-            <line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width=".5"/>
-            <ellipse cx="40" cy="40" rx="10" ry="20" stroke="currentColor" stroke-width=".5" fill="none"/>
+      <article class="project-card reveal" data-tags="research design" style="transition-delay:.08s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <line x1="30" y1="76" x2="110" y2="76" stroke="rgba(25,23,20,.3)" stroke-width=".8"/>
+            <line x1="50" y1="76" x2="50" y2="20" stroke="rgba(25,23,20,.25)" stroke-width=".7"/>
+            <line x1="70" y1="76" x2="70" y2="35" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <line x1="90" y1="76" x2="90" y2="48" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <line x1="30" y1="20" x2="50" y2="20" stroke="rgba(25,23,20,.2)" stroke-width=".5" stroke-dasharray="3 2"/>
+            <circle cx="50" cy="20" r="2" fill="rgba(25,23,20,.35)"/>
+            <circle cx="70" cy="35" r="2" fill="rgba(25,23,20,.3)"/>
+            <circle cx="90" cy="48" r="2" fill="rgba(25,23,20,.25)"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Manufacturing · 2023</p>
-            <span class="tag">GCC</span>
-          </div>
-          <h3>Turned Hydraulic Fittings</h3>
-          <p>High-pressure hydraulic fittings in stainless 316. 5-axis turning, pressure-tested to 400 bar. Batch of 1,200 units.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">Turning</span><span class="tag">SS316</span><span class="tag">Hydraulic</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Research</p>
+          <h3 class="project-title">Lightweight Structure Study</h3>
+          <p class="project-meta">FEA Analysis · DFM Report · 2023</p>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card" data-tags="design engineering">
-        <div class="project-image">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:.12">
-            <rect x="10" y="30" width="60" height="20" stroke="currentColor" stroke-width=".8"/>
-            <line x1="25" y1="20" x2="25" y2="60" stroke="currentColor" stroke-width=".5"/>
-            <line x1="40" y1="20" x2="40" y2="60" stroke="currentColor" stroke-width=".5"/>
-            <line x1="55" y1="20" x2="55" y2="60" stroke="currentColor" stroke-width=".5"/>
+      <article class="project-card reveal" data-tags="manufacturing" style="transition-delay:.12s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="30" y="22" width="80" height="49" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <rect x="44" y="34" width="52" height="25" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <circle cx="58" cy="46" r="7" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
+            <circle cx="82" cy="46" r="7" stroke="rgba(25,23,20,.25)" stroke-width=".6" fill="none"/>
+            <circle cx="58" cy="46" r="2" fill="rgba(25,23,20,.25)"/>
+            <circle cx="82" cy="46" r="2" fill="rgba(25,23,20,.25)"/>
           </svg>
         </div>
-        <div class="project-info">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-            <p class="mono" style="font-size:10px;color:var(--muted)">Design · Engineering · 2022</p>
-            <span class="tag">Retail</span>
-          </div>
-          <h3>Modular Display System</h3>
-          <p>Parametric retail display system — extruded aluminium profiles, CNC-cut acrylic panels, and injection-moulded connectors. 18 configurations.</p>
-          <div class="tag-list" style="margin-top:16px">
-            <span class="tag">Extrusion</span><span class="tag">Acrylic</span><span class="tag">Modular</span>
-          </div>
+        <div class="project-body">
+          <p class="project-cat">Manufacturing</p>
+          <h3 class="project-title">Pneumatic Valve Body</h3>
+          <p class="project-meta">Brass C360 · CNC + EDM · 2023</p>
         </div>
-      </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="design engineering" style="transition-delay:.04s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="25" y="25" width="90" height="43" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <line x1="25" y1="46" x2="115" y2="46" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+            <rect x="40" y="33" width="20" height="13" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <rect x="80" y="33" width="20" height="13" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <rect x="40" y="50" width="20" height="10" stroke="rgba(25,23,20,.15)" stroke-width=".5"/>
+            <rect x="80" y="50" width="20" height="10" stroke="rgba(25,23,20,.15)" stroke-width=".5"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Design &amp; Engineering</p>
+          <h3 class="project-title">Modular Rack System</h3>
+          <p class="project-meta">Steel · Laser + Powder Coat · 2022</p>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="research engineering" style="transition-delay:.08s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <path d="M 35 65 Q 70 15 105 65" stroke="rgba(25,23,20,.35)" stroke-width=".8" fill="none"/>
+            <path d="M 35 65 Q 70 30 105 65" stroke="rgba(25,23,20,.2)" stroke-width=".5" fill="none" stroke-dasharray="5 3"/>
+            <line x1="35" y1="65" x2="105" y2="65" stroke="rgba(25,23,20,.25)" stroke-width=".7"/>
+            <circle cx="70" cy="35" r="3" stroke="rgba(25,23,20,.3)" stroke-width=".6" fill="none"/>
+            <line x1="70" y1="35" x2="70" y2="65" stroke="rgba(25,23,20,.15)" stroke-width=".5" stroke-dasharray="3 2"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Research</p>
+          <h3 class="project-title">Stress Distribution Analysis</h3>
+          <p class="project-meta">SolidWorks FEA · Report · 2022</p>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="design manufacturing" style="transition-delay:.12s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <circle cx="70" cy="46" r="34" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <circle cx="70" cy="46" r="22" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <circle cx="70" cy="46" r="8" stroke="rgba(25,23,20,.2)" stroke-width=".6"/>
+            <circle cx="70" cy="46" r="2.5" fill="rgba(25,23,20,.35)"/>
+            <line x1="70" y1="12" x2="70" y2="80" stroke="rgba(25,23,20,.08)" stroke-width=".5" stroke-dasharray="4 3"/>
+            <line x1="36" y1="46" x2="104" y2="46" stroke="rgba(25,23,20,.08)" stroke-width=".5" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Design &amp; Manufacturing</p>
+          <h3 class="project-title">Turned Disc Coupling</h3>
+          <p class="project-meta">Aluminium · CNC Turning · 2022</p>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="engineering" style="transition-delay:.04s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="22" y="28" width="96" height="37" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <line x1="46" y1="28" x2="46" y2="65" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+            <line x1="70" y1="28" x2="70" y2="65" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+            <line x1="94" y1="28" x2="94" y2="65" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+            <line x1="22" y1="46" x2="118" y2="46" stroke="rgba(25,23,20,.1)" stroke-width=".5" stroke-dasharray="5 3"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Engineering</p>
+          <h3 class="project-title">Cooling Plate — Thermal Management</h3>
+          <p class="project-meta">Aluminium 6061 · CNC · Anodised · 2022</p>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="design" style="transition-delay:.08s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <rect x="30" y="20" width="80" height="53" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <rect x="30" y="20" width="80" height="14" stroke="rgba(25,23,20,.2)" stroke-width=".5" fill="rgba(25,23,20,.03)"/>
+            <line x1="42" y1="46" x2="98" y2="46" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+            <line x1="42" y1="54" x2="82" y2="54" stroke="rgba(25,23,20,.15)" stroke-width=".5"/>
+            <line x1="42" y1="62" x2="90" y2="62" stroke="rgba(25,23,20,.15)" stroke-width=".5"/>
+            <circle cx="36" cy="27" r="2" fill="rgba(25,23,20,.2)"/>
+            <circle cx="44" cy="27" r="2" fill="rgba(25,23,20,.2)"/>
+            <circle cx="52" cy="27" r="2" fill="rgba(25,23,20,.2)"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Industrial Design</p>
+          <h3 class="project-title">Control Panel Layout</h3>
+          <p class="project-meta">Concept · DFM · 3D Model · 2021</p>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="manufacturing research" style="transition-delay:.12s">
+        <div class="project-img">
+          <svg width="140" height="93" viewBox="0 0 140 93" fill="none" aria-hidden="true">
+            <line x1="35" y1="18" x2="35" y2="75" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <line x1="35" y1="75" x2="105" y2="75" stroke="rgba(25,23,20,.35)" stroke-width=".8"/>
+            <polyline points="35,60 55,40 75,50 95,25 105,25" stroke="rgba(25,23,20,.4)" stroke-width=".8" fill="none"/>
+            <circle cx="55" cy="40" r="2.5" fill="rgba(25,23,20,.4)"/>
+            <circle cx="75" cy="50" r="2.5" fill="rgba(25,23,20,.4)"/>
+            <circle cx="95" cy="25" r="2.5" fill="rgba(25,23,20,.4)"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <p class="project-cat">Manufacturing &amp; Research</p>
+          <h3 class="project-title">Process Capability Study</h3>
+          <p class="project-meta">Statistical Analysis · CMM · 2021</p>
+        </div>
+      </article>
 
     </div>
-  </section>
+  </div>
+
+  <!-- CTA -->
+  <div style="border-top:1px solid var(--rule);padding:clamp(48px,8vh,80px) var(--px);max-width:var(--max);margin:0 auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--gap);flex-wrap:wrap">
+      <div>
+        <p class="dwg-ref" style="margin-bottom:10px">Start a project</p>
+        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em">Your brief becomes the next entry.</h2>
+      </div>
+      <a href="/studio/" class="btn btn-primary btn-arrow">Begin in Studio</a>
+    </div>
+  </div>
 
 </main>
 
 <footer class="g-footer">
-  <div class="footer-grid">
+  <div class="footer-top">
     <div>
-      <a class="g-logo" href="../" style="margin-bottom:12px;display:inline-flex">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-          <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-          <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-          <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-          <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-          <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-          <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
-        </svg>
-        <span class="g-logo-text">GESTALTUNG</span>
-      </a>
-      <p class="mono" style="font-size:10px;color:var(--muted)">Doha, Qatar &nbsp;·&nbsp; <span data-year></span></p>
+      <span class="footer-brand-name">Gestaltung</span>
+      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
-    <nav style="display:flex;flex-direction:column;gap:8px">
-      <a class="link-muted mono" href="../studio/" style="font-size:12px">Studio</a>
-      <a class="link-muted mono" href="../manufacturing/" style="font-size:12px">Manufacturing</a>
-      <a class="link-muted mono" href="../shop/" style="font-size:12px">Shop</a>
-    </nav>
-    <nav style="display:flex;flex-direction:column;gap:8px">
-      <a class="link-muted mono" href="../projects/" style="font-size:12px">Projects</a>
-      <a class="link-muted mono" href="../about/" style="font-size:12px">About</a>
-      <a class="link-muted mono" href="../contact/" style="font-size:12px">Contact</a>
-    </nav>
-    <p class="mono" style="font-size:10px;color:var(--dim);align-self:end">&copy; <span data-year></span> GESTALTUNG.</p>
+    <div>
+      <p class="footer-col-title">Platform</p>
+      <nav class="footer-links">
+        <a href="/studio/" class="footer-link">Studio</a>
+        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
+        <a href="/shop/" class="footer-link">Shop</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <nav class="footer-links">
+        <a href="/projects/" class="footer-link">Projects</a>
+        <a href="/about/" class="footer-link">About</a>
+        <a href="/contact/" class="footer-link">Contact</a>
+        <a href="/faq/" class="footer-link">FAQ</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Portal</p>
+      <nav class="footer-links">
+        <a href="/login/client/" class="footer-link">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; <span data-year></span> GESTALTUNG. Doha, Qatar.</p>
+    <p class="footer-copy">N&nbsp;25°17′&nbsp;&nbsp;E&nbsp;51°31′</p>
   </div>
 </footer>
 
