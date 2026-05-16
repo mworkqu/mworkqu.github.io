@@ -233,6 +233,25 @@ input, textarea, select { font: inherit; }
   font-size: 10px;
 }
 
+/* Studio tag inside a button — small chip showing where the CTA leads */
+.btn-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  margin-right: 2px;
+  margin-left: -6px;
+  border: 1px solid currentColor;
+  opacity: 0.65;
+  line-height: 1;
+}
+.btn-primary .btn-tag { color: var(--surface-hi); }
+.btn-ghost   .btn-tag { color: var(--ink); }
+
 .btn-text:hover { color: var(--ink); }
 
 /* Legacy aliases used in some pages */
