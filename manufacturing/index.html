@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manufacturing — GESTALTUNG</title>
-  <meta name="description" content="CNC machining, laser cutting, 3D printing, sheet metal, and injection moulding — coordinated through a single platform with full production tracking. Tolerances to ±0.005 mm.">
+  <meta name="description" content="CNC machining, laser cutting, 3D printing, sheet metal, and injection moulding — coordinated through a single platform. Tolerances to ±0.005 mm.">
+  <meta name="theme-color" content="#ECEAE3">
   <meta property="og:title" content="Manufacturing — GESTALTUNG">
   <meta property="og:description" content="Precision parts on demand. CNC, laser, 3D print, sheet metal, injection moulding.">
   <meta property="og:type" content="website">
@@ -18,16 +19,15 @@
 <body>
 
 <header class="g-nav" data-nav>
-  <a class="g-logo" href="../">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
     </svg>
-    <span class="g-logo-text">GESTALTUNG</span>
+    <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
     <a class="g-nav-link" href="/studio/">Studio</a>
@@ -38,229 +38,310 @@
     <a class="g-nav-link" href="/contact/">Contact</a>
     <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
 
-  <section class="page-header">
-    <p class="page-label mono">02 / Manufacturing</p>
-    <h1 class="page-title">Precision parts,<br>on demand.</h1>
-    <p class="page-lead">CNC machining, laser cutting, 3D printing, sheet metal, and injection moulding — coordinated through a single platform with full production tracking.</p>
-    <a class="btn-machine" href="#quote">Request a quote</a>
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div>
+        <p class="page-overline">02 / Manufacturing</p>
+        <h1 class="page-title reveal">
+          Parts<br>
+          made with<br>
+          intent.
+        </h1>
+      </div>
+      <div class="reveal" style="transition-delay:.1s">
+        <p class="page-lead">
+          Six manufacturing processes, one platform. Upload your files, specify
+          your tolerances, and receive production-quality parts — tracked from
+          first operation to final inspection.
+        </p>
+        <div style="margin-top:clamp(24px,4vh,36px);display:flex;gap:10px;flex-wrap:wrap">
+          <a href="#quote" class="btn btn-primary btn-arrow">Request Quote</a>
+          <a href="/projects/" class="btn btn-ghost">See Production Work</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Capability Matrix -->
+  <section class="mfg-capabilities">
+
+    <div class="section-label reveal">
+      <span class="section-num">Capabilities</span>
+      <span class="section-tag">6 Processes Available</span>
+    </div>
+
+    <div class="tile-grid-3 reveal" style="transition-delay:.05s">
+
+      <div class="capability-cell">
+        <h3 class="cap-name">CNC Machining</h3>
+        <p class="cap-spec">3-axis · 5-axis · Tolerance ±0.005 mm</p>
+        <p class="cap-desc">Precision milling and turning across aluminium, steel, brass, and engineering plastics. Full 5-axis for complex geometry.</p>
+        <div class="cap-tags">
+          <span class="tag">3-axis</span>
+          <span class="tag">5-axis</span>
+          <span class="tag">Turning</span>
+          <span class="tag">EDM</span>
+        </div>
+      </div>
+
+      <div class="capability-cell">
+        <h3 class="cap-name">Laser Cutting</h3>
+        <p class="cap-spec">CO₂ · Fibre · Tolerance ±0.1 mm</p>
+        <p class="cap-desc">High-precision sheet profiling in mild steel, stainless, aluminium, and acrylic up to 25 mm thickness.</p>
+        <div class="cap-tags">
+          <span class="tag">CO₂</span>
+          <span class="tag">Fibre</span>
+          <span class="tag">Nesting</span>
+        </div>
+      </div>
+
+      <div class="capability-cell">
+        <h3 class="cap-name">3D Printing</h3>
+        <p class="cap-spec">FDM · SLA · SLS · Layer 0.05 mm</p>
+        <p class="cap-desc">Rapid prototyping and end-use parts in standard and engineering-grade polymers. Multi-material and flexible options available.</p>
+        <div class="cap-tags">
+          <span class="tag">FDM</span>
+          <span class="tag">SLA</span>
+          <span class="tag">SLS</span>
+          <span class="tag">PETG</span>
+        </div>
+      </div>
+
+      <div class="capability-cell">
+        <h3 class="cap-name">Sheet Metal</h3>
+        <p class="cap-spec">Cut · Bend · Weld · Tolerance ±0.2 mm</p>
+        <p class="cap-desc">Complete sheet metal workflow — laser profiling, CNC bending, welding, and finishing in one coordinated process.</p>
+        <div class="cap-tags">
+          <span class="tag">Bending</span>
+          <span class="tag">Welding</span>
+          <span class="tag">Punching</span>
+        </div>
+      </div>
+
+      <div class="capability-cell">
+        <h3 class="cap-name">Injection Moulding</h3>
+        <p class="cap-spec">Prototype · Bridge · Production tooling</p>
+        <p class="cap-desc">From soft-tool prototype runs to hardened production moulds. Material selection support for mechanical and aesthetic requirements.</p>
+        <div class="cap-tags">
+          <span class="tag">Soft Tool</span>
+          <span class="tag">Hard Tool</span>
+          <span class="tag">Multi-cavity</span>
+        </div>
+      </div>
+
+      <div class="capability-cell">
+        <h3 class="cap-name">Vacuum Casting</h3>
+        <p class="cap-spec">Silicone mould · Shore A–D range</p>
+        <p class="cap-desc">Small-batch production using silicone moulds cast from a master. Excellent for pre-production validation and small series.</p>
+        <div class="cap-tags">
+          <span class="tag">Silicone</span>
+          <span class="tag">PU Resin</span>
+          <span class="tag">Low-run</span>
+        </div>
+      </div>
+
+    </div>
+
   </section>
 
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">Capabilities</span>
-    </div>
-    <div class="service-grid">
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">01</p>
-        <h3>CNC Machining</h3>
-        <p>3-axis and 5-axis milling, turning, and EDM. Tolerances to ±0.005 mm. Aluminium, steel, titanium, and engineering plastics.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">3-axis</span><span class="tag">5-axis</span><span class="tag">Turning</span><span class="tag">EDM</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">02</p>
-        <h3>Laser Cutting</h3>
-        <p>CO₂ and fibre laser cutting for sheet metal, acrylic, wood, and composites. Engraving and marking included.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">CO₂</span><span class="tag">Fibre</span><span class="tag">Engraving</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">03</p>
-        <h3>3D Printing</h3>
-        <p>FDM, SLA, and SLS for rapid prototypes and end-use parts. Multi-material and large-format available.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">FDM</span><span class="tag">SLA</span><span class="tag">SLS</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">04</p>
-        <h3>Sheet Metal</h3>
-        <p>Cutting, bending, punching, and welding. Mild steel, stainless, and aluminium. Powder coat and anodise finishing.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">Bending</span><span class="tag">Welding</span><span class="tag">Powder coat</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">05</p>
-        <h3>Injection Moulding</h3>
-        <p>Low-volume tooling and production runs. ABS, PP, nylon, and custom compounds. Single and multi-cavity moulds.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">Low-volume</span><span class="tag">ABS</span><span class="tag">PP</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">06</p>
-        <h3>Vacuum Casting</h3>
-        <p>Polyurethane casting from silicone moulds. Up to 20 parts per mould. Shore hardness A10 – D80.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">PU</span><span class="tag">Silicone</span><span class="tag">Low-run</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">07</p>
-        <h3>Surface Finishing</h3>
-        <p>Anodising, plating, bead blasting, powder coating, painting, and polishing. Full surface treatment coordination.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">Anodise</span><span class="tag">Plating</span><span class="tag">Blasting</span>
-        </div>
-      </div>
-      <div class="service-item">
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:12px">08</p>
-        <h3>Assembly &amp; Kitting</h3>
-        <p>Sub-assembly, final assembly, and packaging. Quality inspection and certificate of conformance on request.</p>
-        <div class="tag-list" style="margin-top:16px">
-          <span class="tag">Assembly</span><span class="tag">QC</span><span class="tag">CoC</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Specification Table -->
+  <div class="mfg-specs">
+    <div class="mfg-specs-inner">
 
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">Production flow</span>
-    </div>
-    <div class="step-strip">
-      <div class="step-col">
-        <p class="mono" style="font-size:11px;color:var(--muted)">01</p>
-        <h4>File review</h4>
-        <p>Upload STEP, DXF, or PDF. We review for manufacturability and flag issues before quoting.</p>
+      <div class="section-label reveal">
+        <span class="section-num">Specifications</span>
+        <span class="section-tag">Process reference data</span>
       </div>
-      <div class="step-col">
-        <p class="mono" style="font-size:11px;color:var(--muted)">02</p>
-        <h4>Quotation</h4>
-        <p>Itemised quote within 48 hours — material, process, finishing, and lead time clearly stated.</p>
-      </div>
-      <div class="step-col">
-        <p class="mono" style="font-size:11px;color:var(--muted)">03</p>
-        <h4>Production</h4>
-        <p>Your order is assigned to the appropriate vendor. Live status visible in your dashboard.</p>
-      </div>
-      <div class="step-col">
-        <p class="mono" style="font-size:11px;color:var(--muted)">04</p>
-        <h4>QC &amp; dispatch</h4>
-        <p>Inspection report attached before dispatch. Tracking number and delivery window confirmed.</p>
-      </div>
-    </div>
-  </section>
 
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">Materials</span>
-    </div>
-    <div class="tag-list">
-      <span class="tag">Aluminium 6061</span><span class="tag">Aluminium 7075</span>
-      <span class="tag">Stainless 304</span><span class="tag">Stainless 316</span>
-      <span class="tag">Mild steel</span><span class="tag">Titanium Grade 5</span>
-      <span class="tag">ABS</span><span class="tag">Nylon PA12</span>
-      <span class="tag">Delrin (POM)</span><span class="tag">PETG</span>
-      <span class="tag">Polycarbonate</span><span class="tag">Carbon fibre</span>
-    </div>
-  </section>
+      <div class="reveal" style="transition-delay:.05s;overflow-x:auto">
+        <table class="spec-table" style="min-width:600px">
+          <thead>
+            <tr>
+              <th>Process</th>
+              <th>Materials</th>
+              <th>Tolerance</th>
+              <th>Max Volume</th>
+              <th>Lead Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CNC Milling 5-axis</td>
+              <td>Al, Steel, Brass, Plastics</td>
+              <td><span class="spec-val">±0.005 mm</span></td>
+              <td><span class="spec-val">600 × 500 × 400 mm</span></td>
+              <td><span class="spec-val">3–5 days</span></td>
+            </tr>
+            <tr>
+              <td>CNC Turning</td>
+              <td>Al, Steel, Brass, Nylon</td>
+              <td><span class="spec-val">±0.01 mm</span></td>
+              <td><span class="spec-val">Ø300 × 800 mm</span></td>
+              <td><span class="spec-val">3–5 days</span></td>
+            </tr>
+            <tr>
+              <td>Laser Cutting (Fibre)</td>
+              <td>Steel, SS, Al, Copper</td>
+              <td><span class="spec-val">±0.1 mm</span></td>
+              <td><span class="spec-val">1500 × 3000 mm</span></td>
+              <td><span class="spec-val">1–2 days</span></td>
+            </tr>
+            <tr>
+              <td>FDM Printing</td>
+              <td>PLA, PETG, ABS, PA12</td>
+              <td><span class="spec-val">±0.2 mm</span></td>
+              <td><span class="spec-val">300 × 300 × 400 mm</span></td>
+              <td><span class="spec-val">1–3 days</span></td>
+            </tr>
+            <tr>
+              <td>SLA Printing</td>
+              <td>Standard, Tough, Flexible</td>
+              <td><span class="spec-val">±0.1 mm</span></td>
+              <td><span class="spec-val">250 × 250 × 300 mm</span></td>
+              <td><span class="spec-val">2–4 days</span></td>
+            </tr>
+            <tr>
+              <td>Sheet Metal</td>
+              <td>MS, SS 304, Al 5052</td>
+              <td><span class="spec-val">±0.2 mm</span></td>
+              <td><span class="spec-val">1200 × 2500 mm</span></td>
+              <td><span class="spec-val">3–7 days</span></td>
+            </tr>
+            <tr>
+              <td>Injection Moulding</td>
+              <td>PP, PE, ABS, PA, PC</td>
+              <td><span class="spec-val">±0.05 mm</span></td>
+              <td><span class="spec-val">Project-dependent</span></td>
+              <td><span class="spec-val">2–6 weeks</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <section class="g-section reveal" id="quote">
-    <div class="section-row">
-      <span class="section-label mono">Request a quote</span>
     </div>
-    <div class="g-split">
+  </div>
+
+  <!-- Quote Form -->
+  <section class="mfg-form" id="quote">
+
+    <div class="section-label reveal">
+      <span class="section-num">Request a Quote</span>
+      <span class="section-tag">24-hour response</span>
+    </div>
+
+    <div class="grid-2 reveal" style="transition-delay:.05s;align-items:start;gap:clamp(32px,6vw,88px)">
+
+      <div>
+        <h2 style="font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px">Send us your files.</h2>
+        <p style="font-size:14px;color:var(--ink-50);line-height:1.7;margin-bottom:28px">
+          Provide your CAD files, quantity, material preference, and any tolerance
+          or surface finish requirements. We'll review and respond within 24 hours
+          with a detailed quote and lead time.
+        </p>
+        <div style="border:1px solid var(--rule);padding:clamp(18px,2.5vw,28px)">
+          <p class="dwg-ref" style="margin-bottom:16px">Accepted file formats</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="tag" style="cursor:default">STEP</span>
+            <span class="tag" style="cursor:default">IGES</span>
+            <span class="tag" style="cursor:default">STL</span>
+            <span class="tag" style="cursor:default">DXF</span>
+            <span class="tag" style="cursor:default">DWG</span>
+            <span class="tag" style="cursor:default">PDF</span>
+          </div>
+        </div>
+      </div>
+
       <form class="g-form" action="#" method="post">
         <div class="field">
-          <label class="mono">Full name</label>
-          <input type="text" name="name" required placeholder="Your name">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required>
         </div>
         <div class="field">
-          <label class="mono">Email</label>
-          <input type="email" name="email" required placeholder="you@company.com">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@company.com" required>
         </div>
         <div class="field">
-          <label class="mono">Company</label>
-          <input type="text" name="company" placeholder="Optional">
-        </div>
-        <div class="field">
-          <label class="mono">Process</label>
-          <select name="process">
+          <label for="process">Process</label>
+          <select id="process" name="process">
+            <option value="">Select process</option>
             <option>CNC Machining</option>
             <option>Laser Cutting</option>
-            <option>3D Printing</option>
+            <option>3D Printing (FDM)</option>
+            <option>3D Printing (SLA/SLS)</option>
             <option>Sheet Metal</option>
             <option>Injection Moulding</option>
             <option>Vacuum Casting</option>
-            <option>Surface Finishing</option>
-            <option>Assembly / Kitting</option>
-            <option>Multiple / Other</option>
+            <option>Multiple / Unsure</option>
           </select>
         </div>
         <div class="field">
-          <label class="mono">Material</label>
-          <input type="text" name="material" placeholder="e.g. Aluminium 6061, ABS">
+          <label for="qty">Quantity</label>
+          <input type="text" id="qty" name="quantity" placeholder="e.g. 10 pieces">
         </div>
         <div class="field">
-          <label class="mono">Quantity</label>
-          <input type="number" name="quantity" min="1" placeholder="Number of parts">
+          <label for="material">Material</label>
+          <input type="text" id="material" name="material" placeholder="e.g. Aluminium 6061">
         </div>
         <div class="field">
-          <label class="mono">Attach files</label>
-          <input type="file" name="files" multiple>
+          <label for="tolerance">Tolerance</label>
+          <input type="text" id="tolerance" name="tolerance" placeholder="e.g. ±0.05 mm general">
         </div>
-        <div class="field">
-          <label class="mono">Additional notes</label>
-          <textarea name="notes" rows="3" placeholder="Tolerances, finish requirements, or special instructions."></textarea>
+        <div class="field span-2">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" rows="5" placeholder="Surface finish, anodising, inspection reports, special requirements…"></textarea>
         </div>
-        <div class="field">
-          <label class="mono">Required delivery</label>
-          <select name="delivery">
-            <option>Under 1 week</option>
-            <option>1 – 2 weeks</option>
-            <option>2 – 4 weeks</option>
-            <option>Flexible</option>
-          </select>
+        <div class="field span-2" style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="submit" class="btn btn-primary btn-arrow">Submit Quote Request</button>
+          <p style="font-size:12px;color:var(--ink-35);align-self:center">Demo mode — no data is stored or sent.</p>
         </div>
-        <button class="btn-machine" type="submit" style="width:100%">Submit for quote</button>
       </form>
-      <div>
-        <p class="mono" style="font-size:11px;color:var(--muted);margin-bottom:24px">Quote within 48h</p>
-        <h3 style="font-weight:200;font-size:22px;margin-bottom:16px">No hidden costs.</h3>
-        <p style="color:var(--muted);line-height:1.7;margin-bottom:24px">Every quote is itemised — material cost, machine time, finishing, and lead time stated clearly. No vague estimates.</p>
-        <p style="color:var(--muted);line-height:1.7">Existing client? Log in to your <a class="link-muted" href="../login/client/">dashboard</a> to track orders.</p>
-      </div>
+
     </div>
+
   </section>
 
 </main>
 
 <footer class="g-footer">
-  <div class="footer-grid">
+  <div class="footer-top">
     <div>
-      <a class="g-logo" href="../" style="margin-bottom:12px;display:inline-flex">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-          <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-          <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-          <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-          <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-          <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-          <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
-        </svg>
-        <span class="g-logo-text">GESTALTUNG</span>
-      </a>
-      <p class="mono" style="font-size:10px;color:var(--muted)">Doha, Qatar &nbsp;·&nbsp; <span data-year></span></p>
+      <span class="footer-brand-name">Gestaltung</span>
+      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
-    <nav style="display:flex;flex-direction:column;gap:8px">
-      <a class="link-muted mono" href="../studio/" style="font-size:12px">Studio</a>
-      <a class="link-muted mono" href="../manufacturing/" style="font-size:12px">Manufacturing</a>
-      <a class="link-muted mono" href="../shop/" style="font-size:12px">Shop</a>
-    </nav>
-    <nav style="display:flex;flex-direction:column;gap:8px">
-      <a class="link-muted mono" href="../projects/" style="font-size:12px">Projects</a>
-      <a class="link-muted mono" href="../about/" style="font-size:12px">About</a>
-      <a class="link-muted mono" href="../contact/" style="font-size:12px">Contact</a>
-    </nav>
-    <p class="mono" style="font-size:10px;color:var(--dim);align-self:end">&copy; <span data-year></span> GESTALTUNG.</p>
+    <div>
+      <p class="footer-col-title">Platform</p>
+      <nav class="footer-links">
+        <a href="/studio/" class="footer-link">Studio</a>
+        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
+        <a href="/shop/" class="footer-link">Shop</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <nav class="footer-links">
+        <a href="/projects/" class="footer-link">Projects</a>
+        <a href="/about/" class="footer-link">About</a>
+        <a href="/contact/" class="footer-link">Contact</a>
+        <a href="/faq/" class="footer-link">FAQ</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Portal</p>
+      <nav class="footer-links">
+        <a href="/login/client/" class="footer-link">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; <span data-year></span> GESTALTUNG. Doha, Qatar.</p>
+    <p class="footer-copy">DWG-SET-MFG / REV.2</p>
   </div>
 </footer>
 

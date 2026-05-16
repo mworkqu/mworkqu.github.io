@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ — GESTALTUNG</title>
   <meta name="description" content="Common questions about working with GESTALTUNG — project intake, file formats, lead times, materials, shipping, and payment.">
+  <meta name="theme-color" content="#ECEAE3">
   <meta property="og:title" content="FAQ — GESTALTUNG">
   <meta property="og:description" content="Common questions about studio projects, manufacturing, and shipping.">
   <meta property="og:type" content="website">
@@ -13,21 +14,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 
 <header class="g-nav" data-nav>
   <a class="g-logo" href="/">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.32)" stroke-width=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.14)" stroke-width=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.40)" stroke-width=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".7" fill="rgba(10,10,10,0.65)"/>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
     </svg>
-    <span class="g-logo-text">GESTALTUNG</span>
+    <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
     <a class="g-nav-link" href="/studio/">Studio</a>
@@ -38,266 +38,210 @@
     <a class="g-nav-link" href="/contact/">Contact</a>
     <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
 
-  <section class="page-header">
-    <p class="page-label mono">FAQ</p>
-    <h1 class="page-title">Common questions.</h1>
-    <p class="page-lead">Working with GESTALTUNG — project intake, file formats, lead times, materials, shipping, and payment.</p>
-  </section>
-
-  <!-- ─── Studio ──────────────────────────────────────── -->
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">01 · Studio</span>
-    </div>
-    <div class="faq-list">
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">How does a project start?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Submit a brief through the <a class="link-muted" href="/studio/#request">Studio request form</a> or email <a class="link-muted" href="mailto:studio@gestaltung.qa">studio@gestaltung.qa</a>. A senior engineer reviews every brief and responds within 24 hours, working days, with a structured next step — usually a fixed-scope quotation or a request for clarifying information.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What file formats do you accept?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Native: SolidWorks (SLDPRT / SLDASM), Fusion 360 (F3D), CATIA, Rhino (3DM), AutoCAD (DWG). Neutral: STEP, IGES, STL, OBJ, DXF, PDF. We also work from sketches, point-cloud scans, and physical samples for reverse engineering. If you have something else, ask.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Do you sign NDAs?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Yes. Mutual NDAs are standard for any project before file exchange. We can use your template or provide ours. All client files and project data are treated as confidential by default — included in our standard engagement terms.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What does a project cost?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Every project is quoted with a fixed scope and a fixed price — we do not bill by the hour. Studio engagements typically range from 5,000 QAR (single-part DFM reviews) to 50,000+ QAR (full product development). You will receive an itemised quotation before any work begins.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">How long does a project take?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>A quotation is issued within 24 hours of receiving a complete brief. Typical project timelines: DFM review or single-part modelling, 3–7 days; full mechanical design, 2–4 weeks; complex product development, 1–3 months. Rush availability on request.</p>
-      </details>
-
-    </div>
-  </section>
-
-
-  <!-- ─── Manufacturing ───────────────────────────────── -->
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">02 · Manufacturing</span>
-    </div>
-    <div class="faq-list">
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What is the minimum order quantity?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>One. We routinely produce single parts for prototyping. MOQs only apply to processes that require tooling — injection moulding starts at ~50 units, vacuum casting at 1–20 per silicone mould. CNC, laser, 3D print, sheet metal, and assembly have no minimum.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What tolerances can you hold?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Standard CNC machining: ±0.05 mm general, ±0.005 mm on toleranced features. Sheet metal: ±0.2 mm cut, ±0.5° bend. 3D printing: ±0.1 mm (SLA), ±0.3 mm (FDM). Tighter tolerances available on request and quoted accordingly.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What materials do you stock?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Common metals: aluminium 6061/7075, stainless 304/316, mild steel, titanium Grade 5, brass, copper. Plastics: ABS, nylon (PA12), Delrin (POM), PETG, polycarbonate, acrylic. 3D print resins and SLS powders on demand. Custom alloys and specialty materials sourced per project — typically adds 1 week to lead time.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">How is a quote calculated?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Every quote is itemised: material cost, machine time, finishing, assembly (if any), QC, and delivery. You see each line — no opaque "estimates." Bulk discounts apply transparently above 25 / 100 / 500 units.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Can I see the parts before they ship?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Yes. Inspection photos and dimensional reports are attached to every order before dispatch. For higher-value orders, we offer in-person inspection at the Doha workshop or third-party inspection via SGS / Bureau Veritas.</p>
-      </details>
-
-    </div>
-  </section>
-
-
-  <!-- ─── Shop ─────────────────────────────────────── -->
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">03 · Shop &amp; Shipping</span>
-    </div>
-    <div class="faq-list">
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Where do you ship?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Doha — same-day courier. GCC (UAE, KSA, Bahrain, Kuwait, Oman) — 3 to 5 working days. International — 7 to 14 working days via DHL / FedEx with full tracking. Bulk and palletised shipments quoted separately.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">What's your return policy?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Stocked shop items: 14-day return for any reason, original condition. Custom-manufactured parts are non-returnable unless they fail to meet the agreed specification, in which case we remake at no charge.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">How do I pay?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Bank transfer (QAR, USD, EUR), corporate cards, and Wise for international clients. Shop orders are pre-paid. Project work: 50% on engagement, 50% on delivery for engagements under 25,000 QAR; staged milestone billing for larger projects.</p>
-      </details>
-
-    </div>
-  </section>
-
-
-  <!-- ─── General ──────────────────────────────────── -->
-  <section class="g-section reveal">
-    <div class="section-row">
-      <span class="section-label mono">04 · General</span>
-    </div>
-    <div class="faq-list">
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Are you hiring?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>We hire mechanical engineers, industrial designers, and CNC programmers on an ongoing basis. Send a portfolio and short note to <a class="link-muted" href="mailto:studio@gestaltung.qa">studio@gestaltung.qa</a>. Workshop and assembly roles posted separately when open.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Do you take vendor / supplier applications?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Yes — we maintain an active vendor network for specialised processes (anodising, plating, heat treatment, specific tooling). Apply via the <a class="link-muted" href="/login/vendor/">Vendor portal</a> or email a capability summary.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Where are you located?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Studio and workshop in Doha, Qatar (Lusail Marina District). Hours Sunday to Thursday, 09:00 to 18:00 AST. Visits by appointment. See <a class="link-muted" href="/contact/">Contact</a> for full details and map link.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-q">Still have a question?</span>
-          <span class="faq-toggle" aria-hidden="true"></span>
-        </summary>
-        <p>Reach the studio directly at <a class="link-muted" href="mailto:studio@gestaltung.qa">studio@gestaltung.qa</a> or via the <a class="link-muted" href="/contact/">contact form</a>. We respond to every enquiry within 24 hours, working days.</p>
-      </details>
-
-    </div>
-  </section>
-
-
-  <!-- ─── CTA ──────────────────────────────────────── -->
-  <section class="g-section reveal">
-    <div class="g-split">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-inner">
       <div>
-        <h3 style="font-weight:200;font-size:26px;margin-bottom:16px;letter-spacing:-0.01em">Couldn't find what you needed?</h3>
-        <p style="color:var(--muted);line-height:1.7;margin-bottom:24px">Reach the studio directly — every enquiry gets a real response within 24 hours.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a class="btn-machine" href="/contact/">
-            Contact the studio
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 1l4.5 4.5L6 10" stroke="currentColor" stroke-width="1"/></svg>
-          </a>
-          <a class="btn-ghost" href="/studio/#request">Submit a brief</a>
+        <p class="page-overline">FAQ</p>
+        <h1 class="page-title reveal">
+          Common<br>
+          questions,<br>
+          answered.
+        </h1>
+      </div>
+      <div class="reveal" style="transition-delay:.1s">
+        <p class="page-lead">
+          Everything you need to know about working with the studio,
+          submitting manufacturing files, lead times, and shipping.
+          Can't find what you need? <a href="/contact/" style="text-decoration:underline;text-underline-offset:3px">Contact us directly.</a>
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- FAQ sections -->
+  <section style="padding:var(--section-y) var(--px);max-width:var(--max);margin:0 auto">
+    <div class="grid-2" style="gap:clamp(40px,8vw,100px);align-items:start">
+
+      <div>
+        <!-- Studio questions -->
+        <div class="section-label reveal" style="margin-bottom:24px">
+          <span class="section-num">Studio</span>
+        </div>
+        <div class="faq-list reveal" style="transition-delay:.05s">
+
+          <details class="faq-item">
+            <summary class="faq-q">How do I start a design project?</summary>
+            <p class="faq-a">Fill out the brief form on the <a href="/studio/" style="text-decoration:underline;text-underline-offset:3px">Studio page</a>. Describe the problem, your constraints, and any target processes or materials. We'll review your brief and respond within 24 hours with questions or a scope proposal.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What information do you need to start?</summary>
+            <p class="faq-a">As much as you can give. Reference images, sketches, competitor products, size constraints, material preferences, and target manufacturing process all help. If you have nothing — that's fine too. We'll start with questions.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What file formats do you deliver?</summary>
+            <p class="faq-a">We deliver in whatever format the project requires: STEP, IGES, STL for 3D data; DXF or DWG for 2D; PDF for technical drawings; SolidWorks native files on request. Everything is documented and named to a consistent standard.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Do you offer design-only projects without manufacturing?</summary>
+            <p class="faq-a">Yes. Many clients engage the studio for design and documentation only, then take files to their own manufacturers. We have no obligation to manufacture what we design.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Can you review or improve an existing design?</summary>
+            <p class="faq-a">Yes. Design review, DFM analysis, and drawing audits are common engagements. Send us the files and describe your concern — we'll assess and propose what's needed.</p>
+          </details>
+
+        </div>
+
+        <!-- Projects questions -->
+        <div class="section-label reveal" style="margin-top:clamp(40px,6vh,64px);margin-bottom:24px">
+          <span class="section-num">Projects</span>
+        </div>
+        <div class="faq-list reveal" style="transition-delay:.05s">
+
+          <details class="faq-item">
+            <summary class="faq-q">Do you work with clients outside Qatar?</summary>
+            <p class="faq-a">Yes. We work remotely with clients across the GCC and internationally. Design and engineering services are fully remote-compatible. Manufacturing and shipping logistics depend on location — contact us to discuss.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">How are projects priced?</summary>
+            <p class="faq-a">Studio projects are scoped and priced per engagement — we don't publish day rates because scope varies too much. Manufacturing is quoted per file, per process, based on geometry, material, quantity, and tolerance. You'll receive a written quote before any work begins.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Do you sign NDAs?</summary>
+            <p class="faq-a">Yes. We routinely sign mutual NDAs before reviewing client files. Send us your standard NDA or request ours — we'll execute before any technical information is exchanged.</p>
+          </details>
+
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <p class="mono" style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:8px">Direct routes</p>
-        <a class="link-muted" href="/studio/#request" style="font-size:13px">&rarr; Studio project brief</a>
-        <a class="link-muted" href="/manufacturing/#quote" style="font-size:13px">&rarr; Manufacturing quote</a>
-        <a class="link-muted" href="/shop/" style="font-size:13px">&rarr; Shop catalogue</a>
-        <a class="link-muted" href="mailto:studio@gestaltung.qa" style="font-size:13px">&rarr; studio@gestaltung.qa</a>
+
+      <div>
+        <!-- Manufacturing questions -->
+        <div class="section-label reveal" style="margin-bottom:24px">
+          <span class="section-num">Manufacturing</span>
+        </div>
+        <div class="faq-list reveal" style="transition-delay:.05s">
+
+          <details class="faq-item">
+            <summary class="faq-q">What file formats do you accept for manufacturing?</summary>
+            <p class="faq-a">STEP and IGES for 3D machining and printing. DXF or DWG for laser cutting and sheet metal. PDF technical drawings are required for toleranced features. STL is accepted for 3D printing only. Always include a drawing — models alone are insufficient for toleranced work.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What are your standard tolerances?</summary>
+            <p class="faq-a">General machining tolerance is ±0.1 mm unless specified. CNC 5-axis can achieve ±0.005 mm for critical features. Laser cutting is ±0.1 mm, FDM printing is ±0.2 mm. Tolerances must be explicitly called out on the drawing — we manufacture to what's documented.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What materials do you work with?</summary>
+            <p class="faq-a">Aluminium (6061, 7075, 5052), mild steel, stainless (304, 316), brass, copper, and engineering plastics (Nylon, Delrin, UHMWPE) for machining. Standard polymers (PLA, PETG, ABS, PA12) for 3D printing. Specialty materials on request — ask if you don't see what you need.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What is the minimum order quantity?</summary>
+            <p class="faq-a">There's no minimum quantity. We produce single prototypes and production runs of thousands. Unit price varies with quantity — include your target run size in your quote request.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Do you offer surface finishing?</summary>
+            <p class="faq-a">Yes: anodising (clear, black, colour), powder coating, brushing, bead blasting, electroplating, and painting. Specify the finish and any colour reference (RAL, Pantone) in your quote request.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Can you provide inspection reports?</summary>
+            <p class="faq-a">Yes. First Article Inspection (FAI) reports and dimensional inspection with CMM are available on request. Specify required inspection documentation at quote stage so we can include it in scope and price.</p>
+          </details>
+
+        </div>
+
+        <!-- Shop questions -->
+        <div class="section-label reveal" style="margin-top:clamp(40px,6vh,64px);margin-bottom:24px">
+          <span class="section-num">Shop</span>
+        </div>
+        <div class="faq-list reveal" style="transition-delay:.05s">
+
+          <details class="faq-item">
+            <summary class="faq-q">How long does shipping take?</summary>
+            <p class="faq-a">Within Qatar: 1–2 business days. GCC countries: 3–5 business days. International: 7–14 business days depending on destination and customs. All orders ship with tracking.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">What payment methods do you accept?</summary>
+            <p class="faq-a">Bank transfer (preferred for large orders), credit card via secure payment link, and local payment on collection in Doha. Invoices are issued in QAR. USD invoicing available on request.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">Can I return or exchange an item?</summary>
+            <p class="faq-a">Physical products may be returned within 14 days if unused and in original condition. Digital products are non-refundable once downloaded. Custom or made-to-order items cannot be returned unless faulty.</p>
+          </details>
+
+        </div>
       </div>
+
     </div>
   </section>
+
+  <!-- Still have questions -->
+  <div style="border-top:1px solid var(--rule);padding:clamp(48px,8vh,80px) var(--px);max-width:var(--max);margin:0 auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--gap);flex-wrap:wrap">
+      <div>
+        <p class="dwg-ref" style="margin-bottom:10px">Still have a question?</p>
+        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em">A senior engineer will answer directly.</h2>
+      </div>
+      <a href="/contact/" class="btn btn-primary btn-arrow">Contact Us</a>
+    </div>
+  </div>
 
 </main>
 
-
 <footer class="g-footer">
-  <div class="footer-grid">
+  <div class="footer-top">
     <div>
-      <a class="g-logo" href="/" style="margin-bottom:14px;display:inline-flex">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-          <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.32)" stroke-width=".6"/>
-          <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.14)" stroke-width=".5"/>
-          <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
-          <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.22)" stroke-width=".5"/>
-          <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.40)" stroke-width=".5" fill="none"/>
-          <circle cx="10" cy="10" r=".7" fill="rgba(10,10,10,0.65)"/>
-        </svg>
-        <span class="g-logo-text">GESTALTUNG</span>
-      </a>
-      <p style="font-size:12px;color:var(--muted);line-height:1.7;max-width:220px">An engineering studio, manufacturing platform, and product commerce system. Doha, Qatar.</p>
+      <span class="footer-brand-name">Gestaltung</span>
+      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
-    <nav style="display:flex;flex-direction:column;gap:10px">
-      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Platform</p>
-      <a class="link-muted" href="/studio/" style="font-size:13px">Studio</a>
-      <a class="link-muted" href="/manufacturing/" style="font-size:13px">Manufacturing</a>
-      <a class="link-muted" href="/shop/" style="font-size:13px">Shop</a>
-    </nav>
-    <nav style="display:flex;flex-direction:column;gap:10px">
-      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Studio</p>
-      <a class="link-muted" href="/projects/" style="font-size:13px">Projects</a>
-      <a class="link-muted" href="/about/" style="font-size:13px">About</a>
-      <a class="link-muted" href="/faq/" style="font-size:13px">FAQ</a>
-      <a class="link-muted" href="/contact/" style="font-size:13px">Contact</a>
-    </nav>
-    <nav style="display:flex;flex-direction:column;gap:10px">
-      <p class="mono" style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Access</p>
-      <a class="link-muted" href="/login/client/" style="font-size:13px">Client</a>
-      <a class="link-muted" href="/login/admin/" style="font-size:13px">Admin</a>
-      <a class="link-muted" href="/login/vendor/" style="font-size:13px">Vendor</a>
-    </nav>
+    <div>
+      <p class="footer-col-title">Platform</p>
+      <nav class="footer-links">
+        <a href="/studio/" class="footer-link">Studio</a>
+        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
+        <a href="/shop/" class="footer-link">Shop</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <nav class="footer-links">
+        <a href="/projects/" class="footer-link">Projects</a>
+        <a href="/about/" class="footer-link">About</a>
+        <a href="/contact/" class="footer-link">Contact</a>
+        <a href="/faq/" class="footer-link">FAQ</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Portal</p>
+      <nav class="footer-links">
+        <a href="/login/client/" class="footer-link">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+      </nav>
+    </div>
   </div>
   <div class="footer-bottom">
-    <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.10em">&copy; <span data-year></span> GESTALTUNG · ALL RIGHTS RESERVED</p>
-    <p class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.10em">v1.0 · STABLE</p>
+    <p class="footer-copy">&copy; <span data-year></span> GESTALTUNG. Doha, Qatar.</p>
+    <p class="footer-copy">N&nbsp;25°17′&nbsp;&nbsp;E&nbsp;51°31′</p>
   </div>
 </footer>
 
-<script src="/assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
 </body>
 </html>
