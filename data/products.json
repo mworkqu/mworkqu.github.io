@@ -1,0 +1,156 @@
+{
+  "currency": "QAR",
+  "updated": "2026-09-07",
+  "categories": [
+    { "key": "tools",    "label": "Tools" },
+    { "key": "fixtures", "label": "Fixtures" },
+    { "key": "objects",  "label": "Objects" },
+    { "key": "digital",  "label": "Digital" }
+  ],
+  "products": [
+    {
+      "sku": "SKU-0101",
+      "name": "Setting Block Set — 123 Style",
+      "category": "tools",
+      "type": "physical",
+      "art": "setting-blocks",
+      "description": "Hardened steel precision blocks. Ground flat to ±0.005 mm. Six-piece set with storage case.",
+      "price": 480,
+      "onHand": 6,
+      "committed": 2,
+      "reorderPoint": 3,
+      "leadTimeDays": 18
+    },
+    {
+      "sku": "SKU-0102",
+      "name": "Datum Reference Frame Kit",
+      "category": "tools",
+      "type": "physical",
+      "art": "datum-frame",
+      "description": "Modular aluminium datum blocks for CMM fixturing. Anodised, M6 threaded. Set of four.",
+      "price": 740,
+      "onHand": 3,
+      "committed": 0,
+      "reorderPoint": 3,
+      "leadTimeDays": 21
+    },
+    {
+      "sku": "SKU-0103",
+      "name": "Taper Gauge Set — 1°–30°",
+      "category": "tools",
+      "type": "physical",
+      "art": "taper-gauge",
+      "description": "Precision ground taper gauges in hardened tool steel. Laser-engraved markings. 15-piece set.",
+      "price": 320,
+      "onHand": 11,
+      "committed": 1,
+      "reorderPoint": 4,
+      "leadTimeDays": 14
+    },
+    {
+      "sku": "SKU-0201",
+      "name": "V-Block Clamping Set",
+      "category": "fixtures",
+      "type": "physical",
+      "art": "v-block",
+      "description": "Cast iron V-blocks with matched clamps. 90° ground to ±0.01 mm. M8 slots, pair.",
+      "price": 560,
+      "onHand": 8,
+      "committed": 4,
+      "reorderPoint": 3,
+      "leadTimeDays": 21
+    },
+    {
+      "sku": "SKU-0202",
+      "name": "Sine Bar — 200 mm",
+      "category": "fixtures",
+      "type": "physical",
+      "art": "sine-bar",
+      "description": "Hardened and precision-ground sine bar, 200 mm between roller centres. Includes gauge block set.",
+      "price": 890,
+      "onHand": 2,
+      "committed": 2,
+      "reorderPoint": 2,
+      "leadTimeDays": 28
+    },
+    {
+      "sku": "SKU-0203",
+      "name": "Toolmaker's Flat Square",
+      "category": "fixtures",
+      "type": "physical",
+      "art": "flat-square",
+      "description": "Hardened tool steel, 150 × 100 mm. Ground and lapped to ISO 1 squareness. Certificate included.",
+      "price": 420,
+      "onHand": 9,
+      "committed": 0,
+      "reorderPoint": 4,
+      "leadTimeDays": 18
+    },
+    {
+      "sku": "SKU-0301",
+      "name": "Machined Pen — Aluminium",
+      "category": "objects",
+      "type": "physical",
+      "art": "machined-pen",
+      "description": "5-axis CNC machined from solid Al 6061. Anodised in warm grey. Accepts standard G2 refill.",
+      "price": 280,
+      "onHand": 14,
+      "committed": 3,
+      "reorderPoint": 6,
+      "leadTimeDays": 12
+    },
+    {
+      "sku": "SKU-0302",
+      "name": "Desktop Card Stand",
+      "category": "objects",
+      "type": "physical",
+      "art": "card-stand",
+      "description": "Precision laser-cut and folded mild steel. Powder-coated matte stone. A6 and business card sizes.",
+      "price": 155,
+      "onHand": 5,
+      "committed": 1,
+      "reorderPoint": 4,
+      "leadTimeDays": 10
+    },
+    {
+      "sku": "SKU-0303",
+      "name": "Compass Rose — Wall Mount",
+      "category": "objects",
+      "type": "physical",
+      "art": "compass-rose",
+      "description": "Waterjet-cut 304 stainless, brushed finish. 200 mm diameter. Hidden wall fixing included.",
+      "price": 640,
+      "onHand": 0,
+      "committed": 0,
+      "reorderPoint": 2,
+      "leadTimeDays": 24
+    },
+    {
+      "sku": "SKU-0401",
+      "name": "DFM Checklist Template",
+      "category": "digital",
+      "type": "digital",
+      "art": "dfm-checklist",
+      "description": "50-point design for manufacture review template. Excel and PDF. Covers CNC, sheet metal, and injection moulding.",
+      "price": 90
+    },
+    {
+      "sku": "SKU-0402",
+      "name": "Technical Drawing Template Pack",
+      "category": "digital",
+      "type": "digital",
+      "art": "drawing-template",
+      "description": "ISO 128 and ASME Y14 compliant drawing borders in A0–A4. Includes title block, revision table, and BOM.",
+      "price": 120
+    },
+    {
+      "sku": "SKU-0403",
+      "name": "Standard Bracket Library — STEP",
+      "category": "digital",
+      "type": "digital",
+      "art": "bracket-library",
+      "description": "48 parametric bracket models in STEP format. Weldments, gussets, and tube clamps. SolidWorks source included.",
+      "price": 200
+    }
+  ]
+}

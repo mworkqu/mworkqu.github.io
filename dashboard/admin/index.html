@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard — GESTALTUNG</title>
+  <title>Admin dashboard — GESTALTUNG</title>
+  <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
-<body>
+<body data-dash-page="admin-overview">
 
 <header class="g-nav" data-nav>
-  <a class="g-logo" href="../../">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
     </svg>
-    <span class="g-logo-text">GESTALTUNG</span>
+    <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
     <a class="g-nav-link" href="/studio/">Studio</a>
@@ -33,133 +33,46 @@
     <a class="g-nav-link" href="/contact/">Contact</a>
     <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo · Static prototype · no real admin data</div>
+<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
-  <aside class="dash-sidebar">
-    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid var(--rule)">Admin</p>
-    <nav style="display:flex;flex-direction:column;gap:2px">
-      <a class="dash-nav-link active" href="#">Overview</a>
-      <a class="dash-nav-link" href="users/">Users</a>
-      <a class="dash-nav-link" href="#">Project Requests</a>
-      <a class="dash-nav-link" href="#">Manufacturing Orders</a>
-      <a class="dash-nav-link" href="#">Vendors</a>
-      <a class="dash-nav-link" href="#">Quotations</a>
-      <a class="dash-nav-link" href="#">Shop Products</a>
-      <a class="dash-nav-link" href="#">Analytics</a>
-    </nav>
-    <div style="margin-top:auto;padding-top:32px">
-      <a class="link-muted mono" href="../../login/" style="font-size:11px">Sign out</a>
-    </div>
-  </aside>
+  <aside class="dash-sidebar" data-dash-sidebar data-role="admin" data-active="overview"></aside>
 
   <section class="dash-main">
-    <div style="margin-bottom:36px">
-      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:6px">Overview</p>
-      <h1 style="font-size:28px;font-weight:200">Admin dashboard.</h1>
-    </div>
+    <p class="dash-panel-title">Overview</p>
+    <h1 class="dash-heading">Admin.</h1>
+    <p class="dash-subhead">What needs a decision today.</p>
 
     <div class="metric-grid">
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">New requests</span>
-        <strong>12</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Vendor reviews</span>
-        <strong>5</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Quotes sent</span>
-        <strong>8</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Active users</span>
-        <strong>24</strong>
-      </div>
+      <div class="metric-card"><span class="metric-label">Need reordering</span><strong data-metric="reorder">—</strong></div>
+      <div class="metric-card"><span class="metric-label">Open jobs</span><strong data-metric="jobs">—</strong></div>
+      <div class="metric-card"><span class="metric-label">Client projects</span><strong data-metric="projects">—</strong></div>
+      <div class="metric-card"><span class="metric-label">Awaiting approval</span><strong data-metric="quotes">—</strong></div>
     </div>
 
-    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--rule)">
+    <p class="dash-panel-title dash-section-gap">Reorder alerts</p>
+    <div class="table-scroll" data-reorder-table></div>
 
-      <a class="metric-card" href="users/" style="text-decoration:none;display:flex;flex-direction:column;gap:8px;background:var(--surface)">
-        <p class="mono" style="font-size:10px;color:var(--muted)">Users</p>
-        <h3 style="font-weight:300;font-size:16px">Manage access</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6">Add clients, admins, and vendors. Suspend or remove access at any time.</p>
-        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:8px">Open &rarr;</span>
-      </a>
-
-      <div class="metric-card" style="display:flex;flex-direction:column;gap:8px">
-        <p class="mono" style="font-size:10px;color:var(--muted)">Vendors</p>
-        <h3 style="font-weight:300;font-size:16px">Assign production</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6">Route manufacturing orders to internal machines, CNC vendors, 3D print, laser, and fabrication partners.</p>
-        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:8px">Open &rarr;</span>
-      </div>
-
-      <div class="metric-card" style="display:flex;flex-direction:column;gap:8px">
-        <p class="mono" style="font-size:10px;color:var(--muted)">Quotations</p>
-        <h3 style="font-weight:300;font-size:16px">Create quotes</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6">Prepare itemised pricing after file review and workshop input. Send for client approval.</p>
-        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:8px">Open &rarr;</span>
-      </div>
-
-    </div>
-
-    <div style="margin-top:40px">
-      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--rule)">Recent requests</p>
-      <table class="g-table">
-        <thead>
-          <tr>
-            <th>Ref</th>
-            <th>Client</th>
-            <th>Type</th>
-            <th>Received</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono" style="font-size:11px">SR-2024-031</td>
-            <td>Meridian Corp</td>
-            <td>Studio · Mechanical</td>
-            <td class="mono" style="font-size:11px">Today</td>
-            <td><span class="badge">New</span></td>
-            <td><a class="btn-table" href="#">Review</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">MQ-2024-044</td>
-            <td>Al-Fardan Group</td>
-            <td>Manufacturing · CNC</td>
-            <td class="mono" style="font-size:11px">Yesterday</td>
-            <td><span class="badge">New</span></td>
-            <td><a class="btn-table" href="#">Review</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">SR-2024-030</td>
-            <td>Confidential</td>
-            <td>Studio · Industrial design</td>
-            <td class="mono" style="font-size:11px">12 May</td>
-            <td><span class="badge active">Quoted</span></td>
-            <td><a class="btn-table" href="#">View</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">MQ-2024-043</td>
-            <td>Qatar Rail</td>
-            <td>Manufacturing · Sheet metal</td>
-            <td class="mono" style="font-size:11px">11 May</td>
-            <td><span class="badge active">In production</span></td>
-            <td><a class="btn-table" href="#">Track</a></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="dash-actions dash-section-gap">
+      <a class="btn btn-primary btn-arrow" href="/dashboard/admin/inventory/">Store stock</a>
+      <a class="btn btn-ghost" href="/dashboard/admin/jobs/">Jobs</a>
+      <a class="btn btn-ghost" href="/dashboard/admin/quotes/">Quotes</a>
     </div>
   </section>
 
 </main>
 
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/product-art.js"></script>
+<script src="/assets/js/store.js"></script>
+<script src="/assets/js/client-store.js"></script>
+<script src="/assets/js/admin-store.js"></script>
+<script src="/assets/js/dash-shell.js"></script>
+<script src="/assets/js/client-pages.js"></script>
+<script src="/assets/js/admin-pages.js"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

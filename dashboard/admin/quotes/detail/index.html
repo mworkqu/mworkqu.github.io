@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Client dashboard — GESTALTUNG</title>
+  <title>Build quote — GESTALTUNG</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
-<body data-client-page="overview">
+<body data-dash-page="admin-quote">
 
 <header class="g-nav" data-nav>
   <a class="g-logo" href="/">
@@ -36,30 +36,45 @@
   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
+<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
-  <aside class="dash-sidebar" data-dash-sidebar data-role="client" data-active="overview"></aside>
+  <aside class="dash-sidebar" data-dash-sidebar data-role="admin" data-active="quotes"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">Overview</p>
-    <h1 class="dash-heading">Good morning.</h1>
-    <p class="dash-subhead">Everything you own is either on your shelf or on a project.</p>
+    <p class="dash-panel-title"><span data-quote-ref>—</span></p>
+    <h1 class="dash-heading" data-quote-title>Quote</h1>
+    <p class="dash-subhead"><span class="badge active" data-quote-state>—</span></p>
 
-    <div class="metric-grid">
-      <div class="metric-card"><span class="metric-label">Active projects</span><strong data-metric="projects">—</strong></div>
-      <div class="metric-card"><span class="metric-label">Parts on the shelf</span><strong data-metric="inventory">—</strong></div>
-      <div class="metric-card"><span class="metric-label">Parts on projects</span><strong data-metric="allocated">—</strong></div>
-      <div class="metric-card"><span class="metric-label">In cart</span><strong data-metric="cart">—</strong></div>
+    <div class="dash-panel">
+      <p class="dash-panel-title">The work</p>
+      <form class="g-form" data-quote-form novalidate>
+        <div class="field">
+          <label for="q-hours">Design hours</label>
+          <input type="number" id="q-hours" name="designHours" min="0" value="12">
+        </div>
+        <div class="field">
+          <label for="q-rate">Hourly rate</label>
+          <input type="number" id="q-rate" name="rate" min="0" value="350">
+        </div>
+        <div class="field">
+          <label for="q-prod">Production</label>
+          <input type="number" id="q-prod" name="production" min="0" value="1450">
+        </div>
+        <div class="field">
+          <label for="q-cont">Contingency %</label>
+          <input type="number" id="q-cont" name="contingencyPct" min="0" max="100" value="10">
+        </div>
+      </form>
     </div>
 
-    <p class="dash-panel-title dash-section-gap">Your projects</p>
-    <div class="table-scroll" data-project-list></div>
+    <div class="table-scroll" data-quote-detail></div>
 
     <div class="dash-actions dash-section-gap">
-      <a class="btn btn-primary btn-arrow" href="/dashboard/client/projects/">Start a project</a>
-      <a class="btn btn-ghost" href="/dashboard/client/inventory/">My inventory</a>
+      <button class="btn btn-primary btn-arrow" type="button" data-send-quote>Send to client</button>
+      <a class="btn btn-ghost" href="/dashboard/admin/quotes/">Back to quotes</a>
+      <p class="field-note" data-quote-note role="status"></p>
     </div>
   </section>
 

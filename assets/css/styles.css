@@ -29,6 +29,12 @@
   --rule-mid:   var(--ink-20);
   --rule-hard:  rgba(25,23,20,.55);
 
+  /* Aliases kept for pages written against the previous palette
+     (404, login). Undefined custom properties fall back to the
+     inherited colour, which silently flattened those pages. */
+  --muted:      var(--ink-50);
+  --dim:        var(--ink-35);
+
   /* Typography */
   --font:       'Inter', 'Helvetica Neue', Arial, sans-serif;
   --mono:       'JetBrains Mono', 'Courier New', monospace;
@@ -502,6 +508,36 @@ input, textarea, select { font: inherit; }
   font-weight: 600;
   color: var(--ink);
   letter-spacing: 0.02em;
+}
+
+/* Stock line — reads `available`, never `onHand`. Monochrome:
+   low stock gets darker ink rather than a colour. */
+.product-stock {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  margin-bottom: 14px;
+}
+
+.product-stock.low { color: var(--ink-70); }
+.product-stock.out { color: var(--ink-50); }
+
+.shop-error {
+  grid-column: 1 / -1;
+  padding: clamp(28px, 5vw, 48px);
+  border: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-50);
+}
+
+.shop-error code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
 }
 
 /* Project cards */
@@ -1638,3 +1674,327 @@ details[open] .faq-q::after { transform: rotate(45deg); }
   .spec-table { font-size: 12px; }
   .spec-table td, .spec-table th { padding: 10px 10px; }
 }
+
+/* 19 — CLIENT DASHBOARD
+   The redesign renamed .dash-table / .metric-row, but the dashboard
+   pages were never updated, so their tables and tiles lost all
+   styling. Defining the names those pages actually use fixes the
+   existing screens and serves the new ones.
+─────────────────────────────────────────────────────────────── */
+
+.g-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  border: 1px solid var(--rule-mid);
+}
+
+.g-table th {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule-mid);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.g-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-70);
+  background: var(--surface-hi);
+  vertical-align: top;
+}
+
+.g-table tr:last-child td { border-bottom: none; }
+.g-table .num { text-align: right; }
+.g-table .small,
+.cell-note { font-size: 11px; }
+
+.cell-note {
+  color: var(--ink-35);
+  margin-top: 3px;
+}
+
+.table-scroll { overflow-x: auto; }
+.table-scroll .g-table { min-width: 560px; }
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--rule-mid);
+  border: 1px solid var(--rule-mid);
+  margin-bottom: 28px;
+}
+
+.metric-card {
+  background: var(--surface);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-card strong {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.badge.active   { color: var(--ink); border-color: var(--rule-hard); }
+.badge.complete { color: var(--surface-hi); background: var(--ink); border-color: var(--ink); }
+
+.row-item {
+  display: grid;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--ink-70);
+}
+
+.row-item.c4 { grid-template-columns: 110px 1fr auto auto; }
+
+.link-muted {
+  color: var(--ink-35);
+  font-size: 11px;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.link-muted:hover { color: var(--ink); }
+
+/* Sidebar */
+.dash-role {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244,242,236,.3);
+  padding: 0 20px 14px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(244,242,236,.12);
+}
+
+.dash-nav { display: flex; flex-direction: column; padding: 0 12px; }
+
+.dash-nav .dash-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dash-pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  min-width: 17px;
+  text-align: center;
+  padding: 1px 5px;
+  color: var(--ink);
+  background: var(--surface-hi);
+}
+
+.dash-sidebar-foot { padding: 28px 20px 0; }
+.dash-sidebar-foot .link-muted { color: rgba(244,242,236,.35); }
+.dash-sidebar-foot .link-muted:hover { color: var(--surface-hi); }
+
+/* Panels */
+.dash-panel {
+  border: 1px solid var(--rule-mid);
+  background: var(--surface);
+  padding: clamp(20px, 3vw, 28px);
+  margin-bottom: 28px;
+}
+
+.dash-panel-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  margin-bottom: 16px;
+}
+
+.dash-empty {
+  border: 1px dashed var(--rule-mid);
+  padding: clamp(24px, 4vw, 40px);
+  font-size: 13px;
+  color: var(--ink-50);
+  text-align: center;
+}
+
+.dash-section-gap { margin-top: 36px; }
+
+/* Parts list */
+.part-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--rule-mid);
+  color: var(--ink-35);
+  white-space: nowrap;
+}
+
+.part-badge.held    { color: var(--ink); border-color: var(--rule-hard); }
+.part-badge.pending { color: var(--ink-50); border-style: dashed; }
+
+.parts-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 14px 0;
+  margin-top: 14px;
+  border-top: 1px solid var(--rule-mid);
+  font-size: 13px;
+  color: var(--ink-50);
+}
+
+.parts-total .mono { font-size: 14px; color: var(--ink); }
+
+/* Part picker */
+.pick-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+}
+
+.pick-row:last-child { border-bottom: none; }
+.pick-name { color: var(--ink); }
+.pick-name .small { color: var(--ink-35); }
+.pick-have { font-size: 11px; color: var(--ink-50); white-space: nowrap; }
+
+.qty-input {
+  width: 62px;
+  padding: 7px 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--rule-mid);
+  text-align: right;
+}
+
+.qty-input:focus { outline: none; border-color: var(--rule-hard); }
+
+.field-error {
+  font-size: 12px;
+  color: var(--ink);
+  min-height: 16px;
+  margin-top: 6px;
+}
+
+.field-note {
+  font-size: 12px;
+  color: var(--ink-50);
+  min-height: 16px;
+  margin-top: 10px;
+}
+
+/* Type chooser on the new-project form */
+.choice-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+
+.choice {
+  position: relative;
+  border: 1px solid var(--rule-mid);
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink-50);
+  transition: all 0.18s;
+}
+
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice:hover { border-color: var(--rule-hard); }
+.choice:has(input:checked) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface-hi);
+}
+
+.dash-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+@media (max-width: 720px) {
+  .row-item.c4  { grid-template-columns: 1fr; gap: 6px; }
+  .pick-row     { grid-template-columns: 1fr; gap: 8px; }
+  .parts-total  { padding-left: 0; padding-right: 0; }
+}
+
+/* 20 — ADMIN & VENDOR
+─────────────────────────────────────────────────────────────── */
+
+.text-input,
+.mini-select {
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--rule-mid);
+  padding: 8px 10px;
+}
+
+.text-input { flex: 1; min-width: 220px; }
+.mini-select { font-size: 12px; padding: 6px 8px; }
+
+.text-input:focus,
+.mini-select:focus { outline: none; border-color: var(--rule-hard); }
+
+.mini-select:disabled { color: var(--ink-35); background: var(--surface); }
+
+/* Low stock reads as weight, not colour — the palette is monochrome. */
+.stock-alert {
+  color: var(--ink);
+  font-weight: 600;
+  position: relative;
+}
+
+.stock-alert::after {
+  content: "";
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--ink);
+}
+
+.g-table td strong { color: var(--ink); font-weight: 600; }
+
+.policy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  font-size: 13px;
+  color: var(--ink-50);
+  line-height: 1.6;
+}
+
+.policy-role {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+
+.dash-subhead em { font-style: normal; color: var(--ink); }

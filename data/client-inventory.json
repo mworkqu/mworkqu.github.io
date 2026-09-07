@@ -1,0 +1,23 @@
+{
+  "client": "Meridian Corp",
+  "note": "Seed data for the demo client. Copied into localStorage on first visit.",
+  "inventory": [
+    { "sku": "SKU-0201", "name": "V-Block Clamping Set",    "qty": 6, "origin": "store", "unitPrice": 560 },
+    { "sku": "SKU-0301", "name": "Machined Pen — Aluminium", "qty": 1, "origin": "store", "unitPrice": 280 },
+    { "sku": "SKU-0103", "name": "Taper Gauge Set — 1°–30°", "qty": 2, "origin": "store", "unitPrice": 320 },
+    { "sku": null, "name": "Stepper motor NEMA 17",  "qty": 4, "origin": "own", "unitPrice": 0, "note": "Bought elsewhere" },
+    { "sku": null, "name": "Linear rail 400 mm",     "qty": 2, "origin": "own", "unitPrice": 0, "note": "Left over from an earlier build" }
+  ],
+  "projects": [
+    {
+      "id": "J-2026-0041",
+      "title": "Meridian display unit",
+      "type": "design",
+      "brief": "A free-standing display plinth for a trade stand. Needs to break down into two cases for shipping.",
+      "targetDate": "2026-11-14",
+      "state": "NEW",
+      "createdAt": "2026-09-02",
+      "parts": []
+    }
+  ]
+}

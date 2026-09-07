@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Store stock — GESTALTUNG</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body data-dash-page="admin-inventory">
+
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
+    </svg>
+    <span class="g-logo-text">Gestaltung</span>
+  </a>
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="/studio/">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/">Shop</a>
+    <a class="g-nav-link" href="/projects/">Projects</a>
+    <a class="g-nav-link" href="/about/">About</a>
+    <a class="g-nav-link" href="/contact/">Contact</a>
+    <a class="g-nav-link access" href="/login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+</header>
+
+<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
+
+<main class="dash-shell">
+
+  <aside class="dash-sidebar" data-dash-sidebar data-role="admin" data-active="inventory"></aside>
+
+  <section class="dash-main">
+    <p class="dash-panel-title">Store stock</p>
+    <h1 class="dash-heading">What is on the shelf.</h1>
+    <p class="dash-subhead">
+      The shop offers <em>available</em>, never <em>on hand</em> — that is what stops
+      the same unit being sold twice. On hand is the sum of the movements below,
+      not a number anybody types.
+    </p>
+    <p class="field-note" data-stock-alert role="status"></p>
+
+    <div class="table-scroll" data-stock-table></div>
+
+    <div class="dash-panel dash-section-gap">
+      <p class="dash-panel-title">Book in a delivery</p>
+      <form class="g-form" data-receive-form novalidate>
+        <div class="field">
+          <label for="r-sku">Product</label>
+          <select id="r-sku" name="sku" data-sku-select></select>
+        </div>
+        <div class="field">
+          <label for="r-qty">How many arrived</label>
+          <input type="number" id="r-qty" name="qty" min="1" placeholder="How many">
+        </div>
+        <div class="field span-2">
+          <label for="r-ref">Reference</label>
+          <input type="text" id="r-ref" name="ref" placeholder="Supplier, delivery note, purchase order…">
+        </div>
+        <div class="field span-2">
+          <button class="btn btn-primary" type="submit">Receive into stock</button>
+          <p class="field-error" data-error role="alert"></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="dash-panel">
+      <p class="dash-panel-title">Make a batch</p>
+      <form class="g-form" data-batch-form novalidate>
+        <div class="field">
+          <label for="b-sku">Product</label>
+          <select id="b-sku" name="sku" data-sku-select></select>
+        </div>
+        <div class="field">
+          <label for="b-qty">How many to make</label>
+          <input type="number" id="b-qty" name="qty" min="1" value="10">
+        </div>
+        <div class="field">
+          <label for="b-process">Process and material</label>
+          <input type="text" id="b-process" name="process" placeholder="e.g. CNC · AL6061">
+        </div>
+        <div class="field">
+          <label for="b-due">Due</label>
+          <input type="date" id="b-due" name="due">
+        </div>
+        <div class="field span-2">
+          <label for="b-vendor">Workshop</label>
+          <select id="b-vendor" name="vendor">
+            <option>Workshop A</option>
+            <option>Workshop B</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <button class="btn btn-primary btn-arrow" type="submit">Create batch job</button>
+          <p class="field-error" data-error role="alert"></p>
+        </div>
+      </form>
+    </div>
+
+    <p class="dash-panel-title dash-section-gap">Stock movements</p>
+    <div class="table-scroll" data-ledger-table></div>
+  </section>
+
+</main>
+
+<script src="/assets/js/product-art.js"></script>
+<script src="/assets/js/store.js"></script>
+<script src="/assets/js/client-store.js"></script>
+<script src="/assets/js/admin-store.js"></script>
+<script src="/assets/js/dash-shell.js"></script>
+<script src="/assets/js/client-pages.js"></script>
+<script src="/assets/js/admin-pages.js"></script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

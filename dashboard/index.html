@@ -1,9 +1,97 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard | GESTALTUNG</title><link rel="stylesheet" href="../assets/css/styles.css"></head>
-  <body>
-    <header class="site-header"><div class="nav"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>GESTALTUNG</span></a><nav class="nav-links" data-nav-links><a href="../studio/">Studio</a><a href="../manufacturing/">Manufacturing</a><a href="../shop/">Shop</a><a href="../projects/">Projects</a><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../login/">Login</a></nav><div class="nav-actions"><a class="button primary" href="../studio/#request">Start a Project</a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button></div></div></header>
-    <main><section class="section"><div class="section-head"><p class="eyebrow">Dashboard system</p><h1>Choose a dashboard.</h1><p class="lead">Front-end structure for client, admin, and vendor workflows.</p></div><div class="grid three"><a class="card" href="client/"><h3>Client Dashboard</h3><p>View projects, quotes, orders, files, messages, and revisions.</p></a><a class="card" href="admin/"><h3>Admin Dashboard</h3><p>Manage users, requests, orders, quotations, vendors, products, payments, delivery, and analytics.</p></a><a class="card" href="vendor/"><h3>Vendor Dashboard</h3><p>View assigned jobs, download files, submit prices, update production, and mark ready.</p></a></div></section></main>
-    <script src="../assets/js/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboards — GESTALTUNG</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<header class="g-nav" data-nav>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
+    </svg>
+    <span class="g-logo-text">Gestaltung</span>
+  </a>
+  <nav class="g-nav-links" data-nav-links>
+    <a class="g-nav-link" href="/studio/">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/">Shop</a>
+    <a class="g-nav-link" href="/projects/">Projects</a>
+    <a class="g-nav-link" href="/about/">About</a>
+    <a class="g-nav-link" href="/contact/">Contact</a>
+    <a class="g-nav-link access" href="/login/">Access</a>
+  </nav>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+</header>
+
+<div class="demo-strip">Demo &middot; Static prototype &middot; all three dashboards share this browser</div>
+
+<main>
+
+  <section class="page-header">
+    <p class="page-label mono">Dashboards</p>
+    <h1 class="page-title">Three views<br>of one system.</h1>
+    <p class="page-lead">
+      Every role reads the same jobs and the same stock. What differs is the
+      slice: a client sees his own work, a workshop sees only what it has to
+      make, and the admin sees all of it.
+    </p>
+  </section>
+
+  <section class="g-section reveal">
+    <div class="access-grid">
+
+      <a class="access-card" href="/dashboard/client/">
+        <p class="mono" style="font-size:10px;color:var(--dim);margin-bottom:16px">01</p>
+        <h3>Client</h3>
+        <p>Projects and their parts lists, his own inventory, the cart, and quotes to approve.</p>
+        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:auto;padding-top:24px;display:block">Open client &rarr;</span>
+      </a>
+
+      <a class="access-card" href="/dashboard/admin/">
+        <p class="mono" style="font-size:10px;color:var(--dim);margin-bottom:16px">02</p>
+        <h3>Admin</h3>
+        <p>Store stock with reorder alerts, the job list, quote building, and users.</p>
+        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:auto;padding-top:24px;display:block">Open admin &rarr;</span>
+      </a>
+
+      <a class="access-card" href="/dashboard/vendor/">
+        <p class="mono" style="font-size:10px;color:var(--dim);margin-bottom:16px">03</p>
+        <h3>Vendor / Workshop</h3>
+        <p>Assigned jobs only — what to make, how many, when. No prices, no client names.</p>
+        <span class="mono" style="font-size:11px;color:var(--dim);margin-top:auto;padding-top:24px;display:block">Open workshop &rarr;</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="g-section reveal">
+    <div class="section-row">
+      <span class="section-label mono">How the pieces connect</span>
+    </div>
+    <p class="page-lead" style="max-width:62ch">
+      A client picks parts from his own shelf or buys them from the shop. Buying
+      reserves store stock; delivery moves it. When a product drops below its
+      reorder point the admin makes a batch, a workshop builds it, and marking it
+      ready puts it back on the shelf. The rules are written down in
+      <a class="link-muted" href="https://github.com/mworkqu/mworkqu.github.io/blob/main/docs/inventory-model.md">docs/inventory-model.md</a>.
+    </p>
+  </section>
+
+</main>
+
+<script src="/assets/js/main.js"></script>
+</body>
 </html>

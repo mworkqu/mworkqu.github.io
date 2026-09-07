@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vendor Dashboard — GESTALTUNG</title>
+  <title>Workshop — GESTALTUNG</title>
+  <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
-<body>
+<body data-dash-page="vendor-jobs">
 
 <header class="g-nav" data-nav>
-  <a class="g-logo" href="../../">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect x=".4" y=".4" width="19.2" height="19.2" stroke="rgba(10,10,10,0.22)" stroke-width=".6"/>
-      <rect x="3.5" y="3.5" width="13" height="13" stroke="rgba(10,10,10,0.09)" stroke-width=".5"/>
-      <line x1="3.5" y1="10" x2="16.5" y2="10" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <line x1="10" y1="3.5" x2="10" y2="16.5" stroke="rgba(10,10,10,0.18)" stroke-width=".5"/>
-      <circle cx="10" cy="10" r="2.2" stroke="rgba(10,10,10,0.28)" stroke-width=".5" fill="none"/>
-      <circle cx="10" cy="10" r=".65" fill="rgba(10,10,10,0.45)"/>
+  <a class="g-logo" href="/">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x=".5" y=".5" width="17" height="17" stroke="rgba(25,23,20,.3)" stroke-width=".6"/>
+      <line x1="9" y1=".5" x2="9" y2="17.5" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <line x1=".5" y1="9" x2="17.5" y2="9" stroke="rgba(25,23,20,.2)" stroke-width=".5"/>
+      <circle cx="9" cy="9" r="2" stroke="rgba(25,23,20,.35)" stroke-width=".5" fill="none"/>
+      <circle cx="9" cy="9" r=".6" fill="rgba(25,23,20,.6)"/>
     </svg>
-    <span class="g-logo-text">GESTALTUNG</span>
+    <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
     <a class="g-nav-link" href="/studio/">Studio</a>
@@ -33,106 +33,66 @@
     <a class="g-nav-link" href="/contact/">Contact</a>
     <a class="g-nav-link access" href="/login/">Access</a>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo · Static prototype · no real vendor data</div>
+<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
-  <aside class="dash-sidebar">
-    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid var(--rule)">Vendor</p>
-    <nav style="display:flex;flex-direction:column;gap:2px">
-      <a class="dash-nav-link active" href="#">Overview</a>
-      <a class="dash-nav-link" href="#">Active Orders</a>
-      <a class="dash-nav-link" href="#">Completed</a>
-      <a class="dash-nav-link" href="#">Files</a>
-      <a class="dash-nav-link" href="#">Messages</a>
-      <a class="dash-nav-link" href="#">Account</a>
-    </nav>
-    <div style="margin-top:auto;padding-top:32px">
-      <a class="link-muted mono" href="../../login/" style="font-size:11px">Sign out</a>
-    </div>
-  </aside>
+  <aside class="dash-sidebar" data-dash-sidebar data-role="vendor" data-active="jobs"></aside>
 
   <section class="dash-main">
-    <div style="margin-bottom:36px">
-      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:6px">Overview</p>
-      <h1 style="font-size:28px;font-weight:200">Workshop dashboard.</h1>
+    <p class="dash-panel-title">My jobs</p>
+    <h1 class="dash-heading"><span data-vendor-name>Workshop</span>.</h1>
+    <p class="dash-subhead">
+      What to make, how many, and when it is due. Prices and client names are not
+      shown here.
+    </p>
+
+    <div class="dash-actions" style="margin-bottom:24px">
+      <label class="mono small" for="v-pick">Signed in as</label>
+      <select class="mini-select" id="v-pick" data-vendor-picker>
+        <option>Workshop A</option>
+        <option>Workshop B</option>
+      </select>
     </div>
 
-    <div class="metric-grid">
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Active orders</span>
-        <strong>7</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Due this week</span>
-        <strong>3</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Awaiting files</span>
-        <strong>2</strong>
-      </div>
-      <div class="metric-card">
-        <span class="mono" style="font-size:10px;color:var(--muted)">Completed this month</span>
-        <strong>14</strong>
+    <div class="table-scroll" data-vendor-open></div>
+    <p class="field-note" data-vendor-note role="status"></p>
+
+    <div class="dash-panel dash-section-gap" data-ready-panel hidden>
+      <p class="dash-panel-title">Mark ready — <span data-ready-job></span></p>
+      <div class="g-form">
+        <div class="field">
+          <label for="v-qty">How many did you actually make?</label>
+          <input type="number" id="v-qty" min="1" value="1" data-ready-qty>
+        </div>
+        <div class="field">
+          <label for="v-note">Note</label>
+          <input type="text" id="v-note" placeholder="Inspection result, anything that went wrong…" data-ready-note>
+        </div>
+        <div class="field span-2 dash-actions">
+          <button class="btn btn-primary" type="button" data-ready-confirm>Confirm ready</button>
+          <button class="btn btn-ghost" type="button" data-ready-cancel>Cancel</button>
+          <p class="field-error" data-ready-error role="alert"></p>
+        </div>
       </div>
     </div>
 
-    <div style="margin-top:40px">
-      <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--rule)">Active orders</p>
-      <table class="g-table">
-        <thead>
-          <tr>
-            <th>Order</th>
-            <th>Description</th>
-            <th>Process</th>
-            <th>Due</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono" style="font-size:11px">MO-2024-019</td>
-            <td>Bracket assembly × 12</td>
-            <td>CNC · AL6061</td>
-            <td class="mono" style="font-size:11px">16 May</td>
-            <td><span class="badge active">In progress</span></td>
-            <td><a class="btn-table" href="#">Update</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">MO-2024-021</td>
-            <td>Enclosure panels × 4</td>
-            <td>Laser · SS304</td>
-            <td class="mono" style="font-size:11px">18 May</td>
-            <td><span class="badge active">In progress</span></td>
-            <td><a class="btn-table" href="#">Update</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">MO-2024-022</td>
-            <td>Prototype housing × 1</td>
-            <td>3D print · SLA</td>
-            <td class="mono" style="font-size:11px">20 May</td>
-            <td><span class="badge">Awaiting files</span></td>
-            <td><a class="btn-table" href="#">View</a></td>
-          </tr>
-          <tr>
-            <td class="mono" style="font-size:11px">MO-2024-023</td>
-            <td>Turned fittings × 50</td>
-            <td>CNC · SS316</td>
-            <td class="mono" style="font-size:11px">22 May</td>
-            <td><span class="badge">Queued</span></td>
-            <td><a class="btn-table" href="#">View</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="dash-panel-title dash-section-gap">Finished</p>
+    <div class="table-scroll" data-vendor-done></div>
   </section>
 
 </main>
 
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/product-art.js"></script>
+<script src="/assets/js/store.js"></script>
+<script src="/assets/js/client-store.js"></script>
+<script src="/assets/js/admin-store.js"></script>
+<script src="/assets/js/dash-shell.js"></script>
+<script src="/assets/js/client-pages.js"></script>
+<script src="/assets/js/admin-pages.js"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

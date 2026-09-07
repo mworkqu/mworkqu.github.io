@@ -96,8 +96,9 @@ document.querySelectorAll('[data-filter-group]').forEach((group) => {
   const counter   = document.querySelector(`[data-filter-count="${groupName}"]`);
   if (!target) return;
 
-  const cards = Array.from(target.children);
-  const total = cards.length;
+  /* Re-read the children on every click: the shop grid is rendered
+     from data/products.json after this listener is attached. */
+  const readCards = () => Array.from(target.children);
 
   group.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-filter]');
@@ -107,6 +108,8 @@ document.querySelectorAll('[data-filter-group]').forEach((group) => {
     btn.setAttribute('aria-pressed', 'true');
 
     const filter = btn.dataset.filter;
+    const cards = readCards();
+    const total = cards.length;
     let shown = 0;
     cards.forEach((card) => {
       const tags = (card.dataset.tags || '').split(/\s+/);
