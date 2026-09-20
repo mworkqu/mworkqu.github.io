@@ -20,11 +20,17 @@ TENANT_DAILY_CAP = "25"
 # key. Use it to exercise the whole path before you have credentials.
 MOCK = "0"
 
+# The paid slot (Stage 6). It needs BOTH this flag and a key, and it
+# is the only provider here that can produce an invoice. Leave it at
+# "0" until someone has decided to spend money on purpose.
+ENABLE_PAID = "0"
+
 # Models. Override to move to a different free tier without a deploy
 # of the code itself.
 # GEMINI_MODEL     = "gemini-2.0-flash"
 # GROQ_MODEL       = "llama-3.3-70b-versatile"
 # OPENROUTER_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+# PAID_MODEL       = "claude-sonnet-5"
 
 # Uncomment after `wrangler kv namespace create RATE_KV` and paste the
 # id it prints. Without it the caps are advisory.
@@ -37,3 +43,6 @@ MOCK = "0"
 #   wrangler secret put GEMINI_API_KEY
 #   wrangler secret put GROQ_API_KEY
 #   wrangler secret put OPENROUTER_API_KEY
+#
+# And, only when ENABLE_PAID = "1":
+#   wrangler secret put ANTHROPIC_API_KEY

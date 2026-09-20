@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "updated": "2026-09-20",
+  "note": "Credit pricing for AI features. Nothing here charges anybody: Stage 6 prepares the meter, it does not switch it on. Enforcement is off in ai-config.js (billing.enforce) and this file is read to COUNT, not to bill. Prices live here rather than in code so a tier or a feature price is a data edit — and so that when this moves to Postgres it moves as rows, not as a deploy. See docs/ai-roadmap.md.",
+
+  "currency": "credits",
+
+  "features": {
+    "classifyProject": {
+      "credits": 1,
+      "estTokensIn": 420,
+      "estTokensOut": 120,
+      "note": "A short structured prompt and a short JSON answer. Measured against the real prompt in proxy/worker.js, not guessed."
+    },
+    "generateImage": {
+      "credits": 8,
+      "estTokensIn": 200,
+      "estTokensOut": 0,
+      "note": "Not implemented. Priced now so the meter is not redesigned when it is — an image is roughly an order of magnitude more expensive than a classification."
+    },
+    "generateSchematic": {
+      "credits": 15,
+      "estTokensIn": 1200,
+      "estTokensOut": 2000,
+      "note": "Not implemented. A long reasoning task with a long structured answer."
+    },
+    "generateModel": {
+      "credits": 25,
+      "estTokensIn": 1500,
+      "estTokensOut": 3000,
+      "note": "Not implemented. The most expensive thing on the roadmap, and priced to say so."
+    }
+  },
+
+  "providerMultipliers": {
+    "rules": 0,
+    "cache": 0,
+    "local": 0,
+    "gemini": 1,
+    "groq": 1,
+    "openrouter": 1,
+    "paid": 4
+  },
+
+  "multiplierNote": "Zero is a real price, not a missing one. The rules, the cache and an on-device model cost nothing to run, so they must cost nothing to use — otherwise a client on a small plan is pushed towards the expensive answer by their own allowance, which is exactly backwards.",
+
+  "plans": [
+    {
+      "key": "free",
+      "label": { "en": "Free", "ar": "مجاني" },
+      "monthlyCredits": 50,
+      "providers": ["rules", "cache", "local", "gemini", "groq", "openrouter"],
+      "overage": "block",
+      "note": "Everything that runs on a free tier or on the client's own device. No paid provider, so this plan cannot generate a bill."
+    },
+    {
+      "key": "studio",
+      "label": { "en": "Studio", "ar": "استوديو" },
+      "monthlyCredits": 500,
+      "providers": ["rules", "cache", "local", "gemini", "groq", "openrouter", "paid"],
+      "overage": "block",
+      "note": "Blocks at the allowance rather than charging past it. A surprise invoice is a worse experience than a feature that stops."
+    },
+    {
+      "key": "workshop",
+      "label": { "en": "Workshop", "ar": "ورشة" },
+      "monthlyCredits": 2500,
+      "providers": ["rules", "cache", "local", "gemini", "groq", "openrouter", "paid"],
+      "overage": "notify",
+      "note": "Keeps working past the allowance and flags it, for a client whose work must not stop mid-job. 'notify' still needs somewhere to notify — see docs/ai-roadmap.md."
+    }
+  ],
+
+  "overageNote": "'block' stops at the allowance. 'notify' continues and marks the usage. There is deliberately no 'charge' option yet: metering that bills is a different kind of system, and it is not this one.",
+
+  "defaultPlan": "free"
+}

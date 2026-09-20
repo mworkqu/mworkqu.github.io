@@ -40,7 +40,11 @@ window.AI_CONFIG = {
     groq:       { enabled: true,  implemented: true,  local: false, stage: 3 },
     openrouter: { enabled: true,  implemented: true,  local: false, stage: 3 },
     local:      { enabled: false, implemented: true,  local: true,  stage: 5 },
-    paid:       { enabled: false, implemented: false, local: false, stage: 6 }
+    /* The paid slot. Implemented on both sides and switched off:
+       the adapter is in llm-provider.js and the route is in
+       proxy/worker.js behind ENABLE_PAID. Turning it on is two
+       flags and a key, and it is nobody's accident. */
+    paid:       { enabled: false, implemented: true,  local: false, stage: 6 }
   },
 
   /* Where the keys live. Never a key in this file — see
@@ -111,6 +115,26 @@ window.AI_CONFIG = {
     sendRawFiles:    false,
     requireConsent:  true,
     consentDefault:  false
+  },
+
+  /* ── Credits and plans (Stage 6) — the meter, not the till ──
+     Every provider call is priced from data/ai-plans.json and
+     recorded against the tenant. Nothing is charged: `enforce` is
+     off, so the credits are counted and shown and never refuse
+     anybody.
+
+     Turning `enforce` on makes ai.js stop a call that would take a
+     tenant past their monthly allowance, the same way the daily caps
+     already stop one. Read docs/ai-roadmap.md before you do, because
+     "this feature stopped working" needs somewhere for the client to
+     go next. */
+  billing: {
+    enforce:    false,
+    /* A meter whose readings are only in the browser is a display.
+       This says out loud that the number the client sees is not yet
+       the number anyone would invoice. */
+    authority:  'client',   /* 'client' | 'server' — see the roadmap */
+    showToClient: true
   },
 
   /* ── The in-browser model (Stage 5) — an experiment, and off ──

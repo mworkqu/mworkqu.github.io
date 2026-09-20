@@ -393,6 +393,14 @@ window.DataStore = (function () {
       latency_ms: typeof entry.latencyMs === 'number' ? Math.round(entry.latencyMs) : null,
       tokens_in:  entry.tokensIn || 0,
       tokens_out: entry.tokensOut || 0,
+      /* An estimate and a measurement are different evidence, and
+         adding them up as though they were the same is how a meter
+         becomes indefensible. Marked, never merged. */
+      tokens_estimated: !!entry.tokensEstimated,
+      /* Priced by Billing from data/ai-plans.json. In Postgres this
+         is computed server-side from the price rows — a client that
+         can post its own price is not metered. See 0008_billing.sql. */
+      credits:    typeof entry.credits === 'number' ? entry.credits : 0,
       classification_id: entry.classificationId || null,
       created_at: new Date().toISOString()
     };
@@ -446,6 +454,30 @@ window.DataStore = (function () {
     };
     commit();
     return { ok: true, granted: !!granted };
+  }
+
+  /* ── The subscription plan (Stage 6) ─────────────────────
+     Which tier a tenant is on. Nothing charges for it and nothing
+     enforces it unless AI_CONFIG.billing.enforce is switched on —
+     Stage 6 prepares the meter, it does not start the till.
+
+     Stored per tenant, and in Postgres it will be a column on
+     `tenants` that only the service role can write. A tenant that
+     can set its own plan has a free plan. */
+
+  async function getTenantPlan() {
+    const rec = (raw().aiSettings || {})[tenantId()];
+    return { plan: (rec && rec.plan) || 'free', at: (rec && rec.planAt) || null };
+  }
+
+  async function setTenantPlan(plan) {
+    const s = raw();
+    if (!s.aiSettings) s.aiSettings = {};
+    const rec = s.aiSettings[tenantId()] || (s.aiSettings[tenantId()] = {});
+    rec.plan   = plan || 'free';
+    rec.planAt = new Date().toISOString();
+    commit();
+    return { ok: true, plan: rec.plan };
   }
 
   /* ── The local-model opt-in (Stage 5) ────────────────────
@@ -692,6 +724,9 @@ window.DataStore = (function () {
     /* AI usage, caps and consent — 0004_ai.sql and 0005_ai_consent.sql */
     logAiUsage: logAiUsage, countAiUsage: countAiUsage, listAiUsage: listAiUsage,
     getAiConsent: getAiConsent, setAiConsent: setAiConsent,
+
+    /* Subscription tier — see data/ai-plans.json and 0008_billing.sql */
+    getTenantPlan: getTenantPlan, setTenantPlan: setTenantPlan,
 
     /* The local-model opt-in — device scoped, see Stage 5 */
     getLocalModelOptIn: getLocalModelOptIn, setLocalModelOptIn: setLocalModelOptIn,

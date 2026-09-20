@@ -162,6 +162,15 @@
         } else if (e.skipped === 'tenant_daily_cap' || e.skipped === 'global_daily_cap') {
           line = t('ai.source.capped',
                    'The rules answered. The daily AI limit has been reached, so no model was asked.');
+        } else if (e.skipped === 'credits_exhausted') {
+          /* Said plainly, and without pretending the answer is
+             worse than it is: the rules DID answer. A client who
+             has run out of allowance still got a result. */
+          line = t('ai.source.noCredits',
+            'The rules answered. This month’s AI allowance has been used up.');
+        } else if (e.skipped === 'provider_not_in_plan') {
+          line = t('ai.source.notInPlan',
+            'The rules answered. The faster AI service is not part of this plan.');
         } else if (e.skipped === 'all_providers_failed') {
           line = t('ai.source.failed',
                    'The rules answered. Every AI service was unreachable.');

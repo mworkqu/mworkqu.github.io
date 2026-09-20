@@ -55,6 +55,24 @@ const PROVIDERS = {
     defaultModel: 'meta-llama/llama-3.3-70b-instruct:free',
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
     call: callOpenAICompatible
+  },
+
+  /* ── the paid slot (Stage 6) ──────────────────────────
+     Disabled twice over: it needs ENABLE_PAID = "1" AND a key. One
+     switch would be enough to make it work, which is exactly why
+     there are two — this is the only provider here that can produce
+     an invoice, and it should not start doing that because somebody
+     pasted a key while debugging.
+
+     Anthropic by default. Any paid API is one more row: the browser
+     side already has the adapter and calls it `paid`, so switching
+     vendor never reaches the page. */
+  paid: {
+    keyEnv: 'ANTHROPIC_API_KEY',
+    modelEnv: 'PAID_MODEL',
+    defaultModel: 'claude-sonnet-5',
+    requiresFlag: 'ENABLE_PAID',
+    call: callAnthropic
   }
 };
 
@@ -248,6 +266,46 @@ async function callGemini(spec, env, payload, model) {
 
 /* ── mock, for local testing without a key ─────────────── */
 
+/* Anthropic's Messages API: a system field of its own rather than a
+   system message, and usage reported as input_tokens/output_tokens.
+   The prompt and the validation are shared with every other provider
+   — only the envelope differs, which is the whole reason the vendor
+   differences live in this file. */
+async function callAnthropic(spec, env, payload, model) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': env[spec.keyEnv],
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: model,
+      max_tokens: 700,
+      temperature: 0,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: buildUserPrompt(payload) }]
+    })
+  });
+
+  const body = await res.json().catch(() => null);
+  if (!res.ok) {
+    return {
+      ok: false, status: res.status,
+      error: (body && body.error && body.error.message) || 'provider_error'
+    };
+  }
+
+  const text = (body && Array.isArray(body.content) && body.content[0] && body.content[0].text) || '';
+  const usage = (body && body.usage) || {};
+  return {
+    ok: true,
+    parsed: parseJSONLoose(text),
+    tokensIn:  usage.input_tokens  || 0,
+    tokensOut: usage.output_tokens || 0
+  };
+}
+
 /* Enabled with MOCK=1. Deterministic, so the four Stage 3 checks in
    proxy/README.md can be run before any key exists. It is a canned
    answer, not a model, and says so in its reasons. */
@@ -353,7 +411,14 @@ export default {
       return json({
         ok: true,
         mock: mock,
-        providers: Object.keys(PROVIDERS).filter((p) => mock || !!env[PROVIDERS[p].keyEnv]),
+        providers: Object.keys(PROVIDERS).filter((p) => {
+          const spec = PROVIDERS[p];
+          if (spec.requiresFlag && env[spec.requiresFlag] !== '1') return false;
+          return mock || !!env[spec.keyEnv];
+        }),
+        /* Stated separately, because "the paid provider is off" is
+           the single most important thing this endpoint can say. */
+        paidEnabled: env.ENABLE_PAID === '1' && !!env.ANTHROPIC_API_KEY,
         capEnforced: !!env.RATE_KV && !!(env.GLOBAL_DAILY_CAP || env.TENANT_DAILY_CAP),
         allowedOrigins: (env.ALLOWED_ORIGINS || '(any — set ALLOWED_ORIGINS)').split(',')
       }, 200, cors.headers);
@@ -378,6 +443,16 @@ export default {
     if (!spec) return json({ ok: false, error: 'unknown_provider' }, 400, cors.headers);
 
     const mock = env.MOCK === '1';
+
+    /* A provider that bills has to be switched on deliberately. 501
+       rather than 403 on purpose: to the browser this is "not
+       configured", the fallback chain moves on, and nothing about
+       the site's billing arrangements is announced to a caller who
+       was not supposed to reach it. */
+    if (spec.requiresFlag && env[spec.requiresFlag] !== '1') {
+      return json({ ok: false, error: 'provider_not_enabled' }, 501, cors.headers);
+    }
+
     if (!mock && !env[spec.keyEnv]) {
       /* Not configured is a 501, not a 500: the browser's fallback
          chain should move to the next provider, not treat it as an

@@ -780,6 +780,64 @@ prediction was overwritten and is not recoverable, and scoring against a mixed
 bag while calling it "versus the rules" would be comparing it to something that
 is not the rules.
 
+### Credits and plans — the meter, not the till
+
+**Nothing charges anybody.** Stage 6 was asked to prepare a subscription, not
+to launch one, and the difference is deliberate: a meter can be wrong for a
+month and be fixed, while a bill that is wrong for a month has to be refunded
+and explained.
+
+`data/ai-plans.json` prices each feature and each provider.
+**Cost = ceil(feature credits × provider multiplier).** Adding a tier or
+repricing a feature is a data edit.
+
+A price of zero is a real price. The rules, the cache and the on-device model
+cost nothing to run, so they cost nothing to use — charging for them would push
+a client on a small plan towards the expensive answer to save their allowance,
+which is exactly backwards.
+
+`/dashboard/admin/ai/` shows credits used this month against the plan's
+allowance, per tenant, with the full price list beside it. A number nobody can
+reconstruct should never be the only thing on screen.
+
+**Estimated tokens are marked as estimated.** When a provider reports no usage,
+the tokens are estimated from the payload and the row is flagged. The page
+reports estimated rows separately and never adds them into a measured total.
+
+**Enforcement is off** (`billing.enforce`). Switched on, `ai.js` refuses a
+provider call that would pass the allowance — in the same place and for the
+same reason as the daily caps, before the call rather than after. A free
+provider is never refused: running out of credits leaves a client with the
+rules, the cache and the on-device model, because an allowance that becomes an
+outage is a bug, not a policy.
+
+### The paid slot
+
+`proxy/worker.js` has an Anthropic adapter behind **two** switches:
+`ENABLE_PAID = "1"` *and* a key. One would have been enough to make it work,
+which is exactly why there are two — it is the only provider here that can
+produce an invoice, and it should not start doing that because somebody pasted
+a key while debugging. `/health` reports `paidEnabled` on its own line.
+
+The browser side already has a provider called `paid` and does not know which
+vendor is behind it, so changing vendor never reaches a page.
+
+### The honest gap
+
+Today the browser computes the price and posts it with the usage row.
+`billing.authority` says `'client'` for exactly that reason. **A client that
+can post its own price is not metered.**
+
+`supabase/migrations/0008_billing.sql` already holds the fix: prices are rows,
+and an insert trigger recomputes `credits` from them and discards whatever
+arrived. Flipping `authority` to `'server'` is meaningful only once that
+trigger is running.
+
+**[docs/ai-roadmap.md](docs/ai-roadmap.md)** has the full walkthrough: how to
+move a feature from free to paid in five ordered steps, every cost-control
+setting and what each one actually stops, and what is still missing before
+anyone could be charged.
+
 ### Adding a panel or a provider
 
 A provider registers itself from its own file with

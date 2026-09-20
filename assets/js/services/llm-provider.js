@@ -32,7 +32,13 @@
   const cfg   = () => (window.AI_CONFIG || {});
   const proxy = () => (cfg().proxy || {});
 
-  const NAMES = ['gemini', 'groq', 'openrouter'];
+  /* `paid` is the same three lines as the free ones — the whole
+     difference between a free tier and a paid account is a row in
+     proxy/worker.js and a key, which is the point of putting the
+     provider differences there. It is registered here and disabled
+     in ai-config.js, so moving a feature to a paid model is a config
+     edit and never a code change under time pressure. */
+  const NAMES = ['gemini', 'groq', 'openrouter', 'paid'];
 
   /* ── validation, again ───────────────────────────────── */
 

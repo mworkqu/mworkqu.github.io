@@ -88,6 +88,10 @@
     <h2 class="ins-h2" data-i18n="adminAi.h.providers">Provider calls in this period</h2>
     <div class="table-scroll" data-ai-providers></div>
 
+    <h2 class="ins-h2" data-i18n="adminAi.h.credits">Credits this month</h2>
+    <p class="ins-lede" data-i18n="adminAi.creditsLede">The meter, not the till. Every call is priced from data/ai-plans.json and counted against the tenant's plan. Nothing is charged, and no limit refuses anybody until enforcement is switched on.</p>
+    <div data-ai-credits></div>
+
     <h2 class="ins-h2" data-i18n="adminAi.h.local">A model on this device</h2>
     <p class="ins-lede" data-i18n="adminAi.localLede">An experiment, and it is off. A small model can run in this browser instead of calling a service: nothing is uploaded and nothing is spent. It stays off until it is shown to beat the rules on the log below.</p>
     <div data-ai-local></div>
@@ -107,6 +111,7 @@
 <script src="/assets/js/client-store.js"></script>
 <script src="/assets/js/data/store.js"></script>
 <script src="/assets/js/services/ai-config.js"></script>
+<script src="/assets/js/services/billing.js"></script>
 <script src="/assets/js/services/ai.js"></script>
 <!-- Registers itself with AIService and does nothing else until the
      experiment is switched on. No model is downloaded by this tag. -->

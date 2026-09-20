@@ -123,6 +123,36 @@ proxy: { url: 'http://localhost:8787', mock: false }
 
 `http://localhost:4173` is already in the default `ALLOWED_ORIGINS`.
 
+## The paid slot
+
+There is one provider here that can produce an invoice, and it is switched off
+twice: it needs `ENABLE_PAID = "1"` in `wrangler.toml` **and**
+`ANTHROPIC_API_KEY` as a secret. Either one alone does nothing.
+
+One switch would have been enough to make it work, which is the reason there
+are two — a key pasted while debugging should not start a bill.
+
+```bash
+wrangler secret put ANTHROPIC_API_KEY
+# ENABLE_PAID = "1" in wrangler.toml
+wrangler deploy
+curl https://…/health      # "paidEnabled": true
+```
+
+`/health` reports `paidEnabled` on its own line, because "the paid provider is
+off" is the single most important thing this endpoint can say.
+
+A caller that reaches `/classify` with `provider: "paid"` while it is disabled
+gets `501 provider_not_enabled` — the same shape as "not configured", so the
+browser's fallback chain moves on and nothing about the site's billing
+arrangements is announced to someone who was not supposed to be there.
+
+Switching vendor is one row in `PROVIDERS` plus an adapter, the way
+`callOpenAICompatible` already serves both Groq and OpenRouter. The browser
+calls it `paid` and never learns who answered.
+
+Full walkthrough: **[../docs/ai-roadmap.md](../docs/ai-roadmap.md)**.
+
 ## Two caps, and why both
 
 The browser counts its own usage before asking, and this worker counts again

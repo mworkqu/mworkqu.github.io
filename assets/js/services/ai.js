@@ -395,6 +395,22 @@ window.AIService = (function () {
             const isLocal = !!(decl[name] && decl[name].local);
 
             if (!isLocal) {
+              /* The monthly allowance, checked the same way and for
+                 the same reason as the daily caps: before the call,
+                 so a limit stops the request instead of recording
+                 that it went over. Off unless billing.enforce is on,
+                 and never applied to a provider that costs nothing. */
+              let overAllowance = null;
+              if (window.Billing) {
+                try {
+                  overAllowance = await Billing.check('classifyProject', name, {});
+                } catch (e) { /* a limit we cannot read is one we do not apply */ }
+              }
+              if (overAllowance) {
+                escalation.skipped = overAllowance;
+                continue;
+              }
+
               const blocked = await remoteBlockedBy();
               if (blocked) {
                 /* Recorded, and the loop continues: a later
@@ -419,6 +435,22 @@ window.AIService = (function () {
                that is what the free tier was charged for. */
             if (window.DataStore && DataStore.logAiUsage) {
               try {
+                /* Priced per call, from data/ai-plans.json. A
+                   provider that reports no tokens gets an estimate,
+                   flagged as one: a call that plainly used tokens
+                   must not read as zero, and an estimate must not
+                   read as a measurement. */
+                let credits = 0, tokens = null;
+                if (window.Billing) {
+                  try {
+                    credits = await Billing.cost('classifyProject', name);
+                    if (r && r.ok && !(r.tokensIn || r.tokensOut)) {
+                      tokens = await Billing.estimateTokens(
+                        'classifyProject', payloadFor(isLocal));
+                    }
+                  } catch (e) { /* unpriced counts as free, never guessed */ }
+                }
+
                 await DataStore.logAiUsage({
                   provider: name, feature: 'classifyProject',
                   model: (r && r.model) || null,
@@ -426,12 +458,14 @@ window.AIService = (function () {
                      must not count against a spend cap. Logged all
                      the same — it is still a call that happened. */
                   billable: !isLocal,
+                  credits: credits,
+                  tokensEstimated: !!tokens,
                   ok: !!(r && r.ok),
                   status: r && r.status,
                   error: (r && !r.ok) ? (r.reason || 'failed') : null,
                   latencyMs: (r && r.latencyMs) || (Date.now() - started),
-                  tokensIn: (r && r.tokensIn) || 0,
-                  tokensOut: (r && r.tokensOut) || 0
+                  tokensIn:  (r && r.tokensIn)  || (tokens ? tokens.tokensIn  : 0),
+                  tokensOut: (r && r.tokensOut) || (tokens ? tokens.tokensOut : 0)
                 });
               } catch (e) { /* logging must never break the answer */ }
             }

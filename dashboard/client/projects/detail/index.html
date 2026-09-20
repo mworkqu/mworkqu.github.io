@@ -90,6 +90,9 @@
 <script src="/assets/js/client-store.js"></script>
 <script src="/assets/js/data/store.js"></script>
 <script src="/assets/js/services/ai-config.js"></script>
+<!-- Prices a call before ai.js logs it. Without this the usage rows
+     record the call but not what it cost. -->
+<script src="/assets/js/services/billing.js"></script>
 <script src="/assets/js/services/geometry.js"></script>
 <script src="/assets/js/services/ai.js"></script>
 <!-- Each registers itself with AIService; ai.js never names them. -->

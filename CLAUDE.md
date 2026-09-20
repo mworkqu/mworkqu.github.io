@@ -252,6 +252,34 @@ question can be re-asked when there is real correction data.
 - The benchmark scores only rows whose `source` is `rules` — elsewhere the
   rules' own prediction was overwritten and is not in the log.
 
+### Credits and plans (Stage 6)
+
+`assets/js/services/billing.js` + `data/ai-plans.json`. It counts; it does not
+charge. `billing.enforce` is off, `providers.paid.enabled` is off, and
+`ENABLE_PAID` in the worker is `"0"`.
+
+- **Cost = ceil(feature credits × provider multiplier)**, both from data.
+  Adding a tier is a data edit, never a code change.
+- **Zero is a real price.** rules / cache / local are free to run and therefore
+  free to use. Pricing them pushes a client towards the expensive answer.
+- **A free provider is never refused.** `Billing.check()` returns early when the
+  price is zero, so an exhausted allowance still leaves the rules. An allowance
+  that becomes an outage is a bug.
+- **The allowance is checked before the call**, beside the daily caps, so a
+  limit stops the request rather than recording that it went over.
+- **Estimates are flagged, never merged.** `tokens_estimated` exists because
+  adding an estimate to a measurement is how a meter becomes indefensible.
+- **The browser posts the price today, and that is not good enough to bill on.**
+  `billing.authority: 'client'` says so. `0008_billing.sql` has the trigger that
+  recomputes `credits` server-side; flipping to `'server'` means nothing until
+  it runs.
+- New escalation reasons `credits_exhausted` and `provider_not_in_plan` have
+  provenance lines in the panel. A refusal the user cannot see the reason for
+  reads as a broken feature.
+
+Operations live in `docs/ai-roadmap.md` — free→paid in five ordered steps, and
+every cost-control setting with what it actually stops.
+
 ## i18n
 
 English and Arabic, `data/i18n/{en,ar}.json`, applied by

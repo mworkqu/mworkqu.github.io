@@ -533,6 +533,116 @@
     }, null, 2), 'application/json');
   }
 
+  /* ── credits and plans (Stage 6) ─────────────────────── */
+
+  /* What a subscription would have metered, had anyone been charged.
+     Shown per tenant against the plan's monthly allowance, with the
+     price list beside it so a number nobody can reconstruct is never
+     the only thing on screen. */
+
+  async function renderCredits() {
+    const host = $('[data-ai-credits]');
+    if (!host || !window.Billing) return;
+
+    let plans, plan, u;
+    try {
+      plans = await Billing.load();
+      plan  = await Billing.planFor(await Billing.currentPlan());
+      u     = await Billing.used({
+        scope: 'all',
+        tenant: state.tenant === 'all' ? null : state.tenant
+      });
+    } catch (e) {
+      host.innerHTML = `<p class="dash-empty">${esc(t('adminAi.credits.unavailable',
+        'The price list could not be read.'))}</p>`;
+      return;
+    }
+
+    const allowance = plan ? (plan.monthlyCredits || 0) : 0;
+    const enforcing = !!(((window.AI_CONFIG || {}).billing) || {}).enforce;
+    const pctUsed   = allowance ? Math.min(100, Math.round((u.credits / allowance) * 100)) : 0;
+
+    host.innerHTML = `
+      <div class="metric-grid">
+        <div class="metric-card">
+          <strong>${u.credits}</strong>
+          <span class="metric-label">${esc(t('adminAi.credits.used', 'Credits this month'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${allowance}</strong>
+          <span class="metric-label">${esc(t('adminAi.credits.allowance', 'Plan allowance'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${u.calls}</strong>
+          <span class="metric-label">${esc(t('adminAi.credits.calls', 'Billable calls'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${u.tokensIn + u.tokensOut}</strong>
+          <span class="metric-label">${esc(t('adminAi.credits.tokens', 'Tokens counted'))}</span>
+        </div>
+      </div>
+
+      <div class="ins-cap">
+        <div class="ins-cap-row">
+          <span>${esc(t('adminAi.credits.since', 'Since {d}').replace('{d}', u.since.slice(0, 10)))}</span>
+          <span class="mono">${u.credits} / ${allowance}</span>
+        </div>
+        <div class="ins-bar"><span style="width:${pctUsed}%"></span></div>
+      </div>
+
+      <label class="ins-control">
+        <span>${esc(t('adminAi.credits.plan', 'Plan for this tenant'))}</span>
+        <select data-ai-plan>
+          ${(plans.plans || []).map((x) => `
+            <option value="${esc(x.key)}"${plan && plan.key === x.key ? ' selected' : ''}>${
+              esc(window.I18n ? I18n.pick(x.label) : x.label.en)} — ${x.monthlyCredits}</option>`).join('')}
+        </select>
+      </label>
+
+      <p class="ins-lede">${esc(enforcing
+        ? t('adminAi.credits.enforcing', 'Enforcement is ON: a call that would go past the allowance is refused.')
+        : t('adminAi.credits.notEnforcing', 'Enforcement is off. Credits are counted and shown; nothing is refused and nothing is charged.'))}</p>
+
+      ${u.estimatedRows ? `<p class="ins-lede">${esc(t('adminAi.credits.estimated',
+        '{n} of these calls reported no token count and were estimated. Estimates are marked and never added to measured counts as though they were the same.')
+        .replace('{n}', u.estimatedRows))}</p>` : ''}
+
+      <h3 class="ins-h3">${esc(t('adminAi.credits.priceList', 'What each thing costs'))}</h3>
+      <div class="table-scroll">
+        <table class="g-table">
+          <thead><tr>
+            <th>${esc(t('adminAi.credits.feature', 'Feature'))}</th>
+            <th class="num">${esc(t('adminAi.credits.base', 'Base'))}</th>
+            ${Object.keys(plans.providerMultipliers || {}).map((k) =>
+              `<th class="num">${esc(k)}</th>`).join('')}
+          </tr></thead>
+          <tbody>
+            ${Object.keys(plans.features || {}).map((f) => {
+              const base = plans.features[f].credits || 0;
+              const live = (window.AI_CONFIG.features || {})[f];
+              return `<tr>
+                <td>${esc(f)}${live ? '' : `<div class="cell-note">${esc(
+                  t('adminAi.credits.notBuilt', 'not built yet'))}</div>`}</td>
+                <td class="num mono">${base}</td>
+                ${Object.keys(plans.providerMultipliers).map((k) =>
+                  `<td class="num mono">${Math.ceil(base * plans.providerMultipliers[k])}</td>`).join('')}
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  function bindCredits() {
+    const host = $('[data-ai-credits]');
+    if (!host) return;
+    host.addEventListener('change', async (e) => {
+      if (!e.target.closest('[data-ai-plan]')) return;
+      await DataStore.setTenantPlan(e.target.value);
+      await renderCredits();
+    });
+  }
+
   /* ── the on-device model (Stage 5) ───────────────────── */
 
   /* An experiment with a verdict attached. The point of this panel
@@ -726,6 +836,7 @@
     renderCorrections();
     renderProposals();
     renderUsage();
+    renderCredits();
     renderLocal();
   }
 
@@ -810,6 +921,7 @@
     /* Process labels are {en, ar} pairs, so a language switch has
        to re-pick them before repainting or the table repaints in
        the old language. */
+    bindCredits();
     bindLocal();
 
     document.addEventListener('i18n:change', async () => {
