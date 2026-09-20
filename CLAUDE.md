@@ -230,6 +230,28 @@ writes one row type: an admin's decision on a rule draft.
   boundary is the staff `SELECT` policy in `0006_ai_insight.sql` — select only,
   because a correction log an operator can edit is not evidence.
 
+### The on-device model (Stage 5) — an experiment that lost
+
+`assets/js/services/local-model-provider.js`. Off by default and staying off:
+measured on the logged history it scored 29% against the rules' 59%, and its
+cosine margins were 0.00–0.04. Details in README.md. The code stays so the
+question can be re-asked when there is real correction data.
+
+- **Never download during a classification.** `classifyProject()` returns
+  `model_not_loaded` immediately. A client waiting 25 MB for an answer the
+  rules already had is a worse product than no local model.
+- **Confidence is a margin over the runner-up, capped below the rules.** A
+  cosine similarity is always positive; presenting it as a probability shows
+  high confidence for a part the model has never seen.
+- **Consent and caps are per provider, not per chain** (`remoteBlockedBy()` in
+  `ai.js`). A local provider sends nothing and spends nothing. Gating it on a
+  spend cap disables the free option exactly when the paid ones ran out.
+- Local usage rows are `billable: false` and are excluded from `countAiUsage`.
+  The default is `true`, because the failure that matters is undercounting what
+  a free tier was charged.
+- The benchmark scores only rows whose `source` is `rules` — elsewhere the
+  rules' own prediction was overwritten and is not in the log.
+
 ## i18n
 
 English and Arabic, `data/i18n/{en,ar}.json`, applied by

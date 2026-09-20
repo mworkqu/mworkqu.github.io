@@ -720,6 +720,66 @@ decided by `is_staff()` reading the caller's own profile row, which the caller
 cannot write. Staff can read the logs; they cannot rewrite them. A correction
 log an operator can edit is not evidence.
 
+### The on-device model, and why it is off
+
+**Stage 5 was run as an experiment and the experiment lost.** The result is in
+the repository because a negative result is still a result, and because the
+next person to have this idea deserves the measurement rather than the
+enthusiasm.
+
+`assets/js/services/local-model-provider.js` loads a small sentence-embedding
+model (`Xenova/all-MiniLM-L6-v2`, ~25 MB, quantised) through Transformers.js,
+describes the part as a sentence, describes each process from
+`data/processes.json`, and picks the closest by cosine similarity. It is a real
+provider: it registers with `AIService` like any other and `ai.js` does not
+know it is special.
+
+What it scored, on the logged history, against the rules it would replace:
+
+| | |
+|---|---|
+| Rules | 59% |
+| On-device model | 29% |
+| Rows compared | 17 (all generated samples) |
+| Rows the model would even answer | 7 of 17 |
+
+And on individual briefs the failures are not near misses. "A waterproof
+enclosure for a sensor board" came back as **PCB manufacturing**; a flat 3 mm
+metal plate 400 mm across came back as **3D printing**; a tight-tolerance metal
+part came back as **EDM**. The cosine margins were 0.00–0.04, which is noise.
+
+The honest reading is that similarity to a label sentence is not a
+classifier. Doing better would mean either a genuinely trained model over the
+Stage 4 corrections, or a zero-shot NLI model at 100 MB+ — and neither is
+justified by a problem the rules answer for free, locally, right now.
+
+So it stays behind `providers.local.enabled: false`, and the code exists so the
+question can be re-asked cheaply when there is real correction data to train on.
+
+**What it does get right, structurally:**
+
+- **It never blocks.** `classifyProject()` returns immediately when the model
+  is not loaded — it will not start a 25 MB download in the middle of
+  answering a client. The library is imported only when `load()` is called.
+- **It is opt-in, and the opt-in states the size and the hosts.** The choice is
+  recorded per device, not per tenant: what is being agreed to is a download
+  onto this machine.
+- **Its confidence is a margin, not a probability.** A cosine similarity is
+  always positive, so presenting it as a probability shows high confidence for
+  a part the model knows nothing about. It is derived from how far ahead the
+  winner is, and capped below the hand-written rules.
+- **It costs nothing, and the code knows that.** Consent and the daily caps are
+  now checked *per provider* in `ai.js`: a model running on the device sends
+  nothing and spends nothing, and gating it on a spend cap would disable the
+  one free option exactly when the paid ones have run out. Its usage rows are
+  logged `billable: false`.
+
+The benchmark is on `/dashboard/admin/ai/`. It scores the model only against
+rows the rules answered — for a row a provider answered, the rules' own
+prediction was overwritten and is not recoverable, and scoring against a mixed
+bag while calling it "versus the rules" would be comparing it to something that
+is not the rules.
+
 ### Adding a panel or a provider
 
 A provider registers itself from its own file with

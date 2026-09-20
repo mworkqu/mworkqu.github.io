@@ -354,92 +354,118 @@ window.AIService = (function () {
       if (escalation.considered) {
         const chain = providerChain().filter(function (n) { return n !== 'rules'; });
 
-        /* Consent is a precondition, not a preference: it was
-           resolved above, before a payload could be built. */
-        if (!chain.length) {
-          escalation.skipped = 'no_provider';
-        } else if (!consented) {
-          escalation.skipped = 'consent_missing';
-        } else {
-          /* Then the caps, counted from the usage log BEFORE asking,
-             so a limit stops the request rather than recording that
-             we exceeded it. */
+        /* Consent and the daily caps are about data LEAVING this
+           browser and a free tier being spent. Neither is true of a
+           provider that runs on the device, so both are checked per
+           provider rather than once for the whole chain.
+
+           Gating a local model on a spend cap would be worse than
+           pointless: it disables the one option that costs nothing
+           precisely when the paid ones have run out. */
+        let remoteBlock;
+        async function remoteBlockedBy() {
+          if (remoteBlock !== undefined) return remoteBlock;
+
+          if (!consented) { remoteBlock = 'consent_missing'; return remoteBlock; }
+
+          /* Counted from the usage log BEFORE asking, so a limit
+             stops the request rather than recording that we went
+             over it. Local calls are logged unbillable and are not
+             in this count. */
           const lim = c.limits || {};
-          let capHit = null;
+          remoteBlock = null;
           if (window.DataStore && DataStore.countAiUsage) {
             try {
               if (lim.perTenantPerDay
                   && (await DataStore.countAiUsage({ scope: 'tenant' })) >= lim.perTenantPerDay) {
-                capHit = 'tenant_daily_cap';
+                remoteBlock = 'tenant_daily_cap';
               } else if (lim.globalPerDay
                   && (await DataStore.countAiUsage({ scope: 'global' })) >= lim.globalPerDay) {
-                capHit = 'global_daily_cap';
+                remoteBlock = 'global_daily_cap';
               }
             } catch (e) { /* a cap we cannot count is a cap we do not apply */ }
           }
-
-          if (capHit) {
-            escalation.skipped = capHit;
-          } else {
-            for (const name of chain) {
-              const started = Date.now();
-              let r = null;
-              try {
-                r = await registry[name].classifyProject(
-                  payloadFor(!!(decl[name] && decl[name].local)));
-              } catch (err) {
-                r = { ok: false, reason: String((err && err.message) || err) };
-              }
-
-              /* One row per CALL, not per classification: a request
-                 that fell through three providers cost three, and
-                 that is what the free tier was charged for. */
-              if (window.DataStore && DataStore.logAiUsage) {
-                try {
-                  await DataStore.logAiUsage({
-                    provider: name, feature: 'classifyProject',
-                    model: (r && r.model) || null,
-                    ok: !!(r && r.ok),
-                    status: r && r.status,
-                    error: (r && !r.ok) ? (r.reason || 'failed') : null,
-                    latencyMs: (r && r.latencyMs) || (Date.now() - started),
-                    tokensIn: (r && r.tokensIn) || 0,
-                    tokensOut: (r && r.tokensOut) || 0
-                  });
-                } catch (e) { /* logging must never break the answer */ }
-              }
-
-              escalation.attempts.push({
-                provider: name, ok: !!(r && r.ok),
-                reason: (r && !r.ok) ? (r.reason || 'failed') : null
-              });
-
-              if (r && r.ok) {
-                /* A model wins only by being more certain. A hedging
-                   model must not override a confident rule that
-                   actually measured the part. */
-                if ((r.confidence || 0) >= (result.confidence || 0)) {
-                  const ruleReasons = (result.reasons || []).slice(0, 2);
-                  result = Object.assign({ source: name }, r, {
-                    reasons: (r.reasons || []).concat(ruleReasons),
-                    warnings: result.warnings || [],
-                    features: features,
-                    supersededRules: true
-                  });
-                  escalation.usedProvider = name;
-                } else {
-                  escalation.skipped = 'rules_were_more_certain';
-                }
-                break;
-              }
-              /* Otherwise: next provider. A provider being down costs
-                 precision, never availability. */
-            }
-            if (!escalation.usedProvider && !escalation.skipped) {
-              escalation.skipped = 'all_providers_failed';
-            }
-          }
+          return remoteBlock;
         }
+
+        if (!chain.length) {
+          escalation.skipped = 'no_provider';
+        } else {
+          for (const name of chain) {
+            const isLocal = !!(decl[name] && decl[name].local);
+
+            if (!isLocal) {
+              const blocked = await remoteBlockedBy();
+              if (blocked) {
+                /* Recorded, and the loop continues: a later
+                   provider may be local and therefore unaffected.
+                   Overwriting this with 'all_providers_failed'
+                   below would hide WHY nothing was asked. */
+                escalation.skipped = blocked;
+                continue;
+              }
+            }
+
+            const started = Date.now();
+            let r = null;
+            try {
+              r = await registry[name].classifyProject(payloadFor(isLocal));
+            } catch (err) {
+              r = { ok: false, reason: String((err && err.message) || err) };
+            }
+
+            /* One row per CALL, not per classification: a request
+               that fell through three providers cost three, and
+               that is what the free tier was charged for. */
+            if (window.DataStore && DataStore.logAiUsage) {
+              try {
+                await DataStore.logAiUsage({
+                  provider: name, feature: 'classifyProject',
+                  model: (r && r.model) || null,
+                  /* A model on the device spends nothing, so it
+                     must not count against a spend cap. Logged all
+                     the same — it is still a call that happened. */
+                  billable: !isLocal,
+                  ok: !!(r && r.ok),
+                  status: r && r.status,
+                  error: (r && !r.ok) ? (r.reason || 'failed') : null,
+                  latencyMs: (r && r.latencyMs) || (Date.now() - started),
+                  tokensIn: (r && r.tokensIn) || 0,
+                  tokensOut: (r && r.tokensOut) || 0
+                });
+              } catch (e) { /* logging must never break the answer */ }
+            }
+
+            escalation.attempts.push({
+              provider: name, ok: !!(r && r.ok),
+              reason: (r && !r.ok) ? (r.reason || 'failed') : null
+            });
+
+            if (r && r.ok) {
+              /* A model wins only by being more certain. A hedging
+                 model must not override a confident rule that
+                 actually measured the part. */
+              if ((r.confidence || 0) >= (result.confidence || 0)) {
+                const ruleReasons = (result.reasons || []).slice(0, 2);
+                result = Object.assign({ source: name }, r, {
+                  reasons: (r.reasons || []).concat(ruleReasons),
+                  warnings: result.warnings || [],
+                  features: features,
+                  supersededRules: true
+                });
+                escalation.usedProvider = name;
+              } else {
+                escalation.skipped = 'rules_were_more_certain';
+              }
+              break;
+            }
+            /* Otherwise: next provider. A provider being down costs
+               precision, never availability. */
+          }
+          if (!escalation.usedProvider && !escalation.skipped) {
+            escalation.skipped = 'all_providers_failed';
+          }
+      }
       }
     }
 

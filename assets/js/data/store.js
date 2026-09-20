@@ -381,6 +381,12 @@ window.DataStore = (function () {
       provider:   entry.provider || 'unknown',
       feature:    entry.feature || 'classifyProject',
       model:      entry.model || null,
+      /* A model running on the visitor's own device spends nothing,
+         so it is logged but never counted against a cap. Default
+         true: a caller that forgets to say is assumed to have spent
+         something, because the failure that matters is undercounting
+         what a free tier was charged. */
+      billable:   entry.billable !== false,
       ok:         !!entry.ok,
       http_status: typeof entry.status === 'number' ? entry.status : null,
       error:      entry.error || null,
@@ -408,6 +414,7 @@ window.DataStore = (function () {
     const since = o.since || new Date().toISOString().slice(0, 10);
     const rows  = raw().aiUsage.filter((r) =>
       (r.created_at || '') >= since
+      && r.billable !== false
       && r.error !== 'consent_missing'
       && r.error !== 'cap_reached');
     return (o.scope === 'global' ? rows : rows.filter(mine)).length;
@@ -437,6 +444,33 @@ window.DataStore = (function () {
       granted: !!granted,
       at: new Date().toISOString()
     };
+    commit();
+    return { ok: true, granted: !!granted };
+  }
+
+  /* ── The local-model opt-in (Stage 5) ────────────────────
+     Stored against the device rather than the tenant, because the
+     thing being opted into is a 25 MB download onto this machine.
+     The same person on another browser has not agreed to it, and
+     should not silently find it running.
+
+     It lives here, not in localStorage in a service file, so the
+     Supabase migration has one place to look — even though this
+     particular row will probably never leave the browser. */
+
+  const DEVICE = '__device';
+
+  async function getLocalModelOptIn() {
+    const rec = (raw().aiSettings || {})[DEVICE];
+    return { granted: !!(rec && rec.localModel), at: (rec && rec.localModelAt) || null };
+  }
+
+  async function setLocalModelOptIn(granted) {
+    const s = raw();
+    if (!s.aiSettings) s.aiSettings = {};
+    const rec = s.aiSettings[DEVICE] || (s.aiSettings[DEVICE] = {});
+    rec.localModel   = !!granted;
+    rec.localModelAt = new Date().toISOString();
     commit();
     return { ok: true, granted: !!granted };
   }
@@ -658,6 +692,9 @@ window.DataStore = (function () {
     /* AI usage, caps and consent — 0004_ai.sql and 0005_ai_consent.sql */
     logAiUsage: logAiUsage, countAiUsage: countAiUsage, listAiUsage: listAiUsage,
     getAiConsent: getAiConsent, setAiConsent: setAiConsent,
+
+    /* The local-model opt-in — device scoped, see Stage 5 */
+    getLocalModelOptIn: getLocalModelOptIn, setLocalModelOptIn: setLocalModelOptIn,
 
     /* Learned rule drafts and demo rows — 0006_ai_insight.sql */
     listRuleProposals: listRuleProposals, saveRuleProposal: saveRuleProposal,

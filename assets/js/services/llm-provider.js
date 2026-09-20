@@ -114,6 +114,14 @@
         const started = Date.now();
         const allowed = payload.processes || [];
 
+        /* Fail closed, but say why. The allow-list is what stops a
+           hallucinated process key reaching the panel, so an empty
+           one correctly rejects everything -- and reporting that as
+           'invalid_model_output' would send the next person reading
+           the log looking at the model instead of at the caller that
+           forgot to say which processes exist. */
+        if (!allowed.length) return { ok: false, reason: 'no_allowed_processes' };
+
         if (proxy().mock) {
           const result = sanitise(mockAnswer(payload), allowed);
           if (!result) return { ok: false, reason: 'invalid_mock' };

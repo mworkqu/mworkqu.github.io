@@ -2826,3 +2826,18 @@ input[type="file"] {
 /* A non-zero failure count reads as weight, like low stock does.
    The palette is monochrome; red is not available to mean anything. */
 .ins-flag { color: var(--ink); font-weight: 600; }
+
+.ins-try { display: flex; gap: 8px; margin: 14px 0; flex-wrap: wrap; }
+
+.ins-try input {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-mid);
+  padding: 7px 10px;
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.ins-local-status { font-size: 12px; color: var(--ink-50); }

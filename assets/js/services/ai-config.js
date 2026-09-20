@@ -26,14 +26,20 @@ window.AI_CONFIG = {
      returns a valid answer wins; if every one fails, the rules answer
      stands. A provider being down can therefore cost precision, and
      can never cost availability. */
-  fallbackOrder: ['gemini', 'groq', 'openrouter'],
+  /* `local` is first because a model running on the visitor's own
+     device sends nothing anywhere and costs nothing — if it is
+     loaded and it is any good, there is no argument for asking a
+     remote service before it. It is disabled below, so in practice
+     this chain starts at gemini until someone turns the experiment
+     on. */
+  fallbackOrder: ['local', 'gemini', 'groq', 'openrouter'],
 
   providers: {
     rules:      { enabled: true,  implemented: true,  local: true,  stage: 1 },
     gemini:     { enabled: true,  implemented: true,  local: false, stage: 3 },
     groq:       { enabled: true,  implemented: true,  local: false, stage: 3 },
     openrouter: { enabled: true,  implemented: true,  local: false, stage: 3 },
-    local:      { enabled: false, implemented: false, local: true,  stage: 5 },
+    local:      { enabled: false, implemented: true,  local: true,  stage: 5 },
     paid:       { enabled: false, implemented: false, local: false, stage: 6 }
   },
 
@@ -105,6 +111,33 @@ window.AI_CONFIG = {
     sendRawFiles:    false,
     requireConsent:  true,
     consentDefault:  false
+  },
+
+  /* ── The in-browser model (Stage 5) — an experiment, and off ──
+     A small sentence-embedding model running on the visitor's own
+     device. Nothing downloads, runs or costs anything until someone
+     turns it on deliberately; `providers.local.enabled` above is the
+     switch, and assets/js/services/local-model-provider.js refuses to
+     download during a classification no matter what.
+
+     It stays off until it is shown to beat the rules on the logged
+     history — that is what the benchmark on /dashboard/admin/ai/ is
+     for. An experiment that ships on because it is interesting is
+     just a regression with a good story.
+
+     confidenceCap is the load-bearing number. This model scores
+     similarity, not probability, so its confidence is derived from
+     how far ahead the winner is — and capped below the hand-written
+     rules, which actually measured the part. */
+  localModel: {
+    enabled:          false,
+    lib:              'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2',
+    model:            'Xenova/all-MiniLM-L6-v2',
+    quantized:        true,
+    approxDownloadMB: 25,
+    confidenceCap:    0.6,
+    marginScale:      4,
+    minConfidence:    0.12
   },
 
   /* How much evidence before a repeated correction is worth showing

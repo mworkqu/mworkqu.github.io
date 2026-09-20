@@ -533,6 +533,191 @@
     }, null, 2), 'application/json');
   }
 
+  /* ── the on-device model (Stage 5) ───────────────────── */
+
+  /* An experiment with a verdict attached. The point of this panel
+     is not to show that a model can run in a browser — it can — but
+     to answer whether it is better than the rules it would replace.
+     A benchmark you can only read as "it works" is not a benchmark. */
+
+  const local = { progress: 0, result: null, busy: false, optIn: false, tried: null };
+
+  function renderLocal() {
+    const host = $('[data-ai-local]');
+    if (!host) return;
+    if (!window.LocalModel) {
+      host.innerHTML = `<p class="dash-empty">${esc(t('adminAi.local.missing',
+        'The local model provider is not loaded on this page.'))}</p>`;
+      return;
+    }
+
+    const st  = LocalModel.status();
+    const r   = local.result;
+
+    const status = local.busy
+      ? t('adminAi.local.loading', 'Working… {p}%').replace('{p}', local.progress)
+      : st.state === 'ready'  ? t('adminAi.local.ready', 'Loaded and ready.')
+      : st.state === 'failed' ? t('adminAi.local.failed', 'It did not load: {e}').replace('{e}', st.error || '')
+      : t('adminAi.local.idle', 'Not downloaded.');
+
+    host.innerHTML = `
+      <label class="ai-consent-row">
+        <input type="checkbox" data-ai-local-optin ${local.optIn ? 'checked' : ''}>
+        <span>${esc(t('adminAi.local.optIn',
+          'Download and run a model on this device — about {mb} MB, fetched from a CDN and from huggingface.co. Nothing about your parts is uploaded.')
+          .replace('{mb}', st.approxMB))}</span>
+      </label>
+
+      <p class="ins-lede"><span class="mono">${esc(st.model)}</span> — ${esc(status)}</p>
+
+      <div class="ins-control-actions">
+        <button class="btn-table" type="button" data-ai-local-load
+          ${local.optIn && !local.busy && st.state !== 'ready' ? '' : 'disabled'}>
+          ${esc(t('adminAi.local.load', 'Download and load'))}</button>
+        <button class="btn-table" type="button" data-ai-local-bench
+          ${st.state === 'ready' && !local.busy ? '' : 'disabled'}>
+          ${esc(t('adminAi.local.bench', 'Score it against the log'))}</button>
+        <button class="btn-table danger" type="button" data-ai-local-unload
+          ${st.state === 'ready' && !local.busy ? '' : 'disabled'}>
+          ${esc(t('adminAi.local.unload', 'Unload'))}</button>
+      </div>
+
+      ${st.state === 'ready' ? `
+        <div class="ins-try">
+          <input type="text" data-ai-local-text
+            placeholder="${esc(t('adminAi.local.tryPlaceholder', 'a waterproof enclosure for a sensor board'))}">
+          <button class="btn-table" type="button" data-ai-local-try>${esc(
+            t('adminAi.local.try', 'Ask it'))}</button>
+        </div>
+        ${local.tried ? `<p class="ins-lede">${esc(local.tried)}</p>` : ''}
+      ` : ''}
+
+      ${r ? renderVerdict(r) : ''}`;
+  }
+
+  function renderVerdict(r) {
+    if (!r.ok) {
+      return `<p class="dash-empty">${esc(r.reason === 'no_eligible_rows'
+        ? t('adminAi.local.noRows',
+            'Nothing to score against yet. The comparison needs classifications the rules answered and a human then confirmed or corrected.')
+        : r.reason)}</p>`;
+    }
+
+    const m = Math.round(r.modelAccuracyAll * 100);
+    const u = Math.round(r.rulesAccuracy * 100);
+    const verdict = m > u + 5
+      ? t('adminAi.local.beats', 'On this sample the model beats the rules.')
+      : m < u - 5
+        ? t('adminAi.local.loses', 'On this sample the rules win. Leaving the experiment off is the right call.')
+        : t('adminAi.local.ties', 'On this sample there is nothing to choose between them — which is not a reason to add a 25 MB download.');
+
+    const caveats = [];
+    if (r.demoRows) {
+      caveats.push(t('adminAi.local.demoCaveat',
+        '{n} of the {t} rows are generated samples. A score measured on generated rows measures the generator, not the model.')
+        .replace('{n}', r.demoRows).replace('{t}', r.rows));
+    }
+    if (r.rows < 30) {
+      caveats.push(t('adminAi.local.smallCaveat',
+        'Only {n} rows — far too few to conclude anything that would survive another week of real use.')
+        .replace('{n}', r.rows));
+    }
+    if (r.skipped) {
+      caveats.push(t('adminAi.local.skippedCaveat',
+        'The model declined {n} of them as too uncertain to answer. It is scored on all {t} regardless — a model that answers one question correctly is not right 100% of the time.')
+        .replace('{n}', r.skipped).replace('{t}', r.rows));
+    }
+
+    return `
+      <div class="metric-grid">
+        <div class="metric-card">
+          <strong>${u}%</strong>
+          <span class="metric-label">${esc(t('adminAi.local.rulesScore', 'Rules'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${m}%</strong>
+          <span class="metric-label">${esc(t('adminAi.local.modelScore', 'On-device model'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${r.rows}</strong>
+          <span class="metric-label">${esc(t('adminAi.local.scored', 'Rows compared'))}</span>
+        </div>
+        <div class="metric-card">
+          <strong>${r.modelAnswered}</strong>
+          <span class="metric-label">${esc(t('adminAi.local.answered', 'The model would answer'))}</span>
+        </div>
+      </div>
+      <p class="ins-lede"><strong>${esc(verdict)}</strong></p>
+      <div class="ins-caveat">${caveats.map((c) => `<p>${esc(c)}</p>`).join('')}</div>`;
+  }
+
+  function bindLocal() {
+    const host = $('[data-ai-local]');
+    if (!host) return;
+
+    host.addEventListener('change', async (e) => {
+      if (!e.target.closest('[data-ai-local-optin]')) return;
+      local.optIn = e.target.checked;
+      await DataStore.setLocalModelOptIn(local.optIn);
+      /* Opting in permits the download. It does not start one, and
+         it does not put the provider in the chain until a model is
+         actually loaded and has been scored. */
+      renderLocal();
+    });
+
+    host.addEventListener('click', async (e) => {
+      if (e.target.closest('[data-ai-local-load]')) {
+        local.busy = true; local.progress = 0; renderLocal();
+        const res = await LocalModel.load((p) => {
+          if (p && typeof p.progress === 'number') {
+            local.progress = Math.round(p.progress);
+            const line = host.querySelector('.ins-lede');
+            /* Repainting the whole panel on every progress event
+               would fight the user for the checkbox. */
+            if (line) line.textContent = LocalModel.status().model + ' — '
+              + t('adminAi.local.loading', 'Working… {p}%').replace('{p}', local.progress);
+          }
+        });
+        local.busy = false;
+        if (res.ok) LocalModel.setEnabled(true);
+        renderLocal();
+        return;
+      }
+
+      if (e.target.closest('[data-ai-local-unload]')) {
+        LocalModel.unload();
+        LocalModel.setEnabled(false);
+        local.result = null; local.tried = null;
+        renderLocal();
+        return;
+      }
+
+      if (e.target.closest('[data-ai-local-bench]')) {
+        local.busy = true; local.progress = 0; renderLocal();
+        local.result = await LocalModel.benchmark(rows(), (done, total) => {
+          local.progress = Math.round((done / total) * 100);
+        });
+        local.busy = false;
+        renderLocal();
+        return;
+      }
+
+      if (e.target.closest('[data-ai-local-try]')) {
+        const input = host.querySelector('[data-ai-local-text]');
+        const text  = (input && input.value.trim()) || '';
+        if (!text) return;
+        const out = await AIService.classifyProject({ description: text });
+        local.tried = out.process
+          ? t('adminAi.local.tried', '{p} — confidence {c}, answered by {s}.')
+              .replace('{p}', processLabel(out.process))
+              .replace('{c}', (out.confidence || 0).toFixed(2))
+              .replace('{s}', out.source)
+          : t('adminAi.local.triedNone', 'Nothing confident enough to suggest.');
+        renderLocal();
+      }
+    });
+  }
+
   /* ── wiring ──────────────────────────────────────────── */
 
   function renderAll() {
@@ -541,6 +726,7 @@
     renderCorrections();
     renderProposals();
     renderUsage();
+    renderLocal();
   }
 
   async function reload() {
@@ -624,6 +810,8 @@
     /* Process labels are {en, ar} pairs, so a language switch has
        to re-pick them before repainting or the table repaints in
        the old language. */
+    bindLocal();
+
     document.addEventListener('i18n:change', async () => {
       await loadLabels();
       renderAll();
@@ -653,6 +841,10 @@
       const res = await fetch('/data/classification-rules.json', { cache: 'no-cache' });
       if (res.ok) state.rulesVersion = (await res.json()).version;
     } catch (e) { /* only used to stamp the export */ }
+
+    try {
+      local.optIn = (await DataStore.getLocalModelOptIn()).granted;
+    } catch (e) { /* an older browser store predates the flag */ }
 
     bind();
     await reload();
