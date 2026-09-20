@@ -1,1 +1,6 @@
 .claude/
+
+# Wrangler local secrets — never committed.
+proxy/.dev.vars
+proxy/.wrangler/
+proxy/node_modules/

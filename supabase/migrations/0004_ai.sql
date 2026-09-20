@@ -61,6 +61,13 @@ create table if not exists public.ai_classifications (
   -- 'rules' | 'cache' | a provider name.
   source      text not null default 'rules',
 
+  -- The answer was cut short by something temporary: consent not yet
+  -- given, a daily cap reached, every provider unreachable. The row is
+  -- still a decision the user was shown, so it is kept and counted —
+  -- but it is excluded from the cache lookup, because serving it back
+  -- after the block lifts would make granting consent do nothing.
+  escalation_blocked boolean not null default false,
+
   -- Filled in when the human decides. Null means the suggestion was
   -- shown but never answered, which is itself worth knowing.
   final_process text references public.processes (key),
@@ -76,7 +83,7 @@ create index if not exists ai_cls_created_idx on public.ai_classifications (tena
 -- The cache lookup ai.js makes before any analysis.
 create index if not exists ai_cls_cache_idx
   on public.ai_classifications (tenant_id, file_hash, question_hash)
-  where file_hash is not null;
+  where file_hash is not null and escalation_blocked = false;
 
 -- Stage 4 counts accuracy off this: only answered rows, and whether
 -- the human agreed. A partial index because unanswered rows are the

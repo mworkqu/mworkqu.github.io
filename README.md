@@ -82,6 +82,8 @@ quote form and the workspace filter. No HTML to touch.
 | `assets/js/services/ai.js` | **the AI service** — the only door to any classifier or model |
 | `assets/js/services/rules-provider.js` | the rule engine, driven by `data/classification-rules.json` |
 | `assets/js/services/geometry.js` | measures a CAD file in the browser — nothing is uploaded |
+| `assets/js/services/llm-provider.js` | the Gemini / Groq / OpenRouter adapters, via the proxy |
+| `proxy/worker.js` | the Cloudflare Worker that holds the API keys |
 | `assets/js/services/ai-config.js` | which provider answers, in what order, and what is on |
 | `assets/js/components/classification-confirm.js` | shows a suggestion as a question, never as a fact |
 | `assets/js/workspace-ai-panel.js` | the "Identify the process" workspace panel |
@@ -456,9 +458,10 @@ and `rules` sits last in the chain on purpose: it is local, free and always
 available, so the chain can never fall through to nothing. A provider being
 down must never break the page.
 
-Today only `rules` is implemented. It measures the file in the browser and
-decides from `data/classification-rules.json` — see **The rule-based
-classifier** below.
+`rules` measures the file in the browser and decides from
+`data/classification-rules.json` — see **The rule-based classifier** below. It
+is not one of the chain: it always runs first, and the chain escalates to a
+model only when it is unsure. See **Escalating to an AI service**.
 
 ### The machine never decides silently
 
@@ -575,6 +578,87 @@ Confirming pre-selects that process in the Process → Material filter. It
 listens for the **decision**, not the suggestion — acting on the suggestion
 would be the classifier quietly steering the page, which is the behaviour the
 confirmation step exists to prevent. The select stays editable afterwards.
+
+### Escalating to an AI service
+
+The rules **always** run, and run first. They are local, free and instant, so
+there is never a reason to spend a request before hearing the free answer. An
+AI service is an *escalation*, not an alternative, and it is asked only when:
+
+- the rules came back below `escalate.belowConfidence` (0.5), or
+- the rules produced no process at all, or
+- there is a description and **no geometry** to measure — the one case the
+  rules genuinely cannot address.
+
+A confident rule answer costs nothing and calls nobody. You can watch that:
+classify a flat plate and `DataStore.countAiUsage({scope:'global'})` stays at 0.
+
+Even then the model only wins **by being more certain**. A hedging model does
+not get to override a confident rule that actually measured the part.
+
+### The keys are not in this repository, and cannot be
+
+Everything under `assets/` is downloadable plain text, so a key there is a
+published key. `proxy/` is a Cloudflare Worker that holds them —
+see **[proxy/README.md](proxy/README.md)** for deployment.
+
+The worker is **not a chat proxy**. It accepts a structured payload and builds
+the prompt itself; it will not forward an arbitrary prompt and drops any field
+it does not recognise. A worker that relays whatever it is handed is a free LLM
+for anyone who finds the URL, billed to you.
+
+**You do not need the worker to test any of this.** `proxy.mock: true` in
+`ai-config.js` answers from a canned local result with no network at all, which
+is what ships. The mock labels itself in its own reasons — a test double you
+cannot tell apart from the real thing is a trap.
+
+### Consent, and what actually gets sent
+
+Off by default. Until the client ticks the box, no remote provider is called at
+all, and the panel says so rather than silently degrading.
+
+What is sent, once they agree: the measured geometry, the file extension, the
+material class and tolerance they typed, and their description.
+
+**Never the file, and never the filename.** `buildPayload()` in `ai.js` builds
+what leaves the browser and gates the description on the *consent state
+resolved for that call* — not on a config flag, because a flag cannot be
+revoked by the person whose brief it is.
+
+Consent is stored per tenant, not read off a checkbox that happens to still be
+on screen. "Did this client agree that their brief could leave our servers" is
+a question that may have to be answered months later, and UI state cannot
+answer it. `supabase/migrations/0005_ai_consent.sql` also records *which
+wording* was agreed to, because consent is to a specific statement.
+
+### When a provider is down
+
+`fallbackOrder` is tried in order. A 429, a 500, a timeout or a CORS refusal
+moves to the next one; if every provider fails, **the rules answer stands**.
+A provider being down costs precision and can never cost availability.
+
+Every attempt is logged to `ai_usage` — one row per *call*, not per
+classification, because a request that fell through three providers cost three.
+
+### Two caps, and why both
+
+`limits.perTenantPerDay` and `limits.globalPerDay` are counted from the usage
+log **before** a request is made, so a limit stops the request rather than
+recording that it was exceeded. The global one is separate on purpose: one busy
+tenant must not exhaust the free tier for everyone.
+
+The worker enforces its own copy. Both are needed — **a browser cap is a
+courtesy, not a control**, since anyone can open a console and edit it.
+
+### One thing that is easy to get wrong
+
+An answer that *wanted* to escalate and could not — no consent yet, a cap
+reached, every provider down — is **not cached**. It is logged, because it is
+still a decision the user was shown, but `escalation_blocked` keeps it out of
+the cache lookup.
+
+Without that, ticking the consent box appeared to do nothing: the same question
+came straight back from the row written while consent was still refused.
 
 ### Adding a panel or a provider
 

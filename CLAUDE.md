@@ -183,6 +183,31 @@ Two rules that are easy to break by accident:
   silently disables every negative test on an optional feature, which
   is worse than having no test — it looks like it passed.
 
+### Escalation (Stage 3)
+
+`rules` always runs first and is NOT part of `fallbackOrder`. A model
+is asked only when the rules are unsure, produce no process, or there
+is a description with no geometry. Even then it wins only by being
+more certain. Escalating on every file would spend a free tier on
+questions already answered and send a brief to a third party who did
+not need it.
+
+- **The keys live in `proxy/`, never here.** That worker builds the
+  prompt from a structured payload; it will not forward an arbitrary
+  prompt, or it becomes a free LLM for whoever finds the URL.
+- **Consent gates the description**, resolved per call in `ai.js` —
+  not a config flag, which the client cannot revoke. Off by default.
+- **An answer blocked by something transient is not cached.**
+  `escalation_blocked` keeps it out of the lookup. Without it,
+  ticking the consent box appears to do nothing, because the row
+  written while consent was refused comes straight back.
+- **Caps are counted before asking**, so a limit stops the request.
+  The browser copy is a courtesy; the worker's copy is the control.
+- A model's output is untrusted twice over: the worker validates it
+  and `llm-provider.js` validates it again. A process key that is not
+  ours is dropped rather than rendered.
+- `proxy.mock: true` ships on, so a fresh clone works with no key.
+
 ## i18n
 
 English and Arabic, `data/i18n/{en,ar}.json`, applied by

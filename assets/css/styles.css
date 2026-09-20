@@ -2634,3 +2634,70 @@ input[type="file"] {
   margin: 0;
   text-align: end;
 }
+
+/* ── Stage 3: consent, description, provenance ─────────── */
+
+.ai-consent {
+  border: 1px solid var(--rule-mid);
+  background: var(--ink-03);
+  padding: 10px 11px;
+  margin: 4px 0 12px;
+}
+
+.ai-consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink);
+  cursor: pointer;
+  margin: 0;
+  /* Overrides the uppercase mono treatment .panel-field label carries;
+     a consent notice has to read as a sentence. */
+  font-family: var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.ai-consent-row input[type="checkbox"] {
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--ink);
+}
+
+.ai-consent-note {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-50);
+  margin: 7px 0 0;
+  padding-inline-start: 22px;
+}
+
+.panel-field textarea {
+  width: 100%;
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.55;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-mid);
+  background: var(--white);
+  color: var(--ink);
+  resize: vertical;
+}
+
+.panel-field textarea:focus { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+/* Where the answer came from. Deliberately plain: it is a statement
+   of fact about provenance, not a badge competing with the verdict. */
+.ai-origin {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-50);
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--rule);
+}

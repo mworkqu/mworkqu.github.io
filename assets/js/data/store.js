@@ -79,6 +79,11 @@ window.DataStore = (function () {
     if (!s.aiClassifications) { s.aiClassifications = []; touched = true; }
     s.aiClassifications.forEach(stamp);
 
+    /* Stage 3: one row per provider call, and the consent record. */
+    if (!s.aiUsage)    { s.aiUsage = [];    touched = true; }
+    if (!s.aiSettings) { s.aiSettings = {}; touched = true; }
+    s.aiUsage.forEach(stamp);
+
     if (touched) commit();
   }
 
@@ -298,6 +303,12 @@ window.DataStore = (function () {
       description: entry.description || '',
       features:   entry.features || {},
       warnings:   entry.warnings || [],
+      /* True when the answer was cut short by something temporary —
+         no consent, a daily cap, every provider down. Such a row is
+         logged (it is still a decision the user was shown) but must
+         never be served from cache, or lifting the block would
+         change nothing. */
+      escalation_blocked: !!entry.escalationBlocked,
       suggested_process: entry.suggested || null,
       alternatives: entry.alternatives || [],
       confidence: entry.confidence || 0,
@@ -333,12 +344,85 @@ window.DataStore = (function () {
       mine(r)
       && r.file_hash === fileHash
       && (r.question_hash || '') === (questionHash || '')
+      && !r.escalation_blocked
       && r.suggested_process !== undefined);
     return row ? Object.assign({}, row) : null;
   }
 
   async function listClassifications() {
     return raw().aiClassifications.filter(mine).map((r) => Object.assign({}, r));
+  }
+
+  /* ── AI usage and consent (Stage 3) ──────────────────────
+     Mirrors ai_usage in supabase/migrations/0004_ai.sql and the
+     consent table in 0005. One row per provider CALL, not per
+     classification: a request that fell through three providers is
+     three rows, because that is what the free tier was actually
+     charged for and what Stage 4 needs to see. */
+
+  async function logAiUsage(entry) {
+    const s = raw();
+    const row = {
+      id:         uid('use'),
+      tenant_id:  tenantId(),
+      provider:   entry.provider || 'unknown',
+      feature:    entry.feature || 'classifyProject',
+      model:      entry.model || null,
+      ok:         !!entry.ok,
+      http_status: typeof entry.status === 'number' ? entry.status : null,
+      error:      entry.error || null,
+      latency_ms: typeof entry.latencyMs === 'number' ? Math.round(entry.latencyMs) : null,
+      tokens_in:  entry.tokensIn || 0,
+      tokens_out: entry.tokensOut || 0,
+      classification_id: entry.classificationId || null,
+      created_at: new Date().toISOString()
+    };
+    s.aiUsage.unshift(row);
+    commit();
+    return { ok: true, id: row.id };
+  }
+
+  /* Counted before a request is made, so a cap stops us asking rather
+     than recording that we asked too much. `scope: 'global'` ignores
+     the tenant — it is the ceiling on the whole free tier, and one
+     busy tenant must not be able to exhaust it for everyone.
+
+     Only rows that reached a provider count. A refusal for consent or
+     for the cap itself is not usage, and counting it would make the
+     cap ratchet itself shut. */
+  async function countAiUsage(opts) {
+    const o     = opts || {};
+    const since = o.since || new Date().toISOString().slice(0, 10);
+    const rows  = raw().aiUsage.filter((r) =>
+      (r.created_at || '') >= since
+      && r.error !== 'consent_missing'
+      && r.error !== 'cap_reached');
+    return (o.scope === 'global' ? rows : rows.filter(mine)).length;
+  }
+
+  async function listAiUsage() {
+    return raw().aiUsage.filter(mine).map((r) => Object.assign({}, r));
+  }
+
+  /* Consent is per tenant and defaults to withheld. It is stored, not
+     inferred from a checkbox still being on screen, because "did this
+     client agree to their brief leaving our servers" is a question we
+     may have to answer later. */
+  async function getAiConsent() {
+    const rec = (raw().aiSettings || {})[tenantId()];
+    return rec ? { granted: !!rec.granted, at: rec.at || null } : { granted: false, at: null };
+  }
+
+  async function setAiConsent(granted) {
+    const s = raw();
+    if (!s.aiSettings) s.aiSettings = {};
+    s.aiSettings[tenantId()] = {
+      tenant_id: tenantId(),
+      granted: !!granted,
+      at: new Date().toISOString()
+    };
+    commit();
+    return { ok: true, granted: !!granted };
   }
 
   /* A standalone purchase: untagged, so it lands on the client's own
@@ -378,7 +462,11 @@ window.DataStore = (function () {
 
     /* AI classification log — see supabase/migrations/0004_ai.sql */
     logClassification: logClassification, logCorrection: logCorrection,
-    findClassification: findClassification, listClassifications: listClassifications
+    findClassification: findClassification, listClassifications: listClassifications,
+
+    /* AI usage, caps and consent — 0004_ai.sql and 0005_ai_consent.sql */
+    logAiUsage: logAiUsage, countAiUsage: countAiUsage, listAiUsage: listAiUsage,
+    getAiConsent: getAiConsent, setAiConsent: setAiConsent
   };
 
 })();

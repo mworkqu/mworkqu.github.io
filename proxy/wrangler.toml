@@ -1,0 +1,39 @@
+# Cloudflare Worker that holds the AI keys. See proxy/README.md.
+name = "gestaltung-classifier"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+# The ONLY origins allowed to call /classify. Leave this empty and
+# anyone can spend your quota from their own page — the origin check
+# is the guard that does the real work here.
+ALLOWED_ORIGINS = "https://mworkqu.github.io,http://localhost:4173"
+
+SITE_URL = "https://mworkqu.github.io"
+
+# Free-tier guard rails. Enforced only when RATE_KV is bound below;
+# /health reports whether they actually are.
+GLOBAL_DAILY_CAP = "200"
+TENANT_DAILY_CAP = "25"
+
+# "1" answers from a canned result and calls no model and needs no
+# key. Use it to exercise the whole path before you have credentials.
+MOCK = "0"
+
+# Models. Override to move to a different free tier without a deploy
+# of the code itself.
+# GEMINI_MODEL     = "gemini-2.0-flash"
+# GROQ_MODEL       = "llama-3.3-70b-versatile"
+# OPENROUTER_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+
+# Uncomment after `wrangler kv namespace create RATE_KV` and paste the
+# id it prints. Without it the caps are advisory.
+# [[kv_namespaces]]
+# binding = "RATE_KV"
+# id = "<paste the id here>"
+
+# Secrets are NOT set here. This file is committed; a key in it is a
+# published key. Use:
+#   wrangler secret put GEMINI_API_KEY
+#   wrangler secret put GROQ_API_KEY
+#   wrangler secret put OPENROUTER_API_KEY

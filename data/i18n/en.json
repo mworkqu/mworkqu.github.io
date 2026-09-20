@@ -69,6 +69,16 @@
       "medium": "Worth checking"
     },
     "confirm": "Confirm",
+    "consent": {
+      "label": "Allow measurements and my description to be sent to an AI service when the rules are unsure",
+      "note": "Your CAD file is never sent — only the dimensions measured here and any text you write. Off by default."
+    },
+    "describe": {
+      "ask": "Identify from the description",
+      "label": "Or describe it in words",
+      "placeholder": "e.g. a waterproof enclosure for a sensor board",
+      "tooShort": "Write a sentence about the part first."
+    },
     "failed": "That file could not be read. Nothing was changed.",
     "feature": {
       "bodies": "Separate bodies",
@@ -138,7 +148,19 @@
     "savedConfirmed": "Saved as {process}.",
     "savedCorrected": "Saved as {process}. Thank you — corrections train the classifier.",
     "selectPrompt": "Select…",
+    "source": {
+      "cached": "Answered earlier for this same question",
+      "capped": "The rules answered. The daily AI limit has been reached, so no model was asked.",
+      "failed": "The rules answered. Every AI service was unreachable.",
+      "model": "An AI service answered ({provider})",
+      "noConsent": "The rules answered. An AI service was not asked, because you have not allowed it.",
+      "noProvider": "The rules answered. No AI service is configured.",
+      "rules": "The rules answered — no AI service was called.",
+      "rulesWon": "The rules answered, and were more certain than the AI service.",
+      "tried": "({n} tried and failed)"
+    },
     "sourceLine": "Source: {source}",
+    "thinking": "Working it out…",
     "tolerance": {
       "label": "Tightest tolerance (mm)",
       "placeholder": "e.g. 0.05"

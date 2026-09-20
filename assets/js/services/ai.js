@@ -37,6 +37,14 @@ window.AIService = (function () {
 
   const cfg = () => window.AI_CONFIG || {};
 
+  /* Reasons an escalation was skipped that may not hold next time.
+     `rules_were_more_certain` is deliberately absent: that one is a
+     judgement about the answer itself, and it will still be true. */
+  const TRANSIENT_BLOCKS = [
+    'consent_missing', 'tenant_daily_cap', 'global_daily_cap',
+    'all_providers_failed', 'no_provider'
+  ];
+
   /* ── result shapes ───────────────────────────────────── */
 
   function unavailable(feature, reason) {
@@ -115,13 +123,17 @@ window.AIService = (function () {
      remote provider gets the extension and nothing else, whatever it
      claims to need. Which providers are local is declared in
      ai-config.js, not asserted by the adapter itself. */
-  function buildPayload(meta, features, description, isLocal, extras) {
-    const p = cfg().privacy || {};
+  function buildPayload(meta, features, description, isLocal, extras, consented) {
     const payload = {
       ext:        meta.ext || '',
       sizeBytes:  meta.sizeBytes || 0,
       features:   features || {},
-      description: (isLocal || p.sendDescription) ? (description || '') : '',
+      /* A local provider never sends anything anywhere, so it always
+         sees the description. A remote one sees it only with consent
+         — and that is the consent state resolved for THIS call, not a
+         config flag, because a flag cannot be revoked by the person
+         whose brief it is. */
+      description: (isLocal || consented) ? (description || '') : '',
       processes:  meta.processes || []
     };
     if (isLocal && meta.baseName) payload.baseName = meta.baseName;
@@ -173,6 +185,17 @@ window.AIService = (function () {
   function describeReason(reason) {
     if (!reason) return '';
     if (typeof reason === 'string') return reason;
+
+    /* A model writes sentences, not i18n keys, so an LLM reason
+       arrives as an { en, ar } pair and is picked like any other
+       bilingual label. That keeps the guarantee the rule reasons
+       give: a stored answer still re-reads in either language on a
+       switch, without asking the model again. */
+    if (reason.en || reason.ar) {
+      return window.I18n ? I18n.pick(reason) : (reason.en || reason.ar);
+    }
+
+    if (!reason.key) return '';
     if (!window.I18n) return reason.key;
     const out = I18n.t(reason.key, reason.vars || {});
     return out === reason.key ? reason.key : out;
@@ -215,7 +238,7 @@ window.AIService = (function () {
       description,
       opts.materialClass || '',
       (typeof opts.toleranceMm === 'number' ? opts.toleranceMm : '')
-    ].join(' '));
+    ].join('\u0000'));
 
     /* Cache before analysis, as the brief requires: a file already
        answered is never analysed again. The decision is still logged,
@@ -223,9 +246,14 @@ window.AIService = (function () {
     let result = null;
     let cached = false;
 
-    if ((c.cache || {}).enabled && meta.hash && window.DataStore) {
+    /* A description-only request has no file and therefore no file
+       hash. It is still cacheable -- the question is the same
+       question -- so the key falls back to the question hash alone. */
+    const cacheKey = meta.hash || (questionHash ? 'q:' + questionHash : null);
+
+    if ((c.cache || {}).enabled && cacheKey && window.DataStore) {
       try {
-        const prior = await DataStore.findClassification(meta.hash, questionHash);
+        const prior = await DataStore.findClassification(cacheKey, questionHash);
         if (prior) {
           result = {
             ok: true,
@@ -255,6 +283,14 @@ window.AIService = (function () {
     let features = opts.features || {};
     let geometry = null;
 
+    /* What happened on the way to the answer, so the panel can say
+       "the rules answered this, no model was called" rather than
+       leaving the user to guess which it was. */
+    const escalation = {
+      considered: false, why: null, usedProvider: null,
+      skipped: null, attempts: []
+    };
+
     if (!result
         && file
         && !Object.keys(features).length
@@ -268,45 +304,142 @@ window.AIService = (function () {
     }
 
     if (!result) {
-      const decl    = (c.providers || {});
-      const payload = buildPayload(
-        meta, features, description,
-        false,                      /* per-provider below */
-        { materialClass: opts.materialClass, toleranceMm: opts.toleranceMm });
+      const decl = (c.providers || {});
+      const esc  = c.escalate || {};
 
-      /* Belt and braces. buildPayload cannot leak the file, but if a
-         future edit makes it possible, refuse rather than send. */
-      if (payload.file || payload.bytes || payload.name) {
-        throw new Error('[ai] payload must never carry the file itself');
+      /* Resolved once, before anything is built, because it decides
+         what a payload is even allowed to contain. */
+      let consented = !(c.privacy || {}).requireConsent;
+      if (!consented && window.DataStore) {
+        try { consented = (await DataStore.getAiConsent()).granted; }
+        catch (e) { consented = false; }
       }
 
-      const chain  = providerChain();
-      const errors = [];
+      const payloadFor = (isLocal) => buildPayload(
+        meta, features, description, isLocal,
+        { materialClass: opts.materialClass, toleranceMm: opts.toleranceMm },
+        consented);
 
-      for (const name of chain) {
+      /* -- 1. the rules, always --------------------------
+         Free, local and instant. There is never a reason to spend a
+         request before hearing what the rules say, and their answer
+         is the floor everything below can fall back to. */
+      if (registry.rules) {
         try {
-          /* Rebuilt per provider: a local one may see the base name,
-             a remote one may not, and that must be decided by config
-             rather than by the adapter asking nicely. */
-          const forProvider = buildPayload(
-            meta, features, description,
-            !!(decl[name] && decl[name].local),
-            { materialClass: opts.materialClass, toleranceMm: opts.toleranceMm });
-
-          const r = await registry[name].classifyProject(forProvider);
-          if (r && r.ok) { result = Object.assign({ source: name }, r); break; }
-          errors.push({ provider: name, reason: (r && r.reason) || 'no_result' });
+          const r = await registry.rules.classifyProject(payloadFor(true));
+          if (r && r.ok) result = Object.assign({ source: 'rules' }, r);
         } catch (err) {
-          /* A provider being down must never break the page. Note it
-             and try the next one. */
-          errors.push({ provider: name, reason: String((err && err.message) || err) });
-          if (window.console) console.warn('[ai] provider failed: ' + name, err);
+          if (window.console) console.warn('[ai] rules provider failed', err);
         }
       }
+      if (!result) result = emptyResult('rules', [{ key: 'ai.reason.noProvider' }]);
 
-      if (!result) {
-        result = emptyResult('none', [{ key: 'ai.reason.noProvider' }]);
-        result.errors = errors;
+      /* -- 2. is it worth escalating? --------------------
+         Only when the rules are genuinely unsure, or when there is a
+         description and nothing measurable to go on -- the one case
+         the rules cannot address. Escalating on every file would
+         spend a free tier answering questions already answered, and
+         would send a client's brief to a third party who did not
+         need it. */
+      const weak = (result.confidence || 0) < (esc.belowConfidence || 0.5);
+      const none = esc.whenNoProcess !== false && !result.process;
+      const descOnly = esc.whenDescriptionOnly !== false
+        && !features.hasGeometry
+        && description.trim().length >= (esc.minDescriptionChars || 12);
+
+      escalation.considered = weak || none || descOnly;
+      escalation.why = none ? 'no_process'
+        : (descOnly ? 'description_only' : (weak ? 'low_confidence' : null));
+
+      if (escalation.considered) {
+        const chain = providerChain().filter(function (n) { return n !== 'rules'; });
+
+        /* Consent is a precondition, not a preference: it was
+           resolved above, before a payload could be built. */
+        if (!chain.length) {
+          escalation.skipped = 'no_provider';
+        } else if (!consented) {
+          escalation.skipped = 'consent_missing';
+        } else {
+          /* Then the caps, counted from the usage log BEFORE asking,
+             so a limit stops the request rather than recording that
+             we exceeded it. */
+          const lim = c.limits || {};
+          let capHit = null;
+          if (window.DataStore && DataStore.countAiUsage) {
+            try {
+              if (lim.perTenantPerDay
+                  && (await DataStore.countAiUsage({ scope: 'tenant' })) >= lim.perTenantPerDay) {
+                capHit = 'tenant_daily_cap';
+              } else if (lim.globalPerDay
+                  && (await DataStore.countAiUsage({ scope: 'global' })) >= lim.globalPerDay) {
+                capHit = 'global_daily_cap';
+              }
+            } catch (e) { /* a cap we cannot count is a cap we do not apply */ }
+          }
+
+          if (capHit) {
+            escalation.skipped = capHit;
+          } else {
+            for (const name of chain) {
+              const started = Date.now();
+              let r = null;
+              try {
+                r = await registry[name].classifyProject(
+                  payloadFor(!!(decl[name] && decl[name].local)));
+              } catch (err) {
+                r = { ok: false, reason: String((err && err.message) || err) };
+              }
+
+              /* One row per CALL, not per classification: a request
+                 that fell through three providers cost three, and
+                 that is what the free tier was charged for. */
+              if (window.DataStore && DataStore.logAiUsage) {
+                try {
+                  await DataStore.logAiUsage({
+                    provider: name, feature: 'classifyProject',
+                    model: (r && r.model) || null,
+                    ok: !!(r && r.ok),
+                    status: r && r.status,
+                    error: (r && !r.ok) ? (r.reason || 'failed') : null,
+                    latencyMs: (r && r.latencyMs) || (Date.now() - started),
+                    tokensIn: (r && r.tokensIn) || 0,
+                    tokensOut: (r && r.tokensOut) || 0
+                  });
+                } catch (e) { /* logging must never break the answer */ }
+              }
+
+              escalation.attempts.push({
+                provider: name, ok: !!(r && r.ok),
+                reason: (r && !r.ok) ? (r.reason || 'failed') : null
+              });
+
+              if (r && r.ok) {
+                /* A model wins only by being more certain. A hedging
+                   model must not override a confident rule that
+                   actually measured the part. */
+                if ((r.confidence || 0) >= (result.confidence || 0)) {
+                  const ruleReasons = (result.reasons || []).slice(0, 2);
+                  result = Object.assign({ source: name }, r, {
+                    reasons: (r.reasons || []).concat(ruleReasons),
+                    warnings: result.warnings || [],
+                    features: features,
+                    supersededRules: true
+                  });
+                  escalation.usedProvider = name;
+                } else {
+                  escalation.skipped = 'rules_were_more_certain';
+                }
+                break;
+              }
+              /* Otherwise: next provider. A provider being down costs
+                 precision, never availability. */
+            }
+            if (!escalation.usedProvider && !escalation.skipped) {
+              escalation.skipped = 'all_providers_failed';
+            }
+          }
+        }
       }
     }
 
@@ -317,6 +450,7 @@ window.AIService = (function () {
     result.geometry   = geometry
       ? { ok: geometry.ok, reason: geometry.reason || null }
       : { ok: false, reason: cached ? 'cached' : 'not_attempted' };
+    result.escalation = escalation;
     result.fileHash   = meta.hash;
     result.fileExt    = meta.ext;
     result.fileSize   = meta.sizeBytes;
@@ -326,7 +460,7 @@ window.AIService = (function () {
     if (window.DataStore && DataStore.logClassification) {
       try {
         const logged = await DataStore.logClassification({
-          fileHash:   meta.hash,
+          fileHash:   cacheKey,
           fileExt:    meta.ext,
           fileSize:   meta.sizeBytes,
           questionHash: questionHash,
@@ -342,6 +476,15 @@ window.AIService = (function () {
              reason list grows every time the file is opened. */
           reasons:    (result.reasons || []).filter(
                         (r) => !r || r.key !== 'ai.reason.cached'),
+
+          /* An answer that WANTED to escalate and could not is not a
+             final answer — it is the rules speaking while something
+             temporary was in the way. Caching it as though it were
+             final is why granting consent appeared to do nothing: the
+             same question came straight back from the row written
+             while consent was still refused. Marked here, skipped by
+             findClassification, re-asked once the block lifts. */
+          escalationBlocked: TRANSIENT_BLOCKS.indexOf(escalation.skipped) !== -1,
           source:     result.source
         });
         if (logged && logged.ok) result.logId = logged.id;

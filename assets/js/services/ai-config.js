@@ -16,22 +16,53 @@
 
 window.AI_CONFIG = {
 
-  /* The provider tried first. */
-  activeProvider: 'rules',
+  /* `rules` ALWAYS runs, and runs first. It is local, free and
+     instant, so there is never a reason to pay for an answer before
+     hearing the free one. It is not part of the chain below — it is
+     the floor underneath it. */
 
-  /* Tried in order until one answers. `rules` is last on purpose: it
-     is local, free and always available, so it is the floor the chain
-     can never fall through. From Stage 3 this becomes something like
-     ['gemini', 'groq', 'openrouter', 'rules']. */
-  fallbackOrder: ['rules'],
+  /* Tried in order, and only when the rules result is weak enough to
+     be worth escalating (see `escalate`). The first provider that
+     returns a valid answer wins; if every one fails, the rules answer
+     stands. A provider being down can therefore cost precision, and
+     can never cost availability. */
+  fallbackOrder: ['gemini', 'groq', 'openrouter'],
 
   providers: {
     rules:      { enabled: true,  implemented: true,  local: true,  stage: 1 },
-    gemini:     { enabled: false, implemented: false, local: false, stage: 3 },
-    groq:       { enabled: false, implemented: false, local: false, stage: 3 },
-    openrouter: { enabled: false, implemented: false, local: false, stage: 3 },
+    gemini:     { enabled: true,  implemented: true,  local: false, stage: 3 },
+    groq:       { enabled: true,  implemented: true,  local: false, stage: 3 },
+    openrouter: { enabled: true,  implemented: true,  local: false, stage: 3 },
     local:      { enabled: false, implemented: false, local: true,  stage: 5 },
     paid:       { enabled: false, implemented: false, local: false, stage: 6 }
+  },
+
+  /* Where the keys live. Never a key in this file — see
+     assets/js/services/llm-provider.js and proxy/README.md.
+
+     `mock: true` answers from a canned local result with no network
+     at all, so the escalation path, the fallback chain and the caps
+     can be exercised before a proxy exists. It ships ON so a fresh
+     clone works out of the box; set it false once `url` points at a
+     deployed worker. */
+  proxy: {
+    url: null,
+    mock: true,
+    timeoutMs: 20000
+  },
+
+  /* When is a paid-ish answer worth asking for at all?
+
+     Escalating on every file would burn a free tier on questions the
+     rules already answered well, and would send a description to a
+     third party when nobody needed it to. So: only when the rules are
+     genuinely unsure, or when there is a description and no geometry
+     to go on — which is precisely the case the rules cannot handle. */
+  escalate: {
+    belowConfidence: 0.5,
+    whenNoProcess: true,
+    whenDescriptionOnly: true,
+    minDescriptionChars: 12
   },
 
   /* A feature that is off returns a clean "not available yet" result.
@@ -66,20 +97,23 @@ window.AI_CONFIG = {
      provider is given extracted features and an extension, nothing
      more. ai.js enforces this rather than trusting each adapter.
 
-     sendDescription flips to true in Stage 3, behind the visible
-     consent toggle that stage adds. Until then nothing at all leaves
-     the browser, because `rules` is local. */
+     requireConsent means no remote provider is called at all until
+     the client has said yes, in the panel, where the notice is. It is
+     not a config convenience; turning it off would send a client's
+     brief to a third party without telling them. */
   privacy: {
     sendRawFiles:    false,
-    sendDescription: false
+    requireConsent:  true,
+    consentDefault:  false
   },
 
-  /* Free-tier guard rails. null means "not enforced yet" — the caps
-     start being counted in Stage 3, when there is a metered provider
-     to count. */
+  /* Free-tier guard rails, counted locally from the usage log before
+     a request is made. The worker enforces its own copy — these stop
+     us asking, that stops anyone else. Both are needed: a browser cap
+     is a courtesy, not a control. */
   limits: {
-    perTenantPerDay: null,
-    globalPerDay:    null
+    perTenantPerDay: 25,
+    globalPerDay:    200
   }
 
 };
