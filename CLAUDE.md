@@ -208,6 +208,28 @@ not need it.
   ours is dropped rather than rendered.
 - `proxy.mock: true` ships on, so a fresh clone works with no key.
 
+### Admin insight (Stage 4)
+
+`/dashboard/admin/ai/` + `assets/js/admin-ai.js`. It reads the two AI logs and
+writes one row type: an admin's decision on a rule draft.
+
+- **Accuracy's denominator is `decided_at`, not row count.** An unconfirmed
+  suggestion is an unknown and is reported separately. Folding it in turns
+  abandonment into agreement.
+- **`demo: true` rows are labelled wherever they are counted.** `seedAiDemoData`
+  lives in the data layer, not the page — "page code does not touch persisted
+  state" has no test-only exception.
+- **Nothing reads `aiRuleProposals` at classification time.** A draft is shown
+  to a human who pastes it into `classification-rules.json`. Wiring a proposal
+  straight into the classifier is the one change this feature exists to avoid.
+- A draft needs `learning.minEvidence` corrections, `learning.minAgreement`
+  measured against the parts that matched the same features and went elsewhere,
+  and at least one condition. All three are load-bearing; the last one stops a
+  rule that matches every part ever uploaded.
+- `scope: 'all'` on the two list functions is a rendering convenience. The
+  boundary is the staff `SELECT` policy in `0006_ai_insight.sql` — select only,
+  because a correction log an operator can edit is not evidence.
+
 ## i18n
 
 English and Arabic, `data/i18n/{en,ar}.json`, applied by

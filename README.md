@@ -660,6 +660,66 @@ the cache lookup.
 Without that, ticking the consent box appeared to do nothing: the same question
 came straight back from the row written while consent was still refused.
 
+### Admin insight and the learning loop
+
+`/dashboard/admin/ai/` reads the classification log, the usage log and the rule
+drafts. It writes exactly one kind of row — an admin's decision on a draft —
+and it never edits `data/classification-rules.json`.
+
+**Accuracy counts only decisions a human closed.** A suggestion nobody
+confirmed or corrected is an unknown, not a success, and it is reported
+separately rather than folded into the denominator. Counting abandonment as
+agreement is the single easiest way to make a classifier look good.
+
+**Generated sample rows say so.** The page can seed its own demo log so the
+statistics can be checked on a site with no history; every seeded row carries
+`demo: true` and every screen that counts them says how many are generated. A
+statistic you cannot tell apart from a real one is worse than no statistic.
+
+### Promote to rule — evidence automatic, decision manual
+
+When the same correction keeps appearing, the page drafts the rule it implies,
+in the exact shape of an entry in `classification-rules.json`, and shows it.
+Approving **records your decision and changes nothing** — a person pastes the
+block into the rules file.
+
+That split is the whole design. A classifier that rewrites its own rules from
+user corrections learns whatever its users were confused about that week, and
+does it silently; the first sign of trouble is a rule nobody wrote and nobody
+can explain.
+
+Three guards on what gets drafted at all, in `ai-config.js` under `learning`:
+
+- **`minEvidence` (3).** Two corrections is a coincidence.
+- **`minAgreement` (0.7)**, measured against parts that matched the same
+  features and did *not* go that way. Without that denominator the agreement
+  rate is 100% by construction, which is how a learning loop convinces itself.
+- **A draft with no conditions is refused outright** — it would match every
+  part ever uploaded.
+
+Only features every corrected part shared become conditions, and only
+categorical ones, plus `toleranceMm` as an upper bound. A numeric threshold
+averaged across a handful of corrections fits that sample and nothing else.
+
+### Exporting the log
+
+CSV for the two tables, or JSON for everything. The JSON carries the
+thresholds that produced it — the escalation settings, the confidence bands,
+the caps and the rules-file version — because a log exported without them
+cannot be interpreted six months later.
+
+Both are UTF-8 with a BOM, since these exports carry Arabic and Excel reads a
+UTF-8 file as cp1252 without one.
+
+### Cross-tenant reads
+
+The admin page calls `DataStore.listClassifications({ scope: 'all' })`, which
+is an argument and therefore **no protection at all**. The real version is
+`supabase/migrations/0006_ai_insight.sql`: a `SELECT`-only policy for staff,
+decided by `is_staff()` reading the caller's own profile row, which the caller
+cannot write. Staff can read the logs; they cannot rewrite them. A correction
+log an operator can edit is not evidence.
+
 ### Adding a panel or a provider
 
 A provider registers itself from its own file with

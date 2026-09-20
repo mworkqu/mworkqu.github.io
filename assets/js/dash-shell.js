@@ -24,6 +24,7 @@
       { key: 'jobs',      label: 'Jobs',        k: 'dash.nav.jobs',       href: '/dashboard/admin/jobs/' },
       { key: 'quotes',    label: 'Quotes',      k: 'dash.nav.quotes',     href: '/dashboard/admin/quotes/' },
       { key: 'users',     label: 'Users',       k: 'dash.nav.users',      href: '/dashboard/admin/users/' },
+      { key: 'ai',        label: 'AI insight',  k: 'dash.nav.ai',         href: '/dashboard/admin/ai/' },
       { key: 'analytics', label: 'Analytics',   k: 'dash.nav.analytics',  href: '#' }
     ],
 

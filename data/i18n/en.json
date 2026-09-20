@@ -23,6 +23,85 @@
     "principles": "Principles",
     "workWithUs": "Work with us"
   },
+  "adminAi": {
+    "allTenants": "All tenants",
+    "approve": "Approve",
+    "became": "{from} became {to}",
+    "clear": "Clear samples",
+    "copy": "Copy the rule",
+    "demoLede": "Generated rows for trying this page out. They are marked as samples wherever they are counted, and clearing them leaves real entries alone.",
+    "dismiss": "Dismiss",
+    "empty": "Nothing logged in this period yet.",
+    "evidence": "{n} corrections · {a}% of comparable parts went this way",
+    "exportCsv": "Export CSV",
+    "exportJson": "Export JSON",
+    "eyebrow": "Classification",
+    "globalCap": "All tenants today",
+    "h": {
+      "corrections": "What clients corrected most",
+      "demo": "Sample data",
+      "proposals": "Rules worth adding",
+      "providers": "Provider calls in this period",
+      "sources": "Where the answers came from",
+      "usage": "Today against the caps"
+    },
+    "h1": "What the classifier got right.",
+    "m": {
+      "accuracy": "Confirmed as suggested",
+      "corrections": "Corrected by the client",
+      "decisions": "Classifications",
+      "escalated": "Answered by an AI service"
+    },
+    "noAnswer": "no answer",
+    "noCallsToday": "No AI service has been called today.",
+    "noCorrections": "No corrections in this period — the suggestions were accepted as made.",
+    "noProposals": "Nothing to propose yet. A pattern needs {n} matching corrections with a feature in common before it is worth a rule.",
+    "noProviderCalls": "No provider calls in this period.",
+    "note": {
+      "demo": "{n} of these rows are generated samples.",
+      "undecided": "{n} suggestions were never confirmed or corrected, and are left out of the accuracy figure — an unanswered question is not a correct answer."
+    },
+    "p": {
+      "all": "Everything",
+      "month": "Last 30 days",
+      "today": "Today",
+      "week": "Last 7 days"
+    },
+    "pasteNote": "Approving records your decision. It does not change the classifier — paste this block into data/classification-rules.json to make it live.",
+    "period": "Period",
+    "proposalsLede": "Drafted from repeated corrections. Nothing here is live: approving records your decision, and a person still pastes the rule into the rules file.",
+    "seed": "Generate 24 sample entries",
+    "src": {
+      "cache": "Cache",
+      "rules": "Local rules"
+    },
+    "st": {
+      "accepted": "Approved",
+      "dismissed": "Dismissed",
+      "pending": "Awaiting review"
+    },
+    "sub": "Every suggestion, what the client chose instead, and what it cost to ask.",
+    "tenant": "Tenant",
+    "th": {
+      "accuracy": "Accuracy",
+      "calls": "Calls",
+      "callsToday": "Calls today",
+      "chosen": "Client chose",
+      "confidence": "Mean confidence",
+      "count": "Answers",
+      "decided": "Confirmed or corrected",
+      "failed": "Failed",
+      "latency": "Mean latency",
+      "provider": "Provider",
+      "shared": "What they had in common",
+      "source": "Answered by",
+      "suggested": "Suggested",
+      "tenant": "Tenant",
+      "tenantCap": "Daily cap",
+      "times": "Times",
+      "tokens": "Tokens in / out"
+    }
+  },
   "adminHome": {
     "alerts": "Reorder alerts",
     "awaiting": "Awaiting approval",
@@ -114,6 +193,7 @@
       "ambiguous": ".{ext} is a solid model — it could be machined or printed, so the geometry has to decide",
       "cached": "Answered before for this exact file",
       "conflict": "{count} rules disagreed, so this needs your decision",
+      "demo": "Generated sample entry.",
       "extensionOnly": "Based on the file extension alone — geometry is not read yet",
       "flat": ".{ext} describes a flat 2D profile",
       "gcode": ".{ext} is already machine code for a printer",
@@ -130,6 +210,7 @@
         "flat2d": "A 2D profile with no thickness of its own, which is what a laser cuts",
         "flatPlate": "Flat with a constant {thicknessMm} mm section — a laser cuts this in one pass",
         "flatVarying": "Flat overall, but the section changes — a laser cannot cut that, a mill can",
+        "learned": "A rule your team added after correcting this case repeatedly.",
         "meshDefault": "A mesh format, which usually means a printed part",
         "metal": "You said the material is metal",
         "organic": "Far more surface than its bounding box implies — curved, hollow or organic",
@@ -332,6 +413,7 @@
   "dash": {
     "nav": {
       "account": "Account",
+      "ai": "AI insight",
       "analytics": "Analytics",
       "cart": "Cart & orders",
       "files": "Files",

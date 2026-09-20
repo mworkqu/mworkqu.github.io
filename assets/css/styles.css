@@ -2701,3 +2701,128 @@ input[type="file"] {
   padding-top: 9px;
   border-top: 1px solid var(--rule);
 }
+
+
+/* ── Admin AI insight (Stage 4) ───────────────────────────── */
+
+.ins-controls {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.ins-control { display: flex; flex-direction: column; gap: 5px; }
+
+.ins-control span {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+}
+
+.ins-control select {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-mid);
+  padding: 7px 10px;
+  min-width: 150px;
+}
+
+.ins-control-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ins-h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 34px 0 10px;
+}
+
+.ins-lede, .ins-caveat p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-50);
+  margin-bottom: 12px;
+  max-width: 68ch;
+}
+
+.ins-caveat p { margin-bottom: 4px; }
+
+.ins-cap { margin-bottom: 18px; }
+
+.ins-cap-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-70);
+  margin-bottom: 6px;
+}
+
+.ins-bar {
+  height: 6px;
+  background: var(--rule);
+  border: 1px solid var(--rule-mid);
+}
+
+.ins-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
+.ins-draft {
+  border: 1px solid var(--rule-mid);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: var(--surface);
+}
+
+.ins-draft-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.ins-draft-head strong { font-size: 14px; color: var(--ink); }
+
+.ins-draft-sub {
+  font-size: 11px;
+  color: var(--ink-50);
+  margin-top: 3px;
+}
+
+.ins-json {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  background: var(--rule);
+  border: 1px solid var(--rule-mid);
+  padding: 12px 14px;
+  overflow-x: auto;
+  /* The rule is JSON, which reads left to right whatever the page
+     direction is. Mirroring it would make it unpasteable. */
+  direction: ltr;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.ins-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
+.ins-draft-foot {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-50);
+  max-width: 68ch;
+}
+
+/* A non-zero failure count reads as weight, like low stock does.
+   The palette is monochrome; red is not available to mean anything. */
+.ins-flag { color: var(--ink); font-weight: 600; }

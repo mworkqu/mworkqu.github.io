@@ -107,6 +107,20 @@ window.AI_CONFIG = {
     consentDefault:  false
   },
 
+  /* How much evidence before a repeated correction is worth showing
+     to an admin as a draft rule (Stage 4).
+
+     Both numbers are deliberately unforgiving. Two corrections is a
+     coincidence, and a pattern that only holds 60% of the time is a
+     rule that will be wrong twice a week. The draft is shown, never
+     applied: data/classification-rules.json is edited by a person,
+     and a classifier that rewrites its own rules learns whatever its
+     users were confused about that week. */
+  learning: {
+    minEvidence:  3,
+    minAgreement: 0.7
+  },
+
   /* Free-tier guard rails, counted locally from the usage log before
      a request is made. The worker enforces its own copy — these stop
      us asking, that stops anyone else. Both are needed: a browser cap

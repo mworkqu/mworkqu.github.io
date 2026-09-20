@@ -84,6 +84,10 @@ window.DataStore = (function () {
     if (!s.aiSettings) { s.aiSettings = {}; touched = true; }
     s.aiUsage.forEach(stamp);
 
+    /* Stage 4: rule drafts learned from corrections. They are
+       proposals, never live rules — see saveRuleProposal. */
+    if (!s.aiRuleProposals) { s.aiRuleProposals = []; touched = true; }
+
     if (touched) commit();
   }
 
@@ -349,8 +353,17 @@ window.DataStore = (function () {
     return row ? Object.assign({}, row) : null;
   }
 
-  async function listClassifications() {
-    return raw().aiClassifications.filter(mine).map((r) => Object.assign({}, r));
+  /* `scope: 'all'` crosses tenants and exists for one caller: the
+     admin insight page. It is NOT a back door — in Postgres it is a
+     separate read policy for staff (0006_ai_insight.sql), and a
+     client's JWT will not satisfy it no matter what this argument
+     says. Here it is only as trustworthy as the role check above it,
+     which on a static prototype is not a security boundary at all. */
+  async function listClassifications(opts) {
+    const all = opts && opts.scope === 'all';
+    return raw().aiClassifications
+      .filter((r) => all || mine(r))
+      .map((r) => Object.assign({}, r));
   }
 
   /* ── AI usage and consent (Stage 3) ──────────────────────
@@ -400,8 +413,11 @@ window.DataStore = (function () {
     return (o.scope === 'global' ? rows : rows.filter(mine)).length;
   }
 
-  async function listAiUsage() {
-    return raw().aiUsage.filter(mine).map((r) => Object.assign({}, r));
+  async function listAiUsage(opts) {
+    const all = opts && opts.scope === 'all';
+    return raw().aiUsage
+      .filter((r) => all || mine(r))
+      .map((r) => Object.assign({}, r));
   }
 
   /* Consent is per tenant and defaults to withheld. It is stored, not
@@ -423,6 +439,181 @@ window.DataStore = (function () {
     };
     commit();
     return { ok: true, granted: !!granted };
+  }
+
+  /* ── Learned rule proposals (Stage 4) ────────────────────
+     A proposal is a DRAFT of a rule, never a rule. Nothing in this
+     repository reads aiRuleProposals at classification time, and
+     data/classification-rules.json is only ever edited by a person.
+
+     That is deliberate. A classifier that rewrites its own rules
+     from user corrections learns whatever its users were confused
+     about that week, and it does it silently — the first sign of
+     trouble is a rule nobody wrote and nobody can explain. So the
+     evidence is gathered automatically and the decision stays
+     manual. */
+
+  async function listRuleProposals() {
+    return (raw().aiRuleProposals || []).map((r) => Object.assign({}, r));
+  }
+
+  /* Keyed on the signature, so re-analysing the same corrections
+     updates one row instead of stacking a duplicate every visit. */
+  async function saveRuleProposal(entry) {
+    const s = raw();
+    if (!s.aiRuleProposals) s.aiRuleProposals = [];
+    const sig = entry.signature || '';
+    const existing = s.aiRuleProposals.find((r) => r.signature === sig);
+    if (existing) {
+      existing.evidence_count = entry.evidenceCount || 0;
+      existing.agreement      = entry.agreement || 0;
+      existing.draft          = entry.draft || existing.draft;
+      existing.sample_ids     = entry.sampleIds || [];
+      existing.updated_at     = new Date().toISOString();
+      commit();
+      return { ok: true, id: existing.id, updated: true };
+    }
+    const row = {
+      id:             uid('prop'),
+      signature:      sig,
+      from_process:   entry.fromProcess || null,
+      to_process:     entry.toProcess   || null,
+      evidence_count: entry.evidenceCount || 0,
+      agreement:      entry.agreement || 0,
+      draft:          entry.draft || null,
+      sample_ids:     entry.sampleIds || [],
+      status:         'pending',
+      created_at:     new Date().toISOString(),
+      updated_at:     new Date().toISOString(),
+      decided_at:     null
+    };
+    s.aiRuleProposals.unshift(row);
+    commit();
+    return { ok: true, id: row.id, updated: false };
+  }
+
+  /* 'accepted' records that a human agreed with the draft. It does
+     NOT install it — the admin still pastes it into the rules file,
+     which stays the only place a live rule comes from. */
+  async function decideRuleProposal(id, status) {
+    const row = (raw().aiRuleProposals || []).find((r) => r.id === id);
+    if (!row) return { ok: false, error: 'not_found' };
+    if (['pending', 'accepted', 'dismissed'].indexOf(status) === -1) {
+      return { ok: false, error: 'invalid_status' };
+    }
+    row.status     = status;
+    row.decided_at = status === 'pending' ? null : new Date().toISOString();
+    commit();
+    return { ok: true, status: row.status };
+  }
+
+  /* ── Demo log data ───────────────────────────────────────
+     Stage 4 has to be verifiable on a site with no history, and a
+     dashboard demonstrated on an empty table proves nothing. These
+     rows go through the same shapes as the real ones but carry
+     `demo: true`, and every screen that counts them says how many
+     are generated. A statistic you cannot tell apart from a real one
+     is worse than no statistic.
+
+     It lives here rather than in the page because page code does not
+     touch persisted state — that rule has no test-only exception. */
+
+  const DEMO_CASES = [
+    { ext: 'stl',  suggested: '3d-printing',       final: '3d-printing',       src: 'rules',  conf: 0.82,
+      f: { extension: 'stl',  fileKind: 'mesh',    hasGeometry: true,  isFlat: false, materialClass: 'plastic', boundingBoxMaxMm: 120, minDimensionMm: 14 } },
+    { ext: 'stl',  suggested: '3d-printing',       final: 'cnc-machining',     src: 'rules',  conf: 0.55,
+      f: { extension: 'stl',  fileKind: 'mesh',    hasGeometry: true,  isFlat: false, materialClass: 'metal',   toleranceMm: 0.05, boundingBoxMaxMm: 90 } },
+    { ext: 'step', suggested: 'cnc-machining',     final: 'cnc-machining',     src: 'gemini', conf: 0.71,
+      f: { extension: 'step', fileKind: 'solid',   hasGeometry: true,  isFlat: false, materialClass: 'metal',   boundingBoxMaxMm: 220 } },
+    { ext: 'dxf',  suggested: 'laser-cutting',     final: 'laser-cutting',     src: 'rules',  conf: 0.9,
+      f: { extension: 'dxf',  fileKind: 'profile', hasGeometry: true,  isFlat: true,  profileOnly: true, materialClass: 'metal' } },
+    { ext: 'svg',  suggested: 'laser-cutting',     final: 'laser-cutting',     src: 'rules',  conf: 0.88,
+      f: { extension: 'svg',  fileKind: 'profile', hasGeometry: true,  isFlat: true,  profileOnly: true } },
+    { ext: 'gbr',  suggested: 'pcb-manufacturing', final: 'pcb-manufacturing', src: 'rules',  conf: 0.95,
+      f: { extension: 'gbr',  fileKind: 'pcb',     hasGeometry: false } },
+    { ext: '',     suggested: null,                final: '3d-printing',       src: 'groq',   conf: 0.44,
+      f: { hasGeometry: false } },
+    { ext: 'obj',  suggested: '3d-printing',       final: 'cnc-machining',     src: 'rules',  conf: 0.5,
+      f: { extension: 'obj',  fileKind: 'mesh',    hasGeometry: true,  isFlat: false, materialClass: 'metal',   toleranceMm: 0.08, boundingBoxMaxMm: 75 } },
+    { ext: 'stl',  suggested: '3d-printing',       final: 'cnc-machining',     src: 'rules',  conf: 0.52,
+      f: { extension: 'stl',  fileKind: 'mesh',    hasGeometry: true,  isFlat: false, materialClass: 'metal',   toleranceMm: 0.03, boundingBoxMaxMm: 140 } },
+    { ext: 'stl',  suggested: '3d-printing',       final: null,                src: 'rules',  conf: 0.6,
+      f: { extension: 'stl',  fileKind: 'mesh',    hasGeometry: true,  isFlat: false, materialClass: 'plastic', boundingBoxMaxMm: 60 } }
+  ];
+
+  async function seedAiDemoData(opts) {
+    const o     = opts || {};
+    const count = Math.max(1, Math.min(200, o.count || 24));
+    const days  = Math.max(1, Math.min(30, o.days || 7));
+    const s     = raw();
+    const tenants = o.tenants || [tenantId(), 'tenant_northgate'];
+    let made = 0;
+
+    for (let i = 0; i < count; i++) {
+      const c   = DEMO_CASES[i % DEMO_CASES.length];
+      const tid = tenants[i % tenants.length];
+      /* Spread across the window, but keep a third of them on
+         today, or the "usage against caps" panel has nothing to
+         show on the day you look at it. */
+      const back = i < Math.ceil(count / 3) ? 0 : (i % days);
+      const when = new Date(Date.now() - back * 864e5 - (i * 37) * 6e4);
+      const iso  = when.toISOString();
+      const id   = uid('cls');
+
+      s.aiClassifications.unshift({
+        id: id, tenant_id: tid, demo: true,
+        file_hash: 'demo_' + (c.ext || 'text') + '_' + i,
+        file_ext: c.ext, file_size: 20000 + i * 1300,
+        question_hash: 'demo_q_' + i, description: '',
+        features: c.f, warnings: [], escalation_blocked: false,
+        suggested_process: c.suggested,
+        alternatives: [], confidence: c.conf,
+        reasons: [{ key: 'ai.reason.demo', vars: {} }],
+        source: c.src,
+        final_process: c.final,
+        corrected: c.final === null ? null : (c.final !== c.suggested),
+        created_at: iso,
+        decided_at: c.final === null ? null : new Date(when.getTime() + 9e4).toISOString()
+      });
+
+      /* A remote source means a provider really was called, so the
+         usage log has to agree with the classification log. Stats
+         drawn from two tables that contradict each other are worse
+         than no stats. */
+      if (c.src !== 'rules' && c.src !== 'cache') {
+        s.aiUsage.unshift({
+          id: uid('use'), tenant_id: tid, demo: true,
+          provider: c.src, feature: 'classifyProject', model: 'demo',
+          ok: true, http_status: 200, error: null,
+          latency_ms: 400 + (i % 7) * 130,
+          tokens_in: 180 + (i % 5) * 20, tokens_out: 40 + (i % 3) * 8,
+          classification_id: id, created_at: iso
+        });
+        /* Every third one fell through a provider that was down. */
+        if (i % 3 === 0) {
+          s.aiUsage.unshift({
+            id: uid('use'), tenant_id: tid, demo: true,
+            provider: 'gemini', feature: 'classifyProject', model: null,
+            ok: false, http_status: 429, error: 'http_429',
+            latency_ms: 210, tokens_in: 0, tokens_out: 0,
+            classification_id: id, created_at: iso
+          });
+        }
+      }
+      made++;
+    }
+    commit();
+    return { ok: true, added: made };
+  }
+
+  async function clearAiDemoData() {
+    const s = raw();
+    const before = s.aiClassifications.length + s.aiUsage.length;
+    s.aiClassifications = s.aiClassifications.filter((r) => !r.demo);
+    s.aiUsage           = s.aiUsage.filter((r) => !r.demo);
+    s.aiRuleProposals   = (s.aiRuleProposals || []).filter((r) => !r.demo);
+    commit();
+    return { ok: true, removed: before - (s.aiClassifications.length + s.aiUsage.length) };
   }
 
   /* A standalone purchase: untagged, so it lands on the client's own
@@ -466,7 +657,12 @@ window.DataStore = (function () {
 
     /* AI usage, caps and consent — 0004_ai.sql and 0005_ai_consent.sql */
     logAiUsage: logAiUsage, countAiUsage: countAiUsage, listAiUsage: listAiUsage,
-    getAiConsent: getAiConsent, setAiConsent: setAiConsent
+    getAiConsent: getAiConsent, setAiConsent: setAiConsent,
+
+    /* Learned rule drafts and demo rows — 0006_ai_insight.sql */
+    listRuleProposals: listRuleProposals, saveRuleProposal: saveRuleProposal,
+    decideRuleProposal: decideRuleProposal,
+    seedAiDemoData: seedAiDemoData, clearAiDemoData: clearAiDemoData
   };
 
 })();
