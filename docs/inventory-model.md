@@ -44,6 +44,23 @@ Nothing sits in between, so the two always add up to everything he owns.
 A cart line added from a project keeps a hidden reference to it, which is why
 one Amazon-style cart can still route parts to the right place on delivery.
 
+### The two actions in the workspace
+
+`/dashboard/client/projects/detail/` offers a different action set depending on
+whether the part is already owned:
+
+| | Actions offered |
+|---|---|
+| **In his inventory** | **Add to Project** only. Deducts immediately. |
+| **Not in his inventory** | **Add to Cart** (buys it onto his shelf, untagged) and **Add to Project** |
+
+*Add to Project* on something he does not own puts the line on the project
+**straight away**, tagged `cart` and flagged unpaid, and creates the matching
+project-tagged cart line. The part is therefore visible on the build list
+before it is bought, with the project panel showing what is still owed. That is
+deliberate: a parts list you cannot see until you have paid for it is not a
+parts list. Nothing is deducted from stock, because there was none to deduct.
+
 ### How parts move
 
 - **Adding a part from inventory to a project deducts it immediately.** If he
@@ -124,6 +141,19 @@ NEW → REVIEW → QUOTED → APPROVED → PRODUCTION → READY → CLOSED
 
 Roles see the same states through different filters. Vendors see only jobs
 assigned to them, without prices or client names.
+
+## Where this is enforced
+
+Today: `assets/js/data/store.js`, in the browser. The deduction is a single
+read-check-write that refuses to go below zero, which is the `localStorage`
+stand-in for a guarded `UPDATE`.
+
+Next: `supabase/migrations/0003_rpc.sql`, where the same operations are one
+transaction each and concurrency is handled by `WHERE ... AND qty >= p_qty`.
+The JS function names already match the RPC names so the swap touches one file.
+Tenant isolation is `supabase/migrations/0002_rls.sql` — see the
+"Multi-tenancy" section of the README for what the policies enforce, and for
+why the tenant filtering in JS is *not* a security boundary.
 
 ## Demo mode
 

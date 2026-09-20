@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -30,15 +31,16 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link active" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link active" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
@@ -47,15 +49,15 @@
   <header class="page-header">
     <div class="page-header-inner">
       <div>
-        <p class="page-overline">About</p>
-        <h1 class="page-title reveal">
+        <p class="page-overline" data-i18n="aboutPage.label">About</p>
+        <h1 class="page-title reveal" data-i18n-html="hero.about">
           Engineering<br>
           as a<br>
           discipline.
         </h1>
       </div>
       <div class="reveal" style="transition-delay:.1s">
-        <p class="page-lead">
+        <p class="page-lead" data-i18n="aboutPage.lead">
           GESTALTUNG is an engineering studio and manufacturing platform
           based in Doha, Qatar. We work at the intersection of industrial
           design, mechanical engineering, and precision fabrication.
@@ -69,19 +71,19 @@
     <div class="grid-2" style="gap:clamp(40px,8vw,120px);align-items:start">
       <div class="reveal">
         <div class="section-label" style="margin-bottom:32px">
-          <span class="section-num">Philosophy</span>
+          <span class="section-num" data-i18n="aboutPage.philosophy">Philosophy</span>
         </div>
         <div class="prose">
-          <h2>The brief is a hypothesis. The object is the answer.</h2>
-          <p>We approach every project as an engineering problem — not an aesthetic exercise. Form is always the result of decisions made under constraints: materials, processes, tolerances, cost, and use. When those decisions are made with rigour, the result tends to look right.</p>
-          <p>GESTALTUNG was founded to close the gap between the design studio and the factory floor. Too often, products are designed without understanding what they'll require to make, and manufactured without understanding what they were meant to be. We operate across both.</p>
-          <p>Our studio handles concept development, engineering, and documentation. Our manufacturing network produces the parts. Our shop sells objects that came through the same process. One consistent standard, end to end.</p>
+          <h2 data-i18n="aboutPage.h2">The brief is a hypothesis. The object is the answer.</h2>
+          <p data-i18n="aboutPage.p1">We approach every project as an engineering problem — not an aesthetic exercise. Form is always the result of decisions made under constraints: materials, processes, tolerances, cost, and use. When those decisions are made with rigour, the result tends to look right.</p>
+          <p data-i18n="aboutPage.p2">GESTALTUNG was founded to close the gap between the design studio and the factory floor. Too often, products are designed without understanding what they'll require to make, and manufactured without understanding what they were meant to be. We operate across both.</p>
+          <p data-i18n="aboutPage.p3">Our studio handles concept development, engineering, and documentation. Our manufacturing network produces the parts. Our shop sells objects that came through the same process. One consistent standard, end to end.</p>
         </div>
       </div>
 
       <div class="reveal" style="transition-delay:.1s">
         <div class="section-label" style="margin-bottom:32px">
-          <span class="section-num">Location</span>
+          <span class="section-num" data-i18n="aboutPage.location">Location</span>
         </div>
         <!-- CAD-style location diagram -->
         <svg viewBox="0 0 360 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;opacity:.7" aria-hidden="true">
@@ -112,8 +114,8 @@
         </svg>
 
         <div style="margin-top:28px;border-top:1px solid var(--rule);padding-top:20px">
-          <p class="dwg-ref" style="margin-bottom:8px">Studio established</p>
-          <p style="font-size:14px;font-weight:600;color:var(--ink)">Doha, Qatar — 2020</p>
+          <p class="dwg-ref" style="margin-bottom:8px" data-i18n="aboutPage.est">Studio established</p>
+          <p style="font-size:14px;font-weight:600;color:var(--ink)" data-i18n="aboutPage.estVal">Doha, Qatar — 2020</p>
         </div>
       </div>
     </div>
@@ -124,34 +126,34 @@
     <div style="max-width:var(--max);margin:0 auto;padding:var(--section-y) var(--px)">
 
       <div class="section-label reveal">
-        <span class="section-num">Principles</span>
-        <span class="section-tag">How we think</span>
+        <span class="section-num" data-i18n="aboutPage.principles">Principles</span>
+        <span class="section-tag" data-i18n="aboutPage.howWeThink">How we think</span>
       </div>
 
       <div class="tile-grid-2 reveal" style="transition-delay:.05s">
 
         <div class="value-item">
           <p class="value-num">01</p>
-          <h3 class="value-title">Constraints are the brief.</h3>
-          <p class="value-text">Every design problem has a set of constraints. Material cost, manufacturing process, assembly sequence, maintenance access, regulatory compliance. We start with the constraints and let the design follow.</p>
+          <h3 class="value-title" data-i18n="aboutPage.pr1">Constraints are the brief.</h3>
+          <p class="value-text" data-i18n="aboutPage.pr1d">Every design problem has a set of constraints. Material cost, manufacturing process, assembly sequence, maintenance access, regulatory compliance. We start with the constraints and let the design follow.</p>
         </div>
 
         <div class="value-item">
           <p class="value-num">02</p>
-          <h3 class="value-title">Documents are deliverables.</h3>
-          <p class="value-text">A concept that can't be communicated precisely is a concept that can't be built. We hold technical documentation to the same standard as the design itself — clear, complete, and unambiguous.</p>
+          <h3 class="value-title" data-i18n="aboutPage.pr2">Documents are deliverables.</h3>
+          <p class="value-text" data-i18n="aboutPage.pr2d">A concept that can't be communicated precisely is a concept that can't be built. We hold technical documentation to the same standard as the design itself — clear, complete, and unambiguous.</p>
         </div>
 
         <div class="value-item">
           <p class="value-num">03</p>
-          <h3 class="value-title">Tolerance is intent made measurable.</h3>
-          <p class="value-text">A dimension without a tolerance is a wish. We define tolerances based on function, not convention, and we understand the manufacturing implications of every number we write down.</p>
+          <h3 class="value-title" data-i18n="aboutPage.pr3">Tolerance is intent made measurable.</h3>
+          <p class="value-text" data-i18n="aboutPage.pr3d">A dimension without a tolerance is a wish. We define tolerances based on function, not convention, and we understand the manufacturing implications of every number we write down.</p>
         </div>
 
         <div class="value-item">
           <p class="value-num">04</p>
-          <h3 class="value-title">One standard, end to end.</h3>
-          <p class="value-text">Design and manufacturing are not separate disciplines in this studio. The same rigour that goes into the model goes into the drawing, the quote, the first article inspection, and the delivery. No handover gap.</p>
+          <h3 class="value-title" data-i18n="aboutPage.pr4">One standard, end to end.</h3>
+          <p class="value-text" data-i18n="aboutPage.pr4d">Design and manufacturing are not separate disciplines in this studio. The same rigour that goes into the model goes into the drawing, the quote, the first article inspection, and the delivery. No handover gap.</p>
         </div>
 
       </div>
@@ -163,12 +165,12 @@
   <div class="cta-band">
     <div class="cta-band-inner wrap" style="padding:0">
       <div class="reveal">
-        <p class="dwg-ref" style="color:rgba(244,242,236,.3);margin-bottom:20px">Work with us</p>
-        <p class="cta-band-headline">
+        <p class="dwg-ref" style="color:rgba(244,242,236,.3);margin-bottom:20px" data-i18n="aboutPage.workWithUs">Work with us</p>
+        <p class="cta-band-headline" data-i18n-html="hero.aboutCta">
           Start with<br>a conversation.
         </p>
       </div>
-      <a href="/contact/" class="btn btn-ghost reveal" style="transition-delay:.1s">Get in Touch</a>
+      <a href="/contact/" class="btn btn-ghost reveal" style="transition-delay:.1s" data-i18n="aboutPage.getInTouch">Get in Touch</a>
     </div>
   </div>
 
@@ -178,30 +180,30 @@
   <div class="footer-top">
     <div>
       <span class="footer-brand-name">Gestaltung</span>
-      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
+      <p class="footer-brand-desc" data-i18n="footer.tagline">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
     <div>
-      <p class="footer-col-title">Platform</p>
+      <p class="footer-col-title" data-i18n="footer.platform">Platform</p>
       <nav class="footer-links">
-        <a href="/studio/" class="footer-link">Studio</a>
-        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
-        <a href="/shop/" class="footer-link">Shop</a>
+        <a href="/studio/" class="footer-link" data-i18n="nav.studio">Studio</a>
+        <a href="/manufacturing/" class="footer-link" data-i18n="nav.manufacturing">Manufacturing</a>
+        <a href="/shop/" class="footer-link" data-i18n="nav.shop">Shop</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Company</p>
+      <p class="footer-col-title" data-i18n="footer.company">Company</p>
       <nav class="footer-links">
-        <a href="/projects/" class="footer-link">Projects</a>
-        <a href="/about/" class="footer-link">About</a>
-        <a href="/contact/" class="footer-link">Contact</a>
-        <a href="/faq/" class="footer-link">FAQ</a>
+        <a href="/projects/" class="footer-link" data-i18n="nav.projects">Projects</a>
+        <a href="/about/" class="footer-link" data-i18n="nav.about">About</a>
+        <a href="/contact/" class="footer-link" data-i18n="nav.contact">Contact</a>
+        <a href="/faq/" class="footer-link" data-i18n="nav.faq">FAQ</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Portal</p>
+      <p class="footer-col-title" data-i18n="cta.portal">Portal</p>
       <nav class="footer-links">
-        <a href="/login/client/" class="footer-link">Client Portal</a>
-        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+        <a href="/login/client/" class="footer-link" data-i18n="cta.clientPortal">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link" data-i18n="cta.vendorPortal">Vendor Portal</a>
       </nav>
     </div>
   </div>

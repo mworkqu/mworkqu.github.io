@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project — GESTALTUNG</title>
+  <title>Project workspace — GESTALTUNG</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <!-- Sets lang and dir at parse time so the RTL layout is right on the first frame. -->
+  <script src="/assets/js/i18n.js"></script>
 </head>
-<body data-client-page="detail">
+<body data-client-page="workspace">
 
 <header class="g-nav" data-nav>
   <a class="g-logo" href="/">
@@ -25,48 +27,47 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="client" data-active="projects"></aside>
 
-  <section class="dash-main">
-    <p class="dash-panel-title"><span data-project-ref>—</span></p>
-    <h1 class="dash-heading" data-project-title>Project</h1>
-    <p class="dash-subhead"><span class="badge active" data-project-state>—</span></p>
-    <p class="dash-subhead" data-project-brief></p>
+  <section class="dash-main dash-main-wide">
 
-    <p class="dash-panel-title dash-section-gap">Parts</p>
-    <div class="table-scroll" data-project-detail></div>
-
-    <div data-quote-panel></div>
-
-    <div class="dash-panel dash-section-gap">
-      <p class="dash-panel-title">Add a part</p>
-      <div class="dash-actions" style="margin-bottom:14px">
-        <input class="qty-input" type="number" min="1" value="1" data-part-qty aria-label="Quantity">
-        <input class="text-input" type="text" data-part-search placeholder="Search your inventory and the shop&hellip;">
+    <div class="ws-header">
+      <div>
+        <p class="dash-panel-title"><span data-project-ref>—</span></p>
+        <h1 class="dash-heading" data-project-title>Project</h1>
+        <p class="dash-subhead">
+          <span class="badge active" data-project-state>—</span>
+          <span data-project-brief></span>
+        </p>
       </div>
-      <div data-part-results></div>
-      <p class="field-note" data-part-note role="status"></p>
+      <div class="ws-header-actions">
+        <a class="btn btn-ghost" href="/dashboard/client/projects/" data-i18n="workspace.backToProjects">Back to projects</a>
+        <button class="btn btn-ghost" type="button" data-cancel-project data-i18n="workspace.cancelProject">Cancel project</button>
+      </div>
     </div>
 
-    <div class="dash-actions dash-section-gap">
-      <a class="btn btn-ghost" href="/dashboard/client/projects/">Back to projects</a>
-      <button class="btn btn-ghost" type="button" data-cancel-project>Cancel project</button>
-    </div>
+    <p class="ws-notice" data-ws-notice role="status" aria-live="polite"></p>
+
+    <!-- Panels render themselves in here. The page owns no panel
+         markup: see assets/js/workspace.js for the registry. -->
+    <div data-workspace></div>
+
   </section>
 
 </main>
@@ -74,10 +75,18 @@
 <script src="/assets/js/product-art.js"></script>
 <script src="/assets/js/store.js"></script>
 <script src="/assets/js/client-store.js"></script>
-<script src="/assets/js/admin-store.js"></script>
+<script src="/assets/js/data/store.js"></script>
+<script src="/assets/js/services/ai-config.js"></script>
+<script src="/assets/js/services/ai.js"></script>
+<script src="/assets/js/components/cascade.js"></script>
+<script src="/assets/js/components/classification-confirm.js"></script>
 <script src="/assets/js/dash-shell.js"></script>
-<script src="/assets/js/client-pages.js"></script>
-<script src="/assets/js/admin-pages.js"></script>
+<script src="/assets/js/workspace.js"></script>
+<!-- Panel definitions. A future modelling or schematic panel is one
+     more script tag here, above the boot. -->
+<script src="/assets/js/workspace-project.js"></script>
+<script src="/assets/js/workspace-ai-panel.js"></script>
+<script src="/assets/js/workspace-boot.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

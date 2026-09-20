@@ -48,15 +48,37 @@ window.Store = (function () {
 
   function stockLabel(product) {
     switch (stockState(product)) {
-      case 'digital':       return 'Instant download';
-      case 'made-to-order': return `Made to order · ${product.leadTimeDays || 21} days`;
-      case 'low':           return `Only ${available(product)} left`;
-      default:              return `${available(product)} in stock`;
+      case 'digital':
+        return t('stock.instant', 'Instant download');
+      case 'made-to-order':
+        return t('stock.madeToOrder', 'Made to order · {n} days')
+          .replace('{n}', product.leadTimeDays || 21);
+      case 'low':
+        return t('stock.only', 'Only {n} left').replace('{n}', available(product));
+      default:
+        return t('stock.inStock', '{n} in stock').replace('{n}', available(product));
     }
   }
 
   function money(amount, currency) {
+    if (window.I18n) return I18n.money(amount, currency);
     return `${currency || 'QAR'} ${Number(amount).toLocaleString('en-US')}`;
+  }
+
+  /* Catalogue rows carry parallel *_ar fields rather than { en, ar }
+     pairs, because cart lines and project items store the product NAME
+     as a plain string: changing the shape would make a saved line
+     retranslate itself, and a stored record should keep the wording it
+     was created with. Falls back to English when the Arabic is absent. */
+  function text(row, field) {
+    if (!row) return '';
+    if (window.I18n && I18n.lang() === 'ar' && row[field + '_ar']) return row[field + '_ar'];
+    return row[field] || '';
+  }
+
+  function t(key, fallback) {
+    const v = window.I18n ? I18n.t(key) : key;
+    return v === key ? fallback : v;
   }
 
   function escapeHtml(s) {
@@ -71,6 +93,6 @@ window.Store = (function () {
     return `<svg width="100" height="100" viewBox="0 0 100 100" fill="none" aria-hidden="true">${paths}</svg>`;
   }
 
-  return { load, available, stockState, stockLabel, money, escapeHtml, art };
+  return { load, available, stockState, stockLabel, money, escapeHtml, art, text };
 
 })();

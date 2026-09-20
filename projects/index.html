@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -30,15 +31,16 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link active" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link active" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
@@ -47,13 +49,13 @@
   <header class="page-header">
     <div class="page-header-inner">
       <div>
-        <p class="page-overline">Selected Work</p>
-        <h1 class="page-title reveal">
+        <p class="page-overline" data-i18n="projectsPage.selectedWork">Selected Work</p>
+        <h1 class="page-title reveal" data-i18n="projectsPage.h1">
           Projects.
         </h1>
       </div>
       <div class="reveal" style="transition-delay:.1s">
-        <p class="page-lead">
+        <p class="page-lead" data-i18n="projectsPage.lead">
           A selection of design, engineering, and manufacturing projects
           completed for clients across Qatar and the GCC. Each one started
           with a problem and ended with something built.
@@ -65,13 +67,13 @@
   <!-- Filter toolbar -->
   <div class="shop-toolbar">
     <div class="filter-bar" role="group" aria-label="Filter by discipline" data-filter-group="projects">
-      <button class="tag" data-filter="all" aria-pressed="true">All</button>
-      <button class="tag" data-filter="design" aria-pressed="false">Design</button>
-      <button class="tag" data-filter="engineering" aria-pressed="false">Engineering</button>
-      <button class="tag" data-filter="manufacturing" aria-pressed="false">Manufacturing</button>
-      <button class="tag" data-filter="research" aria-pressed="false">Research</button>
+      <button class="tag" data-filter="all" aria-pressed="true" data-i18n="projectsPage.all">All</button>
+      <button class="tag" data-filter="design" aria-pressed="false" data-i18n="svc.design">Design</button>
+      <button class="tag" data-filter="engineering" aria-pressed="false" data-i18n="svc.engineering">Engineering</button>
+      <button class="tag" data-filter="manufacturing" aria-pressed="false" data-i18n="svc.manufacturing">Manufacturing</button>
+      <button class="tag" data-filter="research" aria-pressed="false" data-i18n="svc.research">Research</button>
     </div>
-    <p class="shop-count" data-filter-count="projects">12 projects</p>
+    <p class="shop-count" data-filter-count="projects" data-i18n="projectsPage.count">12 projects</p>
   </div>
 
   <!-- Project grid -->
@@ -89,9 +91,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Design &amp; Engineering</p>
-          <h3 class="project-title">Precision Instrument Housing</h3>
-          <p class="project-meta">Aluminium 6061 · CNC 5-axis · 2024</p>
+          <p class="project-cat" data-i18n="projectsPage.designEng">Design &amp; Engineering</p>
+          <h3 class="project-title" data-i18n="projectsPage.t1">Precision Instrument Housing</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm1">Aluminium 6061 · CNC 5-axis · 2024</p>
         </div>
       </article>
 
@@ -110,9 +112,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Manufacturing</p>
-          <h3 class="project-title">Flanged Hub Assembly</h3>
-          <p class="project-meta">Steel 4140 · CNC Turning · 2024</p>
+          <p class="project-cat" data-i18n="svc.manufacturing">Manufacturing</p>
+          <h3 class="project-title" data-i18n="projectsPage.t2">Flanged Hub Assembly</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm2">Steel 4140 · CNC Turning · 2024</p>
         </div>
       </article>
 
@@ -126,9 +128,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Industrial Design</p>
-          <h3 class="project-title">Structural Panel Series</h3>
-          <p class="project-meta">Sheet Metal · Laser + Bend · 2023</p>
+          <p class="project-cat" data-i18n="svc.industrialDesign">Industrial Design</p>
+          <h3 class="project-title" data-i18n="projectsPage.t3">Structural Panel Series</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm3">Sheet Metal · Laser + Bend · 2023</p>
         </div>
       </article>
 
@@ -143,9 +145,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Engineering &amp; Manufacturing</p>
-          <h3 class="project-title">Multi-Channel Manifold Block</h3>
-          <p class="project-meta">Aluminium 7075 · CNC · 2023</p>
+          <p class="project-cat" data-i18n="projectsPage.engMfg">Engineering &amp; Manufacturing</p>
+          <h3 class="project-title" data-i18n="projectsPage.t4">Multi-Channel Manifold Block</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm4">Aluminium 7075 · CNC · 2023</p>
         </div>
       </article>
 
@@ -163,9 +165,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Research</p>
-          <h3 class="project-title">Lightweight Structure Study</h3>
-          <p class="project-meta">FEA Analysis · DFM Report · 2023</p>
+          <p class="project-cat" data-i18n="svc.research">Research</p>
+          <h3 class="project-title" data-i18n="projectsPage.t5">Lightweight Structure Study</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm5">FEA Analysis · DFM Report · 2023</p>
         </div>
       </article>
 
@@ -181,9 +183,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Manufacturing</p>
-          <h3 class="project-title">Pneumatic Valve Body</h3>
-          <p class="project-meta">Brass C360 · CNC + EDM · 2023</p>
+          <p class="project-cat" data-i18n="svc.manufacturing">Manufacturing</p>
+          <h3 class="project-title" data-i18n="projectsPage.t6">Pneumatic Valve Body</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm6">Brass C360 · CNC + EDM · 2023</p>
         </div>
       </article>
 
@@ -199,9 +201,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Design &amp; Engineering</p>
-          <h3 class="project-title">Modular Rack System</h3>
-          <p class="project-meta">Steel · Laser + Powder Coat · 2022</p>
+          <p class="project-cat" data-i18n="projectsPage.designEng">Design &amp; Engineering</p>
+          <h3 class="project-title" data-i18n="projectsPage.t7">Modular Rack System</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm7">Steel · Laser + Powder Coat · 2022</p>
         </div>
       </article>
 
@@ -216,9 +218,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Research</p>
-          <h3 class="project-title">Stress Distribution Analysis</h3>
-          <p class="project-meta">SolidWorks FEA · Report · 2022</p>
+          <p class="project-cat" data-i18n="svc.research">Research</p>
+          <h3 class="project-title" data-i18n="projectsPage.t8">Stress Distribution Analysis</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm8">SolidWorks FEA · Report · 2022</p>
         </div>
       </article>
 
@@ -234,9 +236,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Design &amp; Manufacturing</p>
-          <h3 class="project-title">Turned Disc Coupling</h3>
-          <p class="project-meta">Aluminium · CNC Turning · 2022</p>
+          <p class="project-cat" data-i18n="projectsPage.designMfg">Design &amp; Manufacturing</p>
+          <h3 class="project-title" data-i18n="projectsPage.t9">Turned Disc Coupling</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm9">Aluminium · CNC Turning · 2022</p>
         </div>
       </article>
 
@@ -251,9 +253,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Engineering</p>
-          <h3 class="project-title">Cooling Plate — Thermal Management</h3>
-          <p class="project-meta">Aluminium 6061 · CNC · Anodised · 2022</p>
+          <p class="project-cat" data-i18n="svc.engineering">Engineering</p>
+          <h3 class="project-title" data-i18n="projectsPage.t10">Cooling Plate — Thermal Management</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm10">Aluminium 6061 · CNC · Anodised · 2022</p>
         </div>
       </article>
 
@@ -271,9 +273,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Industrial Design</p>
-          <h3 class="project-title">Control Panel Layout</h3>
-          <p class="project-meta">Concept · DFM · 3D Model · 2021</p>
+          <p class="project-cat" data-i18n="svc.industrialDesign">Industrial Design</p>
+          <h3 class="project-title" data-i18n="projectsPage.t11">Control Panel Layout</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm11">Concept · DFM · 3D Model · 2021</p>
         </div>
       </article>
 
@@ -289,9 +291,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Manufacturing &amp; Research</p>
-          <h3 class="project-title">Process Capability Study</h3>
-          <p class="project-meta">Statistical Analysis · CMM · 2021</p>
+          <p class="project-cat" data-i18n="projectsPage.mfgResearch">Manufacturing &amp; Research</p>
+          <h3 class="project-title" data-i18n="projectsPage.t12">Process Capability Study</h3>
+          <p class="project-meta" data-i18n="projectsPage.mm12">Statistical Analysis · CMM · 2021</p>
         </div>
       </article>
 
@@ -302,10 +304,10 @@
   <div style="border-top:1px solid var(--rule);padding:clamp(48px,8vh,80px) var(--px);max-width:var(--max);margin:0 auto">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--gap);flex-wrap:wrap">
       <div>
-        <p class="dwg-ref" style="margin-bottom:10px">Shape a new idea</p>
-        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em">Your brief becomes the next entry.</h2>
+        <p class="dwg-ref" style="margin-bottom:10px" data-i18n="cta.shapeIdea">Shape a new idea</p>
+        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em" data-i18n="projectsPage.nextH">Your brief becomes the next entry.</h2>
       </div>
-      <a href="/studio/" class="btn btn-primary btn-arrow"><span class="btn-tag">Studio</span><span class="btn-label">Shape a new idea</span></a>
+      <a href="/studio/" class="btn btn-primary btn-arrow"><span class="btn-tag" data-i18n="nav.studio">Studio</span><span class="btn-label" data-i18n="cta.shapeIdea">Shape a new idea</span></a>
     </div>
   </div>
 
@@ -315,30 +317,30 @@
   <div class="footer-top">
     <div>
       <span class="footer-brand-name">Gestaltung</span>
-      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
+      <p class="footer-brand-desc" data-i18n="footer.tagline">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
     <div>
-      <p class="footer-col-title">Platform</p>
+      <p class="footer-col-title" data-i18n="footer.platform">Platform</p>
       <nav class="footer-links">
-        <a href="/studio/" class="footer-link">Studio</a>
-        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
-        <a href="/shop/" class="footer-link">Shop</a>
+        <a href="/studio/" class="footer-link" data-i18n="nav.studio">Studio</a>
+        <a href="/manufacturing/" class="footer-link" data-i18n="nav.manufacturing">Manufacturing</a>
+        <a href="/shop/" class="footer-link" data-i18n="nav.shop">Shop</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Company</p>
+      <p class="footer-col-title" data-i18n="footer.company">Company</p>
       <nav class="footer-links">
-        <a href="/projects/" class="footer-link">Projects</a>
-        <a href="/about/" class="footer-link">About</a>
-        <a href="/contact/" class="footer-link">Contact</a>
-        <a href="/faq/" class="footer-link">FAQ</a>
+        <a href="/projects/" class="footer-link" data-i18n="nav.projects">Projects</a>
+        <a href="/about/" class="footer-link" data-i18n="nav.about">About</a>
+        <a href="/contact/" class="footer-link" data-i18n="nav.contact">Contact</a>
+        <a href="/faq/" class="footer-link" data-i18n="nav.faq">FAQ</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Portal</p>
+      <p class="footer-col-title" data-i18n="cta.portal">Portal</p>
       <nav class="footer-links">
-        <a href="/login/client/" class="footer-link">Client Portal</a>
-        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+        <a href="/login/client/" class="footer-link" data-i18n="cta.clientPortal">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link" data-i18n="cta.vendorPortal">Vendor Portal</a>
       </nav>
     </div>
   </div>

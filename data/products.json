@@ -2,10 +2,26 @@
   "currency": "QAR",
   "updated": "2026-09-07",
   "categories": [
-    { "key": "tools",    "label": "Tools" },
-    { "key": "fixtures", "label": "Fixtures" },
-    { "key": "objects",  "label": "Objects" },
-    { "key": "digital",  "label": "Digital" }
+    {
+      "key": "tools",
+      "label": "Tools",
+      "label_ar": "أدوات"
+    },
+    {
+      "key": "fixtures",
+      "label": "Fixtures",
+      "label_ar": "مثبتات"
+    },
+    {
+      "key": "objects",
+      "label": "Objects",
+      "label_ar": "أشياء"
+    },
+    {
+      "key": "digital",
+      "label": "Digital",
+      "label_ar": "رقمية"
+    }
   ],
   "products": [
     {
@@ -19,7 +35,11 @@
       "onHand": 6,
       "committed": 2,
       "reorderPoint": 3,
-      "leadTimeDays": 18
+      "leadTimeDays": 18,
+      "process": "cnc-machining",
+      "material": "tool-steel",
+      "name_ar": "طقم كتل ضبط — طراز 123",
+      "description_ar": "كتل دقيقة من الفولاذ المقسّى. مجلوخة بانبساط ±0.005 مم. طقم من ست قطع مع حقيبة حفظ."
     },
     {
       "sku": "SKU-0102",
@@ -32,7 +52,11 @@
       "onHand": 3,
       "committed": 0,
       "reorderPoint": 3,
-      "leadTimeDays": 21
+      "leadTimeDays": 21,
+      "process": "cnc-machining",
+      "material": "al-6061",
+      "name_ar": "طقم إطار مرجعي للقياس",
+      "description_ar": "كتل ألمنيوم معيارية لتثبيت قطع القياس الإحداثي. مؤنودة، بأسنان M6. طقم من أربع قطع."
     },
     {
       "sku": "SKU-0103",
@@ -45,7 +69,11 @@
       "onHand": 11,
       "committed": 1,
       "reorderPoint": 4,
-      "leadTimeDays": 14
+      "leadTimeDays": 14,
+      "process": "cnc-machining",
+      "material": "tool-steel",
+      "name_ar": "طقم مقاييس مخروطية — 1°–30°",
+      "description_ar": "مقاييس مخروطية مجلوخة بدقة من فولاذ العدة المقسّى. علامات محفورة بالليزر. 15 قطعة."
     },
     {
       "sku": "SKU-0201",
@@ -58,7 +86,11 @@
       "onHand": 8,
       "committed": 4,
       "reorderPoint": 3,
-      "leadTimeDays": 21
+      "leadTimeDays": 21,
+      "process": "cnc-machining",
+      "material": "mild-steel",
+      "name_ar": "طقم كتل V بمشابك",
+      "description_ar": "كتل V من الحديد الزهر مع مشابك مطابقة. زاوية 90° مجلوخة بدقة ±0.01 مم. مجاري M8، زوج."
     },
     {
       "sku": "SKU-0202",
@@ -71,7 +103,11 @@
       "onHand": 2,
       "committed": 2,
       "reorderPoint": 2,
-      "leadTimeDays": 28
+      "leadTimeDays": 28,
+      "process": "cnc-machining",
+      "material": "tool-steel",
+      "name_ar": "مسطرة جيبية — 200 مم",
+      "description_ar": "مسطرة جيبية مقسّاة ومجلوخة بدقة، 200 مم بين مركزي الأسطوانتين. تشمل طقم كتل قياس."
     },
     {
       "sku": "SKU-0203",
@@ -84,7 +120,11 @@
       "onHand": 9,
       "committed": 0,
       "reorderPoint": 4,
-      "leadTimeDays": 18
+      "leadTimeDays": 18,
+      "process": "cnc-machining",
+      "material": "tool-steel",
+      "name_ar": "زاوية قائمة مسطحة لصانع العدد",
+      "description_ar": "فولاذ عدة مقسّى، 150 × 100 مم. مجلوخة ومصقولة إلى تعامد درجة ISO 1. مع شهادة."
     },
     {
       "sku": "SKU-0301",
@@ -97,7 +137,11 @@
       "onHand": 14,
       "committed": 3,
       "reorderPoint": 6,
-      "leadTimeDays": 12
+      "leadTimeDays": 12,
+      "process": "cnc-machining",
+      "material": "al-6061",
+      "name_ar": "قلم مُصنَّع آلياً — ألمنيوم",
+      "description_ar": "مُصنَّع بخمسة محاور من ألمنيوم 6061 صلب. مؤنود برمادي دافئ. يقبل عبوة G2 القياسية."
     },
     {
       "sku": "SKU-0302",
@@ -110,7 +154,11 @@
       "onHand": 5,
       "committed": 1,
       "reorderPoint": 4,
-      "leadTimeDays": 10
+      "leadTimeDays": 10,
+      "process": "laser-cutting",
+      "material": "steel-sheet",
+      "name_ar": "حامل بطاقات مكتبي",
+      "description_ar": "فولاذ طري مقطوع بالليزر ومثني بدقة. مطلي بالمسحوق بلون حجري مطفأ. مقاسا A6 وبطاقة العمل."
     },
     {
       "sku": "SKU-0303",
@@ -123,7 +171,11 @@
       "onHand": 0,
       "committed": 0,
       "reorderPoint": 2,
-      "leadTimeDays": 24
+      "leadTimeDays": 24,
+      "process": "laser-cutting",
+      "material": "ss-sheet",
+      "name_ar": "وردة البوصلة — تعليق جداري",
+      "description_ar": "فولاذ مقاوم للصدأ 304 مقطوع بنفث الماء، بتشطيب مفروش. قطر 200 مم. مع تثبيت جداري مخفي."
     },
     {
       "sku": "SKU-0401",
@@ -132,7 +184,11 @@
       "type": "digital",
       "art": "dfm-checklist",
       "description": "50-point design for manufacture review template. Excel and PDF. Covers CNC, sheet metal, and injection moulding.",
-      "price": 90
+      "price": 90,
+      "process": null,
+      "material": null,
+      "name_ar": "قالب قائمة تحقق للتصميم لأجل التصنيع",
+      "description_ar": "قالب مراجعة من 50 نقطة للتصميم لأجل التصنيع. بصيغتي Excel وPDF. يغطي التصنيع الرقمي والصفائح المعدنية والحقن بالقوالب."
     },
     {
       "sku": "SKU-0402",
@@ -141,7 +197,11 @@
       "type": "digital",
       "art": "drawing-template",
       "description": "ISO 128 and ASME Y14 compliant drawing borders in A0–A4. Includes title block, revision table, and BOM.",
-      "price": 120
+      "price": 120,
+      "process": null,
+      "material": null,
+      "name_ar": "حزمة قوالب الرسم التقني",
+      "description_ar": "إطارات رسم متوافقة مع ISO 128 وASME Y14 بمقاسات A0–A4. تشمل خانة العنوان وجدول المراجعات وقائمة المواد."
     },
     {
       "sku": "SKU-0403",
@@ -150,7 +210,11 @@
       "type": "digital",
       "art": "bracket-library",
       "description": "48 parametric bracket models in STEP format. Weldments, gussets, and tube clamps. SolidWorks source included.",
-      "price": 200
+      "price": 200,
+      "process": null,
+      "material": null,
+      "name_ar": "مكتبة حوامل قياسية — STEP",
+      "description_ar": "48 نموذج حامل بارامتري بصيغة STEP. لحامات وتقويات ومشابك أنابيب. تشمل ملفات SolidWorks الأصلية."
     }
   ]
 }

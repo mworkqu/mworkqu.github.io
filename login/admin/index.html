@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/css/styles.css">
+  <script src="../../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -25,45 +26,46 @@
     <span class="g-logo-text">GESTALTUNG</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access active" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access active" href="/login/" data-i18n="nav.access">Access</a>
+      <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
 </header>
 
 <main class="login-shell">
   <div class="login-panel">
-    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:8px">Admin portal</p>
-    <h1 style="font-size:26px;font-weight:200;margin-bottom:24px">Administrator sign in</h1>
+    <p class="mono" style="font-size:10px;color:var(--muted);margin-bottom:8px" data-i18n="loginAdmin.portal">Admin portal</p>
+    <h1 style="font-size:26px;font-weight:200;margin-bottom:24px" data-i18n="loginAdmin.h1">Administrator sign in</h1>
     <div class="demo-banner">
       <span class="demo-banner-dot"></span>
       <div class="demo-banner-text">
-        <strong>Demo · Static prototype</strong>
+        <strong data-i18n="cta.demoStatic">Demo · Static prototype</strong>
         Authentication is not active. Any credentials will load the demo dashboard — do not enter real passwords.
       </div>
     </div>
     <form class="g-form" action="../../dashboard/admin/" method="get">
       <div class="field">
-        <label class="mono">Email</label>
+        <label class="mono" data-i18n="common.email">Email</label>
         <input type="email" name="email" required placeholder="admin@gestaltung.com" autocomplete="email">
       </div>
       <div class="field">
-        <label class="mono">Password</label>
+        <label class="mono" data-i18n="cta.password">Password</label>
         <input type="password" name="password" required placeholder="••••••••" autocomplete="current-password">
       </div>
       <div class="field">
-        <label class="mono">Security code</label>
+        <label class="mono" data-i18n="loginAdmin.security">Security code</label>
         <input type="text" name="code" required placeholder="6-digit code" maxlength="6" autocomplete="one-time-code" style="letter-spacing:0.15em">
       </div>
-      <button class="btn-machine" type="submit" style="width:100%;margin-top:8px">Sign in</button>
+      <button class="btn-machine" type="submit" style="width:100%;margin-top:8px" data-i18n="cta.signIn">Sign in</button>
     </form>
     <div style="margin-top:28px;padding-top:24px;border-top:0.5px solid var(--rule)">
-      <a class="link-muted mono" href="../" style="font-size:12px">&larr; Other access roles</a>
+      <a class="link-muted mono" href="../" style="font-size:12px" data-i18n="cta.otherRoles">&larr; Other access roles</a>
     </div>
   </div>
 </main>

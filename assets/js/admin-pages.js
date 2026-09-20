@@ -7,6 +7,14 @@
 
 (function () {
 
+  /* Falls back to the English literal, so a missing key degrades to
+     English rather than to a raw key name. */
+  function t(key, fallback) {
+    const v = window.I18n ? I18n.t(key) : key;
+    return v === key ? fallback : v;
+  }
+
+
   const page = document.body.dataset.dashPage;
   if (!page) return;
 
@@ -37,10 +45,10 @@
       <table class="g-table">
         <thead>
           <tr>
-            <th>Product</th><th>SKU</th>
-            <th class="num">On hand</th><th class="num">Committed</th>
-            <th class="num">Available</th><th class="num">Reorder at</th>
-            <th class="num">On order</th><th></th>
+            <th>${t('tbl.product', 'Product')}</th><th>${t('tbl.sku', 'SKU')}</th>
+            <th class="num">${t('tbl.onHand', 'On hand')}</th><th class="num">${t('tbl.committed', 'Committed')}</th>
+            <th class="num">${t('tbl.available', 'Available')}</th><th class="num">${t('tbl.reorderAt', 'Reorder at')}</th>
+            <th class="num">${t('tbl.onOrder', 'On order')}</th><th></th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +67,7 @@
               <td class="num mono">${oo || '—'}</td>
               <td class="num">
                 ${alert && !oo
-                  ? `<button class="btn-table" type="button" data-make="${esc(p.sku)}">Make a batch</button>`
+                  ? `<button class="btn-table" type="button" data-make="${esc(p.sku)}">${t('btn.makeBatch', 'Make a batch')}</button>`
                   : ''}
               </td>
             </tr>`;
@@ -79,9 +87,9 @@
   function renderLedger() {
     const rows = AdminStore.ledger().slice(0, 12);
     $('[data-ledger-table]').innerHTML = !rows.length
-      ? empty('No movements recorded yet. Receiving stock or finishing a batch writes a line here.')
+      ? empty(t('empty.movements', 'No movements recorded yet. Receiving stock or finishing a batch writes a line here.'))
       : `<table class="g-table">
-          <thead><tr><th>Date</th><th>SKU</th><th class="num">Change</th><th>Reason</th><th>Reference</th></tr></thead>
+          <thead><tr><th>${t('tbl.date', 'Date')}</th><th>${t('tbl.sku', 'SKU')}</th><th class="num">${t('tbl.change', 'Change')}</th><th>${t('tbl.reason', 'Reason')}</th><th>${t('tbl.reference', 'Reference')}</th></tr></thead>
           <tbody>
             ${rows.map((m) => `
               <tr>
@@ -117,7 +125,7 @@
       const f   = e.target;
       const qty = parseInt(f.qty.value, 10);
       const err = f.querySelector('[data-error]');
-      if (!qty || qty < 1) { err.textContent = 'Enter how many arrived.'; return; }
+      if (!qty || qty < 1) { err.textContent = t('err.arrived', 'Enter how many arrived.'); return; }
       err.textContent = '';
       AdminStore.receive(f.sku.value, qty, f.ref.value.trim() || 'Delivery booked in');
       f.reset(); fillSkuSelects();
@@ -128,7 +136,7 @@
       const f   = e.target;
       const qty = parseInt(f.qty.value, 10);
       const err = f.querySelector('[data-error]');
-      if (!qty || qty < 1) { err.textContent = 'Enter how many to make.'; return; }
+      if (!qty || qty < 1) { err.textContent = t('err.toMake', 'Enter how many to make.'); return; }
       err.textContent = '';
       const product = catalogue.bySku[f.sku.value];
       AdminStore.createBatch({
@@ -158,10 +166,10 @@
   function renderJobs() {
     const rows = AdminStore.jobs();
     $('[data-jobs-table]').innerHTML = !rows.length
-      ? empty('No jobs yet.')
+      ? empty(t('empty.jobs', 'No jobs yet.'))
       : `<table class="g-table">
           <thead>
-            <tr><th>Job</th><th>Making</th><th class="num">Qty</th><th>Vendor</th><th>Due</th><th>Status</th><th></th></tr>
+            <tr><th>${t('tbl.job', 'Job')}</th><th>${t('tbl.making', 'Making')}</th><th class="num">${t('tbl.qty', 'Qty')}</th><th>${t('tbl.vendor', 'Vendor')}</th><th>${t('tbl.due', 'Due')}</th><th>${t('tbl.status', 'Status')}</th><th></th></tr>
           </thead>
           <tbody>
             ${rows.map((j) => `
@@ -176,7 +184,7 @@
                 </td>
                 <td class="mono small">${esc(j.due || '—')}</td>
                 <td>${jobBadge(j.state)}</td>
-                <td class="num">${j.state === 'QUEUED' ? `<button class="btn-table" type="button" data-start="${esc(j.id)}">Release</button>` : ''}</td>
+                <td class="num">${j.state === 'QUEUED' ? `<button class="btn-table" type="button" data-start="${esc(j.id)}">${t('btn.release', 'Release')}</button>` : ''}</td>
               </tr>`).join('')}
           </tbody>
         </table>`;
@@ -201,9 +209,9 @@
   function renderQuoteList() {
     const rows = ClientStore.projects().filter((p) => p.state !== 'CANCELLED');
     $('[data-quote-list]').innerHTML = !rows.length
-      ? empty('No client projects yet.')
+      ? empty(t('empty.clientProjects', 'No client projects yet.'))
       : `<table class="g-table">
-          <thead><tr><th>Reference</th><th>Project</th><th class="num">Parts</th><th>Status</th><th></th></tr></thead>
+          <thead><tr><th>${t('tbl.reference', 'Reference')}</th><th>${t('tbl.project', 'Project')}</th><th class="num">${t('tbl.parts', 'Parts')}</th><th>${t('tbl.status', 'Status')}</th><th></th></tr></thead>
           <tbody>
             ${rows.map((p) => `
               <tr>
@@ -231,7 +239,7 @@
     const p  = ClientStore.project(id);
     const host = $('[data-quote-detail]');
 
-    if (!p) { host.innerHTML = empty('That project could not be found.'); return; }
+    if (!p) { host.innerHTML = empty(t('empty.notFound', 'That project could not be found.')); return; }
 
     $('[data-quote-ref]').textContent   = p.id;
     $('[data-quote-title]').textContent = p.title;
@@ -277,9 +285,9 @@
       host.innerHTML = `
         <table class="g-table">
           <tbody>
-            <tr><td>Design</td><td class="small">${f.hours} h &times; ${esc(money(f.rate))}</td><td class="num mono">${esc(money(f.design))}</td></tr>
-            <tr><td>Production</td><td class="small">Assembly and finishing</td><td class="num mono">${esc(money(f.prod))}</td></tr>
-            <tr><td>Contingency</td><td class="small">${f.pct}%</td><td class="num mono">${esc(money(f.contingency))}</td></tr>
+            <tr><td>${t('q.design', 'Design')}</td><td class="small">${f.hours} h &times; ${esc(money(f.rate))}</td><td class="num mono">${esc(money(f.design))}</td></tr>
+            <tr><td>${t('q.production', 'Production')}</td><td class="small">${t('q.assembly', 'Assembly and finishing')}</td><td class="num mono">${esc(money(f.prod))}</td></tr>
+            <tr><td>${t('q.contingency', 'Contingency')}</td><td class="small">${f.pct}%</td><td class="num mono">${esc(money(f.contingency))}</td></tr>
             <tr><td><strong>Quoted to the client</strong></td><td></td><td class="num mono"><strong>${esc(money(f.quoted))}</strong></td></tr>
           </tbody>
         </table>
@@ -287,9 +295,9 @@
         <p class="dash-panel-title dash-section-gap">Parts, for information</p>
         <table class="g-table">
           <tbody>
-            <tr><td>Bought from the shop for this project</td><td class="small">Already paid</td><td class="num mono">${esc(money(f.paid))}</td></tr>
-            <tr><td>Taken from the client's own stock</td><td class="small">${f.fromShelf} item${f.fromShelf === 1 ? '' : 's'}</td><td class="num mono">—</td></tr>
-            <tr><td>Supplied by the client</td><td class="small">${f.supplied} item${f.supplied === 1 ? '' : 's'}</td><td class="num mono">—</td></tr>
+            <tr><td>${t('q.boughtForProject', 'Bought from the shop for this project')}</td><td class="small">${t('q.alreadyPaid', 'Already paid')}</td><td class="num mono">${esc(money(f.paid))}</td></tr>
+            <tr><td>${t('q.fromOwnStock', "Taken from the client's own stock")}</td><td class="small">${f.fromShelf} item${f.fromShelf === 1 ? '' : 's'}</td><td class="num mono">—</td></tr>
+            <tr><td>${t('q.suppliedBy', 'Supplied by the client')}</td><td class="small">${f.supplied} item${f.supplied === 1 ? '' : 's'}</td><td class="num mono">—</td></tr>
             <tr><td><strong>Whole project cost</strong></td><td class="small">Quote plus what he has already spent</td><td class="num mono"><strong>${esc(money(f.quoted + f.paid))}</strong></td></tr>
           </tbody>
         </table>`;
@@ -323,9 +331,9 @@
     const done = rows.filter((j) => j.state === 'READY');
 
     $('[data-vendor-open]').innerHTML = !open.length
-      ? empty('Nothing assigned to you right now.')
+      ? empty(t('empty.assigned', 'Nothing assigned to you right now.'))
       : `<table class="g-table">
-          <thead><tr><th>Job</th><th>Make</th><th class="num">Qty</th><th>Due</th><th>Status</th><th></th></tr></thead>
+          <thead><tr><th>${t('tbl.job', 'Job')}</th><th>${t('tbl.make', 'Make')}</th><th class="num">${t('tbl.qty', 'Qty')}</th><th>${t('tbl.due', 'Due')}</th><th>${t('tbl.status', 'Status')}</th><th></th></tr></thead>
           <tbody>
             ${open.map((j) => `
               <tr>
@@ -336,17 +344,17 @@
                 <td>${jobBadge(j.state)}</td>
                 <td class="num">
                   ${j.state === 'QUEUED'
-                    ? `<button class="btn-table" type="button" data-v-start="${esc(j.id)}">Start</button>`
-                    : `<button class="btn-table" type="button" data-v-ready="${esc(j.id)}">Mark ready</button>`}
+                    ? `<button class="btn-table" type="button" data-v-start="${esc(j.id)}">${t('btn.start', 'Start')}</button>`
+                    : `<button class="btn-table" type="button" data-v-ready="${esc(j.id)}">${t('btn.markReady', 'Mark ready')}</button>`}
                 </td>
               </tr>`).join('')}
           </tbody>
         </table>`;
 
     $('[data-vendor-done]').innerHTML = !done.length
-      ? empty('Nothing finished yet.')
+      ? empty(t('empty.finished', 'Nothing finished yet.'))
       : `<table class="g-table">
-          <thead><tr><th>Job</th><th>Made</th><th class="num">Ordered</th><th class="num">Made</th><th>Note</th></tr></thead>
+          <thead><tr><th>${t('tbl.job', 'Job')}</th><th>${t('tbl.making', 'Making')}</th><th class="num">${t('tbl.ordered', 'Ordered')}</th><th class="num">${t('tbl.made', 'Made')}</th><th>${t('tbl.note', 'Note')}</th></tr></thead>
           <tbody>
             ${done.map((j) => `
               <tr>
@@ -398,7 +406,7 @@
       const panel = $('[data-ready-panel]');
       const made  = parseInt($('[data-ready-qty]').value, 10);
       const err   = $('[data-ready-error]');
-      if (!made || made < 1) { err.textContent = 'Enter how many you actually made.'; return; }
+      if (!made || made < 1) { err.textContent = t('err.actual', 'Enter how many you actually made.'); return; }
       err.textContent = '';
       const out = AdminStore.markReady(panel.dataset.job, made, $('[data-ready-note]').value.trim());
       panel.hidden = true;
@@ -425,16 +433,16 @@
     set('quotes',   ClientStore.projects().filter((p) => p.state === 'QUOTED').length);
 
     $('[data-reorder-table]').innerHTML = !flagged.length
-      ? empty('Nothing needs reordering. Every product is above its reorder point or already on order.')
+      ? empty(t('empty.reorder', 'Nothing needs reordering. Every product is above its reorder point or already on order.'))
       : `<table class="g-table">
-          <thead><tr><th>Product</th><th class="num">Available</th><th class="num">Reorder at</th><th></th></tr></thead>
+          <thead><tr><th>${t('tbl.product', 'Product')}</th><th class="num">${t('tbl.available', 'Available')}</th><th class="num">${t('tbl.reorderAt', 'Reorder at')}</th><th></th></tr></thead>
           <tbody>
             ${flagged.map((p) => `
               <tr>
                 <td>${esc(p.name)}<div class="cell-note mono">${esc(p.sku)}</div></td>
                 <td class="num mono stock-alert">${AdminStore.available(p)}</td>
                 <td class="num mono">${p.reorderPoint}</td>
-                <td class="num"><a class="btn-table" href="/dashboard/admin/inventory/">Open stock</a></td>
+                <td class="num"><a class="btn-table" href="/dashboard/admin/inventory/">${t('btn.openStock', 'Open stock')}</a></td>
               </tr>`).join('')}
           </tbody>
         </table>`;
@@ -457,6 +465,17 @@
       if (page === 'admin-quotes')    initQuoteList();
       if (page === 'admin-quote')     initQuoteDetail();
       if (page === 'vendor-jobs')     initVendor();
+
+      /* The dictionary and the stores are separate fetches, so the
+         first paint above may have happened while t() was still
+         falling back to English. Repaint once the dictionary has
+         landed — after the init calls, so the renderers are listening. */
+      if (window.I18n) {
+        I18n.ready().then(() => {
+          document.dispatchEvent(new CustomEvent('clientstore:change'));
+          document.dispatchEvent(new CustomEvent('adminstore:change'));
+        });
+      }
     })
     .catch((err) => {
       const main = document.querySelector('.dash-main');
@@ -466,5 +485,18 @@
            If you opened the file directly, serve the site instead: <code>python -m http.server 8000</code></p>`);
       }
     });
+
+
+  /* The renderers on these pages all redraw on a store event, so
+     re-emitting one is enough to repaint them in the new language.
+
+     'i18n:ready' matters as much as 'i18n:change': the stores resolve
+     before the dictionary fetch does, so the first paint happens while
+     t() is still falling back to English. Without this the page would
+     sit in English until something else changed. */
+  document.addEventListener('i18n:change', () => {
+    document.dispatchEvent(new CustomEvent('clientstore:change'));
+    document.dispatchEvent(new CustomEvent('adminstore:change'));
+  });
 
 })();

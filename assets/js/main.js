@@ -125,6 +125,13 @@ document.querySelectorAll('[data-filter-group]').forEach((group) => {
 /* Public forms (studio brief / manufacturing quote / contact) post to '#'.
    Until a real backend is wired up, swap them for a success panel so the
    user gets clear feedback and we don't lose leads silently. */
+/* Falls back to the English literal, so a missing key degrades to
+   English rather than to a raw key name. */
+function i18nText(key, fallback) {
+  const v = window.I18n ? I18n.t(key) : key;
+  return v === key ? fallback : v;
+}
+
 document.querySelectorAll('form.g-form').forEach((form) => {
   if (form.hasAttribute('data-user-form')) return;          // admin user CRUD
   if (form.getAttribute('action') !== '#') return;          // login forms etc.
@@ -139,10 +146,14 @@ document.querySelectorAll('form.g-form').forEach((form) => {
     panel.className = 'form-success';
     panel.setAttribute('role', 'status');
     panel.innerHTML = `
-      <p class="form-success-label"><span class="dot-live"></span> Received</p>
-      <h4>Thank you${name ? ', ' + escapeHtml(name) : ''} — your message is queued.</h4>
-      <p>A senior engineer will review your brief and respond${email ? ' to <strong>' + escapeHtml(email) + '</strong>' : ''} within 24 hours, working days.</p>
-      <p class="form-success-note">Demo mode · static prototype · no email was actually sent</p>
+      <p class="form-success-label"><span class="dot-live"></span> ${escapeHtml(i18nText('formSuccess.label', 'Received'))}</p>
+      <h4>${escapeHtml(
+        i18nText('formSuccess.thanks', 'Thank you{name} — your message is queued.')
+          .replace('{name}', name ? ', ' + name : ''))}</h4>
+      <p>${
+        escapeHtml(i18nText('formSuccess.body', 'A senior engineer will review your brief and respond within 24 hours, working days.'))
+      }${email ? ' <strong>' + escapeHtml(email) + '</strong>' : ''}</p>
+      <p class="form-success-note">${escapeHtml(i18nText('formSuccess.note', 'Demo mode · static prototype · no email was actually sent'))}</p>
     `;
     form.replaceWith(panel);
     panel.scrollIntoView({ behavior: 'smooth', block: 'center' });

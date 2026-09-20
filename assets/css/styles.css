@@ -1998,3 +1998,561 @@ details[open] .faq-q::after { transform: rotate(45deg); }
 }
 
 .dash-subhead em { font-style: normal; color: var(--ink); }
+
+/* ═══════════════════════════════════════════════════════════════
+   12 — BILINGUAL (AR / EN)
+─────────────────────────────────────────────────────────────── */
+
+/* The document ships in English. An Arabic reader would otherwise
+   see one frame of the wrong language in the wrong direction, so
+   i18n.js marks the root pending until the dictionary is applied.
+   English never gets this class, so it never waits. */
+.i18n-pending body { visibility: hidden; }
+
+/* Inter has no Arabic coverage — without this the browser picks an
+   arbitrary system fallback and the page loses its typography. */
+:root[lang="ar"] {
+  --font: 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Arabic runs taller than Latin at the same size and the tight
+   tracking this design uses is meant for capitals it does not have. */
+:root[lang="ar"] body { line-height: 1.75; }
+:root[lang="ar"] h1,
+:root[lang="ar"] h2,
+:root[lang="ar"] h3,
+:root[lang="ar"] .dash-heading,
+:root[lang="ar"] .g-logo-text { letter-spacing: 0; }
+
+/* Codes, SKUs, prices and tolerances stay latin and stay LTR even
+   inside an Arabic sentence. */
+:root[lang="ar"] .mono,
+:root[lang="ar"] code {
+  font-family: var(--mono);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.lang-toggle {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 5px 11px;
+  border: 1px solid var(--rule-mid);
+  background: transparent;
+  color: var(--ink-70);
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-inline-start: 4px;
+}
+
+.lang-toggle:hover { background: var(--ink); color: var(--surface-hi); border-color: var(--ink); }
+.lang-toggle[lang="ar"] { font-family: 'Noto Sans Arabic', var(--mono); letter-spacing: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── RTL corrections ──────────────────────────────────────
+   Grid and flex follow `direction` on their own, so the workspace
+   columns mirror with no help. These are the places the original
+   stylesheet used a physical edge, which does not flip. */
+
+[dir="rtl"] .dash-nav-link { border-left: 0; border-right: 2px solid transparent; }
+[dir="rtl"] .dash-nav-link:hover { border-right-color: rgba(244,242,236,.25); }
+[dir="rtl"] .dash-nav-link.active { border-right-color: var(--surface-hi); }
+
+[dir="rtl"] .g-table th,
+[dir="rtl"] .g-table td { text-align: right; }
+[dir="rtl"] .g-table .num { text-align: left; }
+
+/* Arrows point at the reading direction, so they have to turn. */
+[dir="rtl"] .btn-arrow::after { transform: scaleX(-1); }
+
+/* ═══════════════════════════════════════════════════════════════
+   13 — WORKSPACE (multi-panel)
+─────────────────────────────────────────────────────────────── */
+
+.dash-main-wide { padding: clamp(20px, 2.4vw, 34px); }
+
+.ws-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.ws-header .dash-subhead { margin-bottom: 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ws-header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ws-notice {
+  font-size: 12px;
+  min-height: 18px;
+  margin-bottom: 14px;
+  color: var(--ink-50);
+}
+
+.ws-notice.is-ok    { color: var(--ink-70); }
+.ws-notice.is-error { color: #8C2F22; font-weight: 600; }
+
+/* ── the grid ─────────────────────────────────────────────
+   Three columns on a landscape screen, one on a phone. Nothing
+   here is written left or right: CSS Grid lays columns out along
+   the inline axis, so dir="rtl" puts the filter column on the
+   right without a second rule. */
+
+.ws-grid {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+  /* The side tracks size to their slot, so a slot that narrows into
+     a rail hands the width back to the middle on its own. Sizing
+     the tracks directly would need :has() nested inside :has(),
+     which is invalid and silently drops the whole rule. */
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.ws-slot { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+.ws-slot-left  { width: 290px; }
+.ws-slot-right { width: 360px; }
+
+/* A side column with nothing expanded left in it becomes a rail. */
+.ws-slot-left:not(:has(.ws-panel:not(.is-collapsed))),
+.ws-slot-right:not(:has(.ws-panel:not(.is-collapsed))) { width: 46px; }
+
+.ws-panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  min-width: 0;
+}
+
+.ws-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ws-panel.is-collapsed .ws-panel-head { border-bottom: 0; }
+
+.ws-panel-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin: 0;
+}
+
+.ws-panel-body { padding: 14px; }
+
+.ws-collapse {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 0;
+  color: var(--ink-50);
+}
+
+.ws-collapse:hover { color: var(--ink); }
+
+.ws-chevron {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s;
+  margin-bottom: 3px;
+}
+
+.ws-panel.is-collapsed .ws-chevron { transform: rotate(-45deg); margin-bottom: 0; margin-top: 3px; }
+
+/* Rail mode: the column is 46px wide, so the title turns to run
+   down it rather than being clipped. */
+.ws-slot:not(:has(.ws-panel:not(.is-collapsed))) .ws-panel-head {
+  flex-direction: column-reverse;
+  gap: 12px;
+  padding: 10px 6px;
+  height: 100%;
+}
+
+.ws-slot:not(:has(.ws-panel:not(.is-collapsed))) .ws-panel-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.ws-panel-error { font-size: 12px; color: #8C2F22; }
+.ws-empty { font-size: 12px; color: var(--ink-50); line-height: 1.6; }
+
+/* ── left panel: fields ───────────────────────────────── */
+
+.panel-field { margin-bottom: 12px; }
+
+.panel-field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 5px;
+}
+
+.panel-field input,
+.panel-field select {
+  width: 100%;
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-mid);
+  background: var(--white);
+  color: var(--ink);
+}
+
+.panel-field select:disabled {
+  background: var(--ink-03);
+  color: var(--ink-35);
+  cursor: not-allowed;
+}
+
+.panel-field input:focus,
+.panel-field select:focus { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+.btn-block { width: 100%; justify-content: center; }
+
+/* ── centre panel: results ────────────────────────────── */
+
+.ws-results { display: flex; flex-direction: column; }
+
+.ws-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ws-result:last-child { border-bottom: 0; }
+.ws-result-main { min-width: 0; }
+
+.ws-chips { display: inline-flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+
+.ws-chip {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid var(--rule);
+  color: var(--ink-50);
+}
+
+.ws-stock {
+  grid-column: 1;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-50);
+}
+
+.ws-stock.is-out  { color: var(--ink-35); }
+.ws-stock.is-shop { color: var(--ink-70); }
+
+.ws-result-actions {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn-table.primary {
+  background: var(--ink);
+  color: var(--surface-hi);
+  border-color: var(--ink);
+}
+
+.btn-table.primary:hover { background: transparent; color: var(--ink); }
+.btn-table:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── right panel: the project ─────────────────────────── */
+
+.ws-items { list-style: none; margin: 0; padding: 0; }
+
+.ws-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 4px 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+}
+
+.ws-item:last-child { border-bottom: 0; }
+.ws-item-qty  { color: var(--ink-50); font-size: 11px; }
+.ws-item-name { min-width: 0; }
+.ws-item-price { font-size: 11px; color: var(--ink-50); grid-column: 2; }
+.ws-item .ws-badge { grid-column: 3; grid-row: 1; }
+.ws-item .btn-table { grid-column: 3; grid-row: 2; justify-self: end; }
+
+/* An unpaid line is on the project but not yet bought. The marker
+   runs down the inline start edge so it flips with the text. */
+.ws-item.is-unpaid { border-inline-start: 2px solid var(--ink-35); padding-inline-start: 8px; }
+
+.ws-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid var(--rule-mid);
+  color: var(--ink-50);
+  white-space: nowrap;
+}
+
+.ws-badge.ok      { border-color: var(--rule-hard); color: var(--ink); }
+.ws-badge.warn    { border-color: #B5651D; color: #8C4A12; }
+.ws-badge.pending { border-style: dashed; }
+.ws-badge.muted   { opacity: 0.7; }
+
+.ws-pay-notice {
+  margin-top: 14px;
+  padding: 13px;
+  border: 1px solid #B5651D;
+  background: rgba(181,101,29,.06);
+}
+
+.ws-pay-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8C4A12;
+  margin-bottom: 6px;
+}
+
+.ws-pay-text { font-size: 12px; color: var(--ink-70); line-height: 1.6; margin-bottom: 11px; }
+.ws-pay-notice .btn { font-size: 10px; padding: 8px 14px; }
+
+.ws-quote td { font-size: 12px; }
+
+/* ── narrow screens ───────────────────────────────────── */
+
+@media (max-width: 1180px) {
+  .ws-grid { grid-template-columns: auto minmax(0, 1fr); }
+  .ws-slot-left { width: 260px; }
+  /* The project panel drops under the results rather than being
+     squeezed — it is the thing you read, not a sidebar. */
+  .ws-slot-right { grid-column: 1 / -1; width: auto; }
+}
+
+@media (max-width: 860px) {
+  .ws-grid { grid-template-columns: minmax(0, 1fr); }
+  /* No rail on a phone: a collapsed panel is just a header, and
+     every slot is full width. */
+  .ws-slot-left,
+  .ws-slot-right,
+  .ws-slot-left:not(:has(.ws-panel:not(.is-collapsed))),
+  .ws-slot-right:not(:has(.ws-panel:not(.is-collapsed))) {
+    grid-column: 1;
+    width: auto;
+  }
+  .ws-slot:not(:has(.ws-panel:not(.is-collapsed))) .ws-panel-head {
+    flex-direction: row;
+    padding: 11px 14px;
+    height: auto;
+  }
+  .ws-slot:not(:has(.ws-panel:not(.is-collapsed))) .ws-panel-title {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+  .ws-result { grid-template-columns: minmax(0, 1fr); }
+  .ws-result-actions { grid-column: 1; grid-row: auto; justify-content: flex-start; margin-top: 6px; }
+  .ws-stock { grid-column: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   14 — AI CLASSIFICATION (Stage 1)
+─────────────────────────────────────────────────────────────── */
+
+.ai-privacy {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-50);
+  border-inline-start: 2px solid var(--rule-mid);
+  padding-inline-start: 9px;
+  margin-bottom: 14px;
+}
+
+.ai-suggest {
+  border: 1px solid var(--rule);
+  background: var(--white);
+  padding: 13px;
+  margin-top: 12px;
+}
+
+/* The band is the honesty signal, so it is carried by the edge of the
+   whole card rather than a small chip that can be missed. */
+.ai-band-high   { border-inline-start: 3px solid var(--rule-hard); }
+.ai-band-medium { border-inline-start: 3px solid #B5651D; }
+.ai-band-low    { border-inline-start: 3px dashed var(--ink-35); }
+
+.ai-suggest-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.ai-suggest-q {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ai-band {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-50);
+}
+
+.ai-band-medium .ai-band { color: #8C4A12; }
+
+.ai-cached {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  margin-bottom: 9px;
+}
+
+.ai-reasons, .ai-alts { margin-bottom: 11px; }
+
+.ai-reasons-title {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  margin-bottom: 5px;
+}
+
+.ai-reasons ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ai-reasons li {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--ink-70);
+  padding-inline-start: 12px;
+  position: relative;
+}
+
+.ai-reasons li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 8px;
+  width: 4px;
+  height: 1px;
+  background: var(--ink-35);
+}
+
+.ai-alt-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.ai-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.ai-actions:empty { display: none; }
+
+.ai-change {
+  display: flex;
+  gap: 7px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-top: 11px;
+  padding-top: 11px;
+  border-top: 1px solid var(--rule);
+}
+
+.ai-change[hidden] { display: none; }
+
+.ai-change label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 4px;
+}
+
+.ai-change select {
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 7px 9px;
+  border: 1px solid var(--rule-mid);
+  background: var(--white);
+  color: var(--ink);
+  min-width: 170px;
+}
+
+.ai-change > div, .ai-change > label { flex: 1 1 auto; }
+
+.ai-source {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-35);
+  margin-top: 10px;
+}
+
+.ai-decided { border-inline-start: 3px solid var(--rule-hard); }
+
+/* A file input is the one control that cannot be fully restyled, so
+   it is given room rather than fought with. */
+input[type="file"] {
+  font-family: var(--mono);
+  font-size: 11px;
+  width: 100%;
+  padding: 8px 0;
+  color: var(--ink-70);
+}

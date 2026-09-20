@@ -6,6 +6,14 @@
 
 (function () {
 
+  /* Falls back to the English literal, so a missing key degrades to
+     English rather than to a raw key name. */
+  function t(key, fallback) {
+    const v = window.I18n ? I18n.t(key) : key;
+    return v === key ? fallback : v;
+  }
+
+
   const page = document.body.dataset.clientPage;
   if (!page) return;
 
@@ -37,13 +45,13 @@
     const host = $('[data-inventory-table]');
     const rows = ClientStore.inventory();
     if (!rows.length) {
-      host.innerHTML = empty('Nothing on your shelf yet. Add a part below, or buy from the shop.');
+      host.innerHTML = empty(t('empty.shelf', 'Nothing on your shelf yet. Add a part below, or buy from the shop.'));
       return;
     }
     host.innerHTML = `
       <table class="g-table">
         <thead>
-          <tr><th>Part</th><th>Reference</th><th>Origin</th><th class="num">Quantity</th><th></th></tr>
+          <tr><th>${t('tbl.part', 'Part')}</th><th>${t('tbl.reference', 'Reference')}</th><th>${t('tbl.origin', 'Origin')}</th><th class="num">${t('tbl.quantity', 'Quantity')}</th><th></th></tr>
         </thead>
         <tbody>
           ${rows.map((r) => `
@@ -52,7 +60,7 @@
               <td class="mono small">${r.sku ? esc(r.sku) : '—'}</td>
               <td>${r.origin === 'store' ? 'Bought here' : 'My own'}</td>
               <td class="num mono">${r.qty}</td>
-              <td class="num"><button class="btn-table danger" type="button" data-remove-inv="${esc(r.id)}">Remove</button></td>
+              <td class="num"><button class="btn-table danger" type="button" data-remove-inv="${esc(r.id)}">${t('btn.remove', 'Remove')}</button></td>
             </tr>`).join('')}
         </tbody>
       </table>`;
@@ -69,7 +77,7 @@
       const qty  = parseInt(form.qty.value, 10);
       const err  = form.querySelector('[data-error]');
       if (!name || !qty || qty < 1) {
-        err.textContent = 'Enter a part name and a quantity of at least 1.';
+        err.textContent = t('err.partQty', 'Enter a part name and a quantity of at least 1.');
         return;
       }
       err.textContent = '';
@@ -115,11 +123,11 @@
   function renderProjects() {
     const host = $('[data-project-list]');
     const rows = ClientStore.projects();
-    if (!rows.length) { host.innerHTML = empty('No projects yet.'); return; }
+    if (!rows.length) { host.innerHTML = empty(t('empty.projects', 'No projects yet.')); return; }
     host.innerHTML = `
       <table class="g-table">
         <thead>
-          <tr><th>Reference</th><th>Project</th><th>Type</th><th class="num">Parts</th><th>Status</th><th></th></tr>
+          <tr><th>${t('tbl.reference', 'Reference')}</th><th>${t('tbl.project', 'Project')}</th><th>${t('tbl.type', 'Type')}</th><th class="num">${t('tbl.parts', 'Parts')}</th><th>${t('tbl.status', 'Status')}</th><th></th></tr>
         </thead>
         <tbody>
           ${rows.map((p) => `
@@ -129,7 +137,7 @@
               <td>${p.type === 'design' ? 'Design &amp; build' : 'Make to order'}</td>
               <td class="num mono">${p.parts.length}</td>
               <td><span class="badge${p.state === 'CANCELLED' ? '' : ' active'}">${esc(p.state)}</span></td>
-              <td class="num"><a class="btn-table" href="/dashboard/client/projects/detail/?id=${encodeURIComponent(p.id)}">Open</a></td>
+              <td class="num"><a class="btn-table" href="/dashboard/client/projects/detail/?id=${encodeURIComponent(p.id)}">${t('btn.open', 'Open')}</a></td>
             </tr>`).join('')}
         </tbody>
       </table>`;
@@ -153,9 +161,9 @@
       const type  = form.querySelector('[name="type"]:checked');
       const title = form.title_.value.trim();
       const brief = form.brief.value.trim();
-      if (!type)  { err.textContent = 'Choose what you need first.'; return; }
-      if (!title) { err.textContent = 'Give the project a name.'; return; }
-      if (!brief) { err.textContent = 'Describe what you are trying to achieve.'; return; }
+      if (!type)  { err.textContent = t('err.pickType', 'Choose what you need first.'); return; }
+      if (!title) { err.textContent = t('err.projectName', 'Give the project a name.'); return; }
+      if (!brief) { err.textContent = t('err.brief', 'Describe what you are trying to achieve.'); return; }
       err.textContent = '';
       const id = ClientStore.createProject({
         title, brief, type: type.value, targetDate: form.targetDate.value
@@ -172,7 +180,7 @@
     const host = $('[data-project-detail]');
 
     if (!p) {
-      host.innerHTML = empty('That project could not be found.');
+      host.innerHTML = empty(t('empty.notFound', 'That project could not be found.'));
       return;
     }
 
@@ -186,10 +194,10 @@
       const total = fresh.parts.reduce((n, l) => n + l.qty * (l.unitPrice || 0), 0);
 
       host.innerHTML = !fresh.parts.length
-        ? empty('No parts yet. Search below to add one from your inventory, or buy it from the shop.')
+        ? empty(t('empty.parts', 'No parts yet. Search below to add one from your inventory, or buy it from the shop.'))
         : `<table class="g-table">
             <thead>
-              <tr><th class="num">Qty</th><th>Part</th><th>Source</th><th class="num">Line total</th><th></th></tr>
+              <tr><th class="num">${t('tbl.qty', 'Qty')}</th><th>${t('tbl.part', 'Part')}</th><th>${t('tbl.source', 'Source')}</th><th class="num">${t('tbl.lineTotal', 'Line total')}</th><th></th></tr>
             </thead>
             <tbody>
               ${fresh.parts.map((l) => `
@@ -198,7 +206,7 @@
                   <td>${esc(l.name)}${l.sku ? `<div class="cell-note mono">${esc(l.sku)}</div>` : ''}</td>
                   <td>${partBadge(l.source)}</td>
                   <td class="num mono">${l.unitPrice ? esc(money(l.qty * l.unitPrice)) : '—'}</td>
-                  <td class="num"><button class="btn-table danger" type="button" data-remove-part="${esc(l.lineId)}">Remove</button></td>
+                  <td class="num"><button class="btn-table danger" type="button" data-remove-part="${esc(l.lineId)}">${t('btn.remove', 'Remove')}</button></td>
                 </tr>`).join('')}
             </tbody>
           </table>
@@ -232,11 +240,11 @@
         <div class="table-scroll">
           <table class="g-table">
             <tbody>
-              <tr><td>Design</td><td class="small">${q.designHours} h</td><td class="num mono">${esc(money(design))}</td></tr>
-              <tr><td>Production</td><td class="small">Assembly and finishing</td><td class="num mono">${esc(money(q.production))}</td></tr>
-              <tr><td>Contingency</td><td class="small">${q.contingencyPct}%</td><td class="num mono">${esc(money(contingency))}</td></tr>
+              <tr><td>${t('q.design', 'Design')}</td><td class="small">${q.designHours} h</td><td class="num mono">${esc(money(design))}</td></tr>
+              <tr><td>${t('q.production', 'Production')}</td><td class="small">${t('q.assembly', 'Assembly and finishing')}</td><td class="num mono">${esc(money(q.production))}</td></tr>
+              <tr><td>${t('q.contingency', 'Contingency')}</td><td class="small">${q.contingencyPct}%</td><td class="num mono">${esc(money(contingency))}</td></tr>
               <tr><td><strong>To approve</strong></td><td class="small">Sent ${esc(q.sentAt)}</td><td class="num mono"><strong>${esc(money(q.quoted))}</strong></td></tr>
-              <tr><td>Parts you have already bought</td><td class="small">Paid at checkout</td><td class="num mono">${esc(money(q.alreadyPaid))}</td></tr>
+              <tr><td>${t('q.alreadyBought', 'Parts you have already bought')}</td><td class="small">${t('q.paidAtCheckout', 'Paid at checkout')}</td><td class="num mono">${esc(money(q.alreadyPaid))}</td></tr>
               <tr><td><strong>Whole project</strong></td><td></td><td class="num mono"><strong>${esc(money(q.total))}</strong></td></tr>
             </tbody>
           </table>
@@ -266,7 +274,7 @@
     cancelBtn.addEventListener('click', () => {
       if (cancelBtn.dataset.armed) { ClientStore.cancelProject(id); return; }
       cancelBtn.dataset.armed = '1';
-      cancelBtn.textContent = 'Cancel project — parts return to inventory. Click again';
+      cancelBtn.textContent = t('misc.cancelArmed', 'Cancel project — parts return to inventory. Click again');
     });
 
     initPartPicker(id, catalogue);
@@ -302,8 +310,8 @@
         results.innerHTML = `
           <div class="pick-row">
             <span class="pick-name">${esc(term)}</span>
-            <span class="pick-have">Not in your inventory or the shop</span>
-            <button class="btn-table" type="button" data-pick-supplied="${esc(term)}">I supply this</button>
+            <span class="pick-have">${t('misc.notInInventory', 'Not in your inventory or the shop')}</span>
+            <button class="btn-table" type="button" data-pick-supplied="${esc(term)}">${t('btn.iSupply', 'I supply this')}</button>
           </div>`;
         return;
       }
@@ -356,10 +364,10 @@
     const lines = ClientStore.cart();
 
     host.innerHTML = !lines.length
-      ? empty('Your cart is empty.')
+      ? empty(t('empty.cart', 'Your cart is empty.'))
       : `<table class="g-table">
           <thead>
-            <tr><th class="num">Qty</th><th>Item</th><th>For</th><th class="num">Line total</th><th></th></tr>
+            <tr><th class="num">${t('tbl.qty', 'Qty')}</th><th>${t('tbl.item', 'Item')}</th><th>${t('tbl.for', 'For')}</th><th class="num">${t('tbl.lineTotal', 'Line total')}</th><th></th></tr>
           </thead>
           <tbody>
             ${lines.map((l) => `
@@ -368,7 +376,7 @@
                 <td>${esc(l.name)}${l.sku ? `<div class="cell-note mono">${esc(l.sku)}</div>` : ''}</td>
                 <td>${l.projectId ? `<span class="mono small">${esc(l.projectId)}</span>` : 'My inventory'}</td>
                 <td class="num mono">${esc(money(l.qty * l.unitPrice))}</td>
-                <td class="num"><button class="btn-table danger" type="button" data-cart-remove="${esc(l.lineId)}">Remove</button></td>
+                <td class="num"><button class="btn-table danger" type="button" data-cart-remove="${esc(l.lineId)}">${t('btn.remove', 'Remove')}</button></td>
               </tr>`).join('')}
           </tbody>
         </table>
@@ -384,10 +392,10 @@
     const host = $('[data-orders-table]');
     const rows = ClientStore.orders();
     host.innerHTML = !rows.length
-      ? empty('No orders yet.')
+      ? empty(t('empty.orders', 'No orders yet.'))
       : `<table class="g-table">
           <thead>
-            <tr><th>Order</th><th>Placed</th><th class="num">Items</th><th class="num">Total</th><th>Status</th><th></th></tr>
+            <tr><th>${t('tbl.order', 'Order')}</th><th>${t('tbl.placed', 'Placed')}</th><th class="num">${t('tbl.items', 'Items')}</th><th class="num">${t('tbl.total', 'Total')}</th><th>${t('tbl.status', 'Status')}</th><th></th></tr>
           </thead>
           <tbody>
             ${rows.map((o) => `
@@ -397,7 +405,7 @@
                 <td class="num mono">${o.lines.reduce((n, l) => n + l.qty, 0)}</td>
                 <td class="num mono">${esc(money(o.total))}</td>
                 <td><span class="badge${o.state === 'delivered' ? ' complete' : ' active'}">${o.state === 'delivered' ? 'Delivered' : 'On its way'}</span></td>
-                <td class="num">${o.state === 'delivered' ? '' : `<button class="btn-table" type="button" data-deliver="${esc(o.id)}">Mark delivered</button>`}</td>
+                <td class="num">${o.state === 'delivered' ? '' : `<button class="btn-table" type="button" data-deliver="${esc(o.id)}">${t('btn.markDelivered', 'Mark delivered')}</button>`}</td>
               </tr>`).join('')}
         </tbody>
       </table>`;
@@ -445,6 +453,17 @@
       if (page === 'projects')  initProjects();
       if (page === 'detail')    initDetail(catalogue);
       if (page === 'cart')      initCart();
+
+      /* The dictionary and the stores are separate fetches, so the
+         first paint above may have happened while t() was still
+         falling back to English. Repaint once the dictionary has
+         landed — after the init calls, so the renderers are listening. */
+      if (window.I18n) {
+        I18n.ready().then(() => {
+          document.dispatchEvent(new CustomEvent('clientstore:change'));
+          document.dispatchEvent(new CustomEvent('adminstore:change'));
+        });
+      }
     })
     .catch((err) => {
       const main = document.querySelector('.dash-main');
@@ -454,5 +473,18 @@
            If you opened the file directly, serve the site instead: <code>python -m http.server 8000</code></p>`);
       }
     });
+
+
+  /* The renderers on these pages all redraw on a store event, so
+     re-emitting one is enough to repaint them in the new language.
+
+     'i18n:ready' matters as much as 'i18n:change': the stores resolve
+     before the dictionary fetch does, so the first paint happens while
+     t() is still falling back to English. Without this the page would
+     sit in English until something else changed. */
+  document.addEventListener('i18n:change', () => {
+    document.dispatchEvent(new CustomEvent('clientstore:change'));
+    document.dispatchEvent(new CustomEvent('adminstore:change'));
+  });
 
 })();

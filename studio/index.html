@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -30,15 +31,16 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link active" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link active" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
@@ -47,22 +49,22 @@
   <header class="page-header">
     <div class="page-header-inner">
       <div>
-        <p class="page-overline">01 / Studio</p>
-        <h1 class="page-title reveal">
+        <p class="page-overline" data-i18n="studioPage.label">01 / Studio</p>
+        <h1 class="page-title reveal" data-i18n-html="hero.studio">
           Design<br>
           with<br>
           precision.
         </h1>
       </div>
       <div class="reveal" style="transition-delay:.1s">
-        <p class="page-lead">
+        <p class="page-lead" data-i18n="studioPage.lead">
           We translate ideas into engineered form. Every project begins
           with intent and ends with a file you can build from — whether
           that's a concept sketch, a STEP file, or a full drawing set.
         </p>
         <div style="margin-top:clamp(24px,4vh,36px);display:flex;gap:10px;flex-wrap:wrap">
-          <a href="#brief" class="btn btn-primary btn-arrow"><span class="btn-tag">Studio</span><span class="btn-label">Shape a new idea</span></a>
-          <a href="/projects/" class="btn btn-ghost">View Projects</a>
+          <a href="#brief" class="btn btn-primary btn-arrow"><span class="btn-tag" data-i18n="nav.studio">Studio</span><span class="btn-label" data-i18n="cta.shapeIdea">Shape a new idea</span></a>
+          <a href="/projects/" class="btn btn-ghost" data-i18n="studioPage.viewProjects">View Projects</a>
         </div>
       </div>
     </div>
@@ -72,8 +74,8 @@
   <section class="studio-services">
 
     <div class="section-label reveal">
-      <span class="section-num">Services</span>
-      <span class="section-tag">Drawing Set — 6 Disciplines</span>
+      <span class="section-num" data-i18n="studioPage.services">Services</span>
+      <span class="section-tag" data-i18n="studioPage.drawingSet">Drawing Set — 6 Disciplines</span>
     </div>
 
     <div class="reveal" style="transition-delay:.05s">
@@ -81,21 +83,21 @@
       <div class="service-item">
         <span class="service-num">01</span>
         <div>
-          <p class="service-title">Industrial Design</p>
-          <p class="service-desc">Form, ergonomics, material language, and product identity — from concept to refined 3D model.</p>
+          <p class="service-title" data-i18n="svc.industrialDesign">Industrial Design</p>
+          <p class="service-desc" data-i18n="studioPage.d1">Form, ergonomics, material language, and product identity — from concept to refined 3D model.</p>
         </div>
         <div class="service-tags">
-          <span class="tag">Concept</span>
+          <span class="tag" data-i18n="studioPage.concept">Concept</span>
           <span class="tag">CMF</span>
-          <span class="tag">Rendering</span>
+          <span class="tag" data-i18n="chip.rendering">Rendering</span>
         </div>
       </div>
 
       <div class="service-item">
         <span class="service-num">02</span>
         <div>
-          <p class="service-title">Mechanical Engineering</p>
-          <p class="service-desc">Structural analysis, mechanism design, tolerance stack-ups, and design for manufacture review.</p>
+          <p class="service-title" data-i18n="svc.mechEng">Mechanical Engineering</p>
+          <p class="service-desc" data-i18n="studioPage.d2">Structural analysis, mechanism design, tolerance stack-ups, and design for manufacture review.</p>
         </div>
         <div class="service-tags">
           <span class="tag">FEA</span>
@@ -107,8 +109,8 @@
       <div class="service-item">
         <span class="service-num">03</span>
         <div>
-          <p class="service-title">3D Modelling</p>
-          <p class="service-desc">Parametric and surface modelling for complex geometries. Output in STEP, IGES, STL, or native formats.</p>
+          <p class="service-title" data-i18n="svc.modelling">3D Modelling</p>
+          <p class="service-desc" data-i18n="studioPage.d3">Parametric and surface modelling for complex geometries. Output in STEP, IGES, STL, or native formats.</p>
         </div>
         <div class="service-tags">
           <span class="tag">STEP</span>
@@ -120,8 +122,8 @@
       <div class="service-item">
         <span class="service-num">04</span>
         <div>
-          <p class="service-title">Technical Drawing</p>
-          <p class="service-desc">ISO and ASME compliant 2D drawings, assembly documentation, and BOMs ready for production.</p>
+          <p class="service-title" data-i18n="svc.drawing">Technical Drawing</p>
+          <p class="service-desc" data-i18n="studioPage.d4">ISO and ASME compliant 2D drawings, assembly documentation, and BOMs ready for production.</p>
         </div>
         <div class="service-tags">
           <span class="tag">ISO 128</span>
@@ -133,26 +135,26 @@
       <div class="service-item">
         <span class="service-num">05</span>
         <div>
-          <p class="service-title">Rapid Prototyping</p>
-          <p class="service-desc">From CAD to physical prototype. FDM, SLA, and machined samples for form and function validation.</p>
+          <p class="service-title" data-i18n="svc.prototyping">Rapid Prototyping</p>
+          <p class="service-desc" data-i18n="studioPage.d5">From CAD to physical prototype. FDM, SLA, and machined samples for form and function validation.</p>
         </div>
         <div class="service-tags">
           <span class="tag">FDM</span>
           <span class="tag">SLA</span>
-          <span class="tag">Machined</span>
+          <span class="tag" data-i18n="chip.machined">Machined</span>
         </div>
       </div>
 
       <div class="service-item">
         <span class="service-num">06</span>
         <div>
-          <p class="service-title">Design for Manufacture</p>
-          <p class="service-desc">Optimising geometry, tolerances, and materials for the target process. Reducing cost without reducing quality.</p>
+          <p class="service-title" data-i18n="svc.dfm">Design for Manufacture</p>
+          <p class="service-desc" data-i18n="studioPage.d6">Optimising geometry, tolerances, and materials for the target process. Reducing cost without reducing quality.</p>
         </div>
         <div class="service-tags">
           <span class="tag">DFM</span>
-          <span class="tag">Cost</span>
-          <span class="tag">Process</span>
+          <span class="tag" data-i18n="chip.cost">Cost</span>
+          <span class="tag" data-i18n="chip.process">Process</span>
         </div>
       </div>
 
@@ -165,34 +167,34 @@
     <div class="studio-process-inner">
 
       <div class="section-label reveal">
-        <span class="section-num">Process</span>
-        <span class="section-tag">How we work</span>
+        <span class="section-num" data-i18n="chip.process">Process</span>
+        <span class="section-tag" data-i18n="studioPage.howWeWork">How we work</span>
       </div>
 
       <div class="tile-grid-4 reveal" style="transition-delay:.05s">
 
         <div class="process-step">
-          <p class="process-step-num">Step 01</p>
-          <h3 class="process-step-title">Brief</h3>
-          <p class="process-step-text">You describe the problem, constraints, and target. We ask the right questions to scope the work clearly.</p>
+          <p class="process-step-num" data-i18n="studioPage.step1">Step 01</p>
+          <h3 class="process-step-title" data-i18n="studioPage.brief">Brief</h3>
+          <p class="process-step-text" data-i18n="studioPage.briefD">You describe the problem, constraints, and target. We ask the right questions to scope the work clearly.</p>
         </div>
 
         <div class="process-step">
-          <p class="process-step-num">Step 02</p>
-          <h3 class="process-step-title">Concept</h3>
-          <p class="process-step-text">Initial sketches and geometry exploration. We present two or three directions with a recommended path.</p>
+          <p class="process-step-num" data-i18n="studioPage.step2">Step 02</p>
+          <h3 class="process-step-title" data-i18n="studioPage.concept">Concept</h3>
+          <p class="process-step-text" data-i18n="studioPage.conceptD">Initial sketches and geometry exploration. We present two or three directions with a recommended path.</p>
         </div>
 
         <div class="process-step">
-          <p class="process-step-num">Step 03</p>
-          <h3 class="process-step-title">Development</h3>
-          <p class="process-step-text">Refined 3D model, structural review, and design for manufacture analysis. Iterative and transparent.</p>
+          <p class="process-step-num" data-i18n="studioPage.step3">Step 03</p>
+          <h3 class="process-step-title" data-i18n="studioPage.dev">Development</h3>
+          <p class="process-step-text" data-i18n="studioPage.devD">Refined 3D model, structural review, and design for manufacture analysis. Iterative and transparent.</p>
         </div>
 
         <div class="process-step">
-          <p class="process-step-num">Step 04</p>
-          <h3 class="process-step-title">Delivery</h3>
-          <p class="process-step-text">Final CAD files, technical drawings, and documentation handed over. Ready for manufacturing or tender.</p>
+          <p class="process-step-num" data-i18n="studioPage.step4">Step 04</p>
+          <h3 class="process-step-title" data-i18n="studioPage.delivery">Delivery</h3>
+          <p class="process-step-text" data-i18n="studioPage.deliveryD">Final CAD files, technical drawings, and documentation handed over. Ready for manufacturing or tender.</p>
         </div>
 
       </div>
@@ -204,57 +206,57 @@
   <section class="studio-form" id="brief">
 
     <div class="section-label reveal">
-      <span class="section-num">Project Brief</span>
-      <span class="section-tag">We respond within 24 hours</span>
+      <span class="section-num" data-i18n="studioPage.projectBrief">Project Brief</span>
+      <span class="section-tag" data-i18n="studioPage.within24">We respond within 24 hours</span>
     </div>
 
     <div class="grid-2 reveal" style="transition-delay:.05s;align-items:start;gap:clamp(32px,6vw,88px)">
 
       <div>
-        <h2 style="font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px">Tell us about your project.</h2>
-        <p style="font-size:14px;color:var(--ink-50);line-height:1.7;margin-bottom:32px">
+        <h2 style="font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px" data-i18n="studioPage.tellUs">Tell us about your project.</h2>
+        <p style="font-size:14px;color:var(--ink-50);line-height:1.7;margin-bottom:32px" data-i18n="studioPage.formLead">
           The more context you give, the better we can scope and respond. Include any constraints, target processes,
           or materials you have in mind. Sketches and reference files are welcome.
         </p>
         <div style="border-top:1px solid var(--rule);padding-top:24px">
-          <p class="dwg-ref" style="margin-bottom:8px">Typical response time</p>
-          <p style="font-size:14px;font-weight:600;color:var(--ink)">24 hours on working days</p>
+          <p class="dwg-ref" style="margin-bottom:8px" data-i18n="studioPage.respTime">Typical response time</p>
+          <p style="font-size:14px;font-weight:600;color:var(--ink)" data-i18n="studioPage.respVal">24 hours on working days</p>
         </div>
       </div>
 
       <form class="g-form" action="#" method="post">
         <div class="field">
-          <label for="name">Name</label>
+          <label for="name" data-i18n="common.name">Name</label>
           <input type="text" id="name" name="name" placeholder="Your full name" required>
         </div>
         <div class="field">
-          <label for="email">Email</label>
+          <label for="email" data-i18n="common.email">Email</label>
           <input type="email" id="email" name="email" placeholder="you@company.com" required>
         </div>
         <div class="field">
-          <label for="company">Company / Organisation</label>
+          <label for="company" data-i18n="studioPage.company">Company / Organisation</label>
           <input type="text" id="company" name="company" placeholder="Optional">
         </div>
         <div class="field">
-          <label for="service">Primary Service</label>
+          <label for="service" data-i18n="studioPage.primary">Primary Service</label>
           <select id="service" name="service">
-            <option value="">Select a service</option>
-            <option>Industrial Design</option>
-            <option>Mechanical Engineering</option>
-            <option>3D Modelling</option>
-            <option>Technical Drawing</option>
-            <option>Rapid Prototyping</option>
-            <option>Design for Manufacture</option>
-            <option>Multiple / Unsure</option>
+            <option value="" data-i18n="studioPage.selectSvc">Select a service</option>
+            <option data-i18n="svc.industrialDesign">Industrial Design</option>
+            <option data-i18n="svc.mechEng">Mechanical Engineering</option>
+            <option data-i18n="svc.modelling">3D Modelling</option>
+            <option data-i18n="svc.drawing">Technical Drawing</option>
+            <option data-i18n="svc.prototyping">Rapid Prototyping</option>
+            <option data-i18n="svc.dfm">Design for Manufacture</option>
+            <option data-i18n="svc.multiple">Multiple / Unsure</option>
           </select>
         </div>
         <div class="field span-2">
-          <label for="brief">Project Brief</label>
+          <label for="brief" data-i18n="studioPage.projectBrief">Project Brief</label>
           <textarea id="brief-text" name="brief" rows="6" placeholder="Describe the project, goals, constraints, and any relevant context…" required></textarea>
         </div>
         <div class="field span-2" style="display:flex;gap:10px;flex-wrap:wrap">
-          <button type="submit" class="btn btn-primary btn-arrow">Send Brief</button>
-          <p style="font-size:12px;color:var(--ink-35);align-self:center">Demo mode — no data is stored or sent.</p>
+          <button type="submit" class="btn btn-primary btn-arrow" data-i18n="studioPage.sendBrief">Send Brief</button>
+          <p style="font-size:12px;color:var(--ink-35);align-self:center" data-i18n="cta.demoNote">Demo mode — no data is stored or sent.</p>
         </div>
       </form>
 
@@ -268,30 +270,30 @@
   <div class="footer-top">
     <div>
       <span class="footer-brand-name">Gestaltung</span>
-      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
+      <p class="footer-brand-desc" data-i18n="footer.tagline">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
     <div>
-      <p class="footer-col-title">Platform</p>
+      <p class="footer-col-title" data-i18n="footer.platform">Platform</p>
       <nav class="footer-links">
-        <a href="/studio/" class="footer-link">Studio</a>
-        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
-        <a href="/shop/" class="footer-link">Shop</a>
+        <a href="/studio/" class="footer-link" data-i18n="nav.studio">Studio</a>
+        <a href="/manufacturing/" class="footer-link" data-i18n="nav.manufacturing">Manufacturing</a>
+        <a href="/shop/" class="footer-link" data-i18n="nav.shop">Shop</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Company</p>
+      <p class="footer-col-title" data-i18n="footer.company">Company</p>
       <nav class="footer-links">
-        <a href="/projects/" class="footer-link">Projects</a>
-        <a href="/about/" class="footer-link">About</a>
-        <a href="/contact/" class="footer-link">Contact</a>
-        <a href="/faq/" class="footer-link">FAQ</a>
+        <a href="/projects/" class="footer-link" data-i18n="nav.projects">Projects</a>
+        <a href="/about/" class="footer-link" data-i18n="nav.about">About</a>
+        <a href="/contact/" class="footer-link" data-i18n="nav.contact">Contact</a>
+        <a href="/faq/" class="footer-link" data-i18n="nav.faq">FAQ</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Portal</p>
+      <p class="footer-col-title" data-i18n="cta.portal">Portal</p>
       <nav class="footer-links">
-        <a href="/login/client/" class="footer-link">Client Portal</a>
-        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+        <a href="/login/client/" class="footer-link" data-i18n="cta.clientPortal">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link" data-i18n="cta.vendorPortal">Vendor Portal</a>
       </nav>
     </div>
   </div>

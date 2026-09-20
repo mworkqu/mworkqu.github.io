@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-dash-page="admin-quote">
 
@@ -25,18 +26,19 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
@@ -44,26 +46,26 @@
 
   <section class="dash-main">
     <p class="dash-panel-title"><span data-quote-ref>—</span></p>
-    <h1 class="dash-heading" data-quote-title>Quote</h1>
+    <h1 class="dash-heading" data-quote-title data-i18n="quoteBuild.h1">Quote</h1>
     <p class="dash-subhead"><span class="badge active" data-quote-state>—</span></p>
 
     <div class="dash-panel">
-      <p class="dash-panel-title">The work</p>
+      <p class="dash-panel-title" data-i18n="quoteBuild.work">The work</p>
       <form class="g-form" data-quote-form novalidate>
         <div class="field">
-          <label for="q-hours">Design hours</label>
+          <label for="q-hours" data-i18n="quoteBuild.designHours">Design hours</label>
           <input type="number" id="q-hours" name="designHours" min="0" value="12">
         </div>
         <div class="field">
-          <label for="q-rate">Hourly rate</label>
+          <label for="q-rate" data-i18n="quoteBuild.rate">Hourly rate</label>
           <input type="number" id="q-rate" name="rate" min="0" value="350">
         </div>
         <div class="field">
-          <label for="q-prod">Production</label>
+          <label for="q-prod" data-i18n="quoteBuild.production">Production</label>
           <input type="number" id="q-prod" name="production" min="0" value="1450">
         </div>
         <div class="field">
-          <label for="q-cont">Contingency %</label>
+          <label for="q-cont" data-i18n="quoteBuild.contingency">Contingency %</label>
           <input type="number" id="q-cont" name="contingencyPct" min="0" max="100" value="10">
         </div>
       </form>
@@ -72,8 +74,8 @@
     <div class="table-scroll" data-quote-detail></div>
 
     <div class="dash-actions dash-section-gap">
-      <button class="btn btn-primary btn-arrow" type="button" data-send-quote>Send to client</button>
-      <a class="btn btn-ghost" href="/dashboard/admin/quotes/">Back to quotes</a>
+      <button class="btn btn-primary btn-arrow" type="button" data-send-quote data-i18n="quoteBuild.send">Send to client</button>
+      <a class="btn btn-ghost" href="/dashboard/admin/quotes/" data-i18n="quoteBuild.back">Back to quotes</a>
       <p class="field-note" data-quote-note role="status"></p>
     </div>
   </section>

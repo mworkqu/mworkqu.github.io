@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-client-page="inventory">
 
@@ -25,27 +26,28 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="client" data-active="inventory"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">My inventory</p>
-    <h1 class="dash-heading">Parts you own.</h1>
-    <p class="dash-subhead">
+    <p class="dash-panel-title" data-i18n="common.myInventory">My inventory</p>
+    <h1 class="dash-heading" data-i18n="clientInv.h1">Parts you own.</h1>
+    <p class="dash-subhead" data-i18n="clientInv.sub">
       Everything here is free to use on a project. Adding a part to a project
       takes it off this list straight away; removing it, or cancelling the
       project, puts it back.
@@ -54,22 +56,22 @@
     <div class="table-scroll" data-inventory-table></div>
 
     <div class="dash-panel dash-section-gap">
-      <p class="dash-panel-title">Add a part you already have</p>
+      <p class="dash-panel-title" data-i18n="clientInv.addOwn">Add a part you already have</p>
       <form class="g-form" data-own-part-form novalidate>
         <div class="field">
-          <label for="own-name">Part name</label>
+          <label for="own-name" data-i18n="clientInv.partName">Part name</label>
           <input type="text" id="own-name" name="name_" placeholder="e.g. Linear rail 400 mm">
         </div>
         <div class="field">
-          <label for="own-qty">Quantity</label>
+          <label for="own-qty" data-i18n="clientInv.qty">Quantity</label>
           <input type="number" id="own-qty" name="qty" min="1" value="1">
         </div>
         <div class="field span-2">
-          <label for="own-note">Note</label>
+          <label for="own-note" data-i18n="common.note">Note</label>
           <input type="text" id="own-note" name="note" placeholder="Optional — where it came from, condition, anything useful">
         </div>
         <div class="field span-2">
-          <button class="btn btn-primary" type="submit">Add to my inventory</button>
+          <button class="btn btn-primary" type="submit" data-i18n="clientInv.submit">Add to my inventory</button>
           <p class="field-error" data-error role="alert"></p>
         </div>
       </form>

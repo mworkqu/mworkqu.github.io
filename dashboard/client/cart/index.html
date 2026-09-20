@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-client-page="cart">
 
@@ -25,27 +26,28 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="client" data-active="cart"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">Cart &amp; orders</p>
-    <h1 class="dash-heading">Cart.</h1>
-    <p class="dash-subhead">
+    <p class="dash-panel-title" data-i18n="common.cartOrders">Cart &amp; orders</p>
+    <h1 class="dash-heading" data-i18n="clientCart.h1">Cart.</h1>
+    <p class="dash-subhead" data-i18n="clientCart.sub">
       One cart for everything. A line added from a project goes to that project
       when it arrives; anything else lands in your inventory.
     </p>
@@ -53,11 +55,11 @@
     <div class="table-scroll" data-cart-table></div>
 
     <div class="dash-actions dash-section-gap">
-      <button class="btn btn-primary btn-arrow" type="button" data-place-order>Place order</button>
+      <button class="btn btn-primary btn-arrow" type="button" data-place-order data-i18n="clientCart.place">Place order</button>
       <p class="field-note" data-order-note role="status"></p>
     </div>
 
-    <p class="dash-panel-title dash-section-gap">Orders</p>
+    <p class="dash-panel-title dash-section-gap" data-i18n="clientCart.orders">Orders</p>
     <div class="table-scroll" data-orders-table></div>
   </section>
 

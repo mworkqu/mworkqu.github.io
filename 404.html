@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -25,12 +26,13 @@
     <span class="g-logo-text">GESTALTUNG</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/login/" data-i18n="nav.access">Access</a>
+      <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#9776;</button>
 </header>
 
 <main class="error-shell">
@@ -40,48 +42,46 @@
       ERR · 404 · RESOURCE NOT FOUND
     </p>
     <h1 style="font-size:clamp(64px,12vw,180px);font-weight:700;letter-spacing:-0.06em;line-height:0.9;margin-bottom:32px;color:var(--ink)">404</h1>
-    <p style="font-size:24px;font-weight:600;letter-spacing:-0.02em;margin-bottom:18px;max-width:560px;color:var(--ink)">The page you requested isn't here.</p>
-    <p style="font-size:15px;font-weight:400;line-height:1.65;color:var(--muted);max-width:520px;margin-bottom:40px">
+    <p style="font-size:24px;font-weight:600;letter-spacing:-0.02em;margin-bottom:18px;max-width:560px;color:var(--ink)" data-i18n="notFound.h">The page you requested isn't here.</p>
+    <p style="font-size:15px;font-weight:400;line-height:1.65;color:var(--muted);max-width:520px;margin-bottom:40px" data-i18n="notFound.p">
       The URL may be mistyped, or the resource has been moved. Try returning home, or navigate using the index below.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px">
-      <a class="btn-machine" href="/">
-        Return home
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 1l4.5 4.5L6 10" stroke="currentColor" stroke-width="1"/></svg>
+      <a class="btn-machine" href="/"><span data-i18n="notFound.home">Return home</span><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 1l4.5 4.5L6 10" stroke="currentColor" stroke-width="1"/></svg>
       </a>
-      <a class="btn-ghost" href="/contact/">Contact the studio</a>
+      <a class="btn-ghost" href="/contact/" data-i18n="notFound.contact">Contact the studio</a>
     </div>
 
     <div class="error-index">
       <a href="/studio/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">01</span>
-        <span style="font-size:15px;font-weight:400">Studio</span>
-        <span style="font-size:12.5px;color:var(--muted)">Design &amp; engineering</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="nav.studio">Studio</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.studioD">Design &amp; engineering</span>
       </a>
       <a href="/manufacturing/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">02</span>
-        <span style="font-size:15px;font-weight:400">Manufacturing</span>
-        <span style="font-size:12.5px;color:var(--muted)">Production platform</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="svc.manufacturing">Manufacturing</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.mfgD">Production platform</span>
       </a>
       <a href="/shop/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">03</span>
-        <span style="font-size:15px;font-weight:400">Shop</span>
-        <span style="font-size:12.5px;color:var(--muted)">Product commerce</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="nav.shop">Shop</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.shopD">Product commerce</span>
       </a>
       <a href="/projects/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">04</span>
-        <span style="font-size:15px;font-weight:400">Projects</span>
-        <span style="font-size:12.5px;color:var(--muted)">Selected work</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="nav.projects">Projects</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.projD">Selected work</span>
       </a>
       <a href="/about/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">05</span>
-        <span style="font-size:15px;font-weight:400">About</span>
-        <span style="font-size:12.5px;color:var(--muted)">Studio &amp; philosophy</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="nav.about">About</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.aboutD">Studio &amp; philosophy</span>
       </a>
       <a href="/login/" class="row-item c3">
         <span class="mono" style="font-size:10px;color:var(--dim);letter-spacing:0.14em">06</span>
-        <span style="font-size:15px;font-weight:400">Access</span>
-        <span style="font-size:12.5px;color:var(--muted)">Client / admin / vendor</span>
+        <span style="font-size:15px;font-weight:400" data-i18n="nav.access">Access</span>
+        <span style="font-size:12.5px;color:var(--muted)" data-i18n="notFound.accessD">Client / admin / vendor</span>
       </a>
     </div>
   </div>

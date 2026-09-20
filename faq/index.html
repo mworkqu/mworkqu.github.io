@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -30,15 +31,16 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
@@ -47,15 +49,15 @@
   <header class="page-header">
     <div class="page-header-inner">
       <div>
-        <p class="page-overline">FAQ</p>
-        <h1 class="page-title reveal">
+        <p class="page-overline" data-i18n="faqPage.label">FAQ</p>
+        <h1 class="page-title reveal" data-i18n-html="hero.faq">
           Common<br>
           questions,<br>
           answered.
         </h1>
       </div>
       <div class="reveal" style="transition-delay:.1s">
-        <p class="page-lead">
+        <p class="page-lead" data-i18n-html="faqPage.lead">
           Everything you need to know about working with the studio,
           submitting manufacturing files, lead times, and shipping.
           Can't find what you need? <a href="/contact/" style="text-decoration:underline;text-underline-offset:3px">Contact us directly.</a>
@@ -71,56 +73,56 @@
       <div>
         <!-- Studio questions -->
         <div class="section-label reveal" style="margin-bottom:24px">
-          <span class="section-num">Studio</span>
+          <span class="section-num" data-i18n="nav.studio">Studio</span>
         </div>
         <div class="faq-list reveal" style="transition-delay:.05s">
 
           <details class="faq-item">
-            <summary class="faq-q">How do I start a design project?</summary>
-            <p class="faq-a">Fill out the brief form on the <a href="/studio/" style="text-decoration:underline;text-underline-offset:3px">Studio page</a>. Describe the problem, your constraints, and any target processes or materials. We'll review your brief and respond within 24 hours with questions or a scope proposal.</p>
+            <summary class="faq-q" data-i18n="faqPage.q1">How do I start a design project?</summary>
+            <p class="faq-a" data-i18n-html="faqPage.a1">Fill out the brief form on the <a href="/studio/" style="text-decoration:underline;text-underline-offset:3px">Studio page</a>. Describe the problem, your constraints, and any target processes or materials. We'll review your brief and respond within 24 hours with questions or a scope proposal.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What information do you need to start?</summary>
-            <p class="faq-a">As much as you can give. Reference images, sketches, competitor products, size constraints, material preferences, and target manufacturing process all help. If you have nothing — that's fine too. We'll start with questions.</p>
+            <summary class="faq-q" data-i18n="faqPage.q2">What information do you need to start?</summary>
+            <p class="faq-a" data-i18n="faqPage.a2">As much as you can give. Reference images, sketches, competitor products, size constraints, material preferences, and target manufacturing process all help. If you have nothing — that's fine too. We'll start with questions.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What file formats do you deliver?</summary>
-            <p class="faq-a">We deliver in whatever format the project requires: STEP, IGES, STL for 3D data; DXF or DWG for 2D; PDF for technical drawings; SolidWorks native files on request. Everything is documented and named to a consistent standard.</p>
+            <summary class="faq-q" data-i18n="faqPage.q3">What file formats do you deliver?</summary>
+            <p class="faq-a" data-i18n="faqPage.a3">We deliver in whatever format the project requires: STEP, IGES, STL for 3D data; DXF or DWG for 2D; PDF for technical drawings; SolidWorks native files on request. Everything is documented and named to a consistent standard.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Do you offer design-only projects without manufacturing?</summary>
-            <p class="faq-a">Yes. Many clients engage the studio for design and documentation only, then take files to their own manufacturers. We have no obligation to manufacture what we design.</p>
+            <summary class="faq-q" data-i18n="faqPage.q4">Do you offer design-only projects without manufacturing?</summary>
+            <p class="faq-a" data-i18n="faqPage.a4">Yes. Many clients engage the studio for design and documentation only, then take files to their own manufacturers. We have no obligation to manufacture what we design.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Can you review or improve an existing design?</summary>
-            <p class="faq-a">Yes. Design review, DFM analysis, and drawing audits are common engagements. Send us the files and describe your concern — we'll assess and propose what's needed.</p>
+            <summary class="faq-q" data-i18n="faqPage.q5">Can you review or improve an existing design?</summary>
+            <p class="faq-a" data-i18n="faqPage.a5">Yes. Design review, DFM analysis, and drawing audits are common engagements. Send us the files and describe your concern — we'll assess and propose what's needed.</p>
           </details>
 
         </div>
 
         <!-- Projects questions -->
         <div class="section-label reveal" style="margin-top:clamp(40px,6vh,64px);margin-bottom:24px">
-          <span class="section-num">Projects</span>
+          <span class="section-num" data-i18n="nav.projects">Projects</span>
         </div>
         <div class="faq-list reveal" style="transition-delay:.05s">
 
           <details class="faq-item">
-            <summary class="faq-q">Do you work with clients outside Qatar?</summary>
-            <p class="faq-a">Yes. We work remotely with clients across the GCC and internationally. Design and engineering services are fully remote-compatible. Manufacturing and shipping logistics depend on location — contact us to discuss.</p>
+            <summary class="faq-q" data-i18n="faqPage.q6">Do you work with clients outside Qatar?</summary>
+            <p class="faq-a" data-i18n="faqPage.a6">Yes. We work remotely with clients across the GCC and internationally. Design and engineering services are fully remote-compatible. Manufacturing and shipping logistics depend on location — contact us to discuss.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">How are projects priced?</summary>
-            <p class="faq-a">Studio projects are scoped and priced per engagement — we don't publish day rates because scope varies too much. Manufacturing is quoted per file, per process, based on geometry, material, quantity, and tolerance. You'll receive a written quote before any work begins.</p>
+            <summary class="faq-q" data-i18n="faqPage.q7">How are projects priced?</summary>
+            <p class="faq-a" data-i18n="faqPage.a7">Studio projects are scoped and priced per engagement — we don't publish day rates because scope varies too much. Manufacturing is quoted per file, per process, based on geometry, material, quantity, and tolerance. You'll receive a written quote before any work begins.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Do you sign NDAs?</summary>
-            <p class="faq-a">Yes. We routinely sign mutual NDAs before reviewing client files. Send us your standard NDA or request ours — we'll execute before any technical information is exchanged.</p>
+            <summary class="faq-q" data-i18n="faqPage.q8">Do you sign NDAs?</summary>
+            <p class="faq-a" data-i18n="faqPage.a8">Yes. We routinely sign mutual NDAs before reviewing client files. Send us your standard NDA or request ours — we'll execute before any technical information is exchanged.</p>
           </details>
 
         </div>
@@ -129,61 +131,61 @@
       <div>
         <!-- Manufacturing questions -->
         <div class="section-label reveal" style="margin-bottom:24px">
-          <span class="section-num">Manufacturing</span>
+          <span class="section-num" data-i18n="svc.manufacturing">Manufacturing</span>
         </div>
         <div class="faq-list reveal" style="transition-delay:.05s">
 
           <details class="faq-item">
-            <summary class="faq-q">What file formats do you accept for manufacturing?</summary>
-            <p class="faq-a">STEP and IGES for 3D machining and printing. DXF or DWG for laser cutting and sheet metal. PDF technical drawings are required for toleranced features. STL is accepted for 3D printing only. Always include a drawing — models alone are insufficient for toleranced work.</p>
+            <summary class="faq-q" data-i18n="faqPage.q9">What file formats do you accept for manufacturing?</summary>
+            <p class="faq-a" data-i18n="faqPage.a9">STEP and IGES for 3D machining and printing. DXF or DWG for laser cutting and sheet metal. PDF technical drawings are required for toleranced features. STL is accepted for 3D printing only. Always include a drawing — models alone are insufficient for toleranced work.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What are your standard tolerances?</summary>
-            <p class="faq-a">General machining tolerance is ±0.1 mm unless specified. CNC 5-axis can achieve ±0.005 mm for critical features. Laser cutting is ±0.1 mm, FDM printing is ±0.2 mm. Tolerances must be explicitly called out on the drawing — we manufacture to what's documented.</p>
+            <summary class="faq-q" data-i18n="faqPage.q10">What are your standard tolerances?</summary>
+            <p class="faq-a" data-i18n="faqPage.a10">General machining tolerance is ±0.1 mm unless specified. CNC 5-axis can achieve ±0.005 mm for critical features. Laser cutting is ±0.1 mm, FDM printing is ±0.2 mm. Tolerances must be explicitly called out on the drawing — we manufacture to what's documented.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What materials do you work with?</summary>
-            <p class="faq-a">Aluminium (6061, 7075, 5052), mild steel, stainless (304, 316), brass, copper, and engineering plastics (Nylon, Delrin, UHMWPE) for machining. Standard polymers (PLA, PETG, ABS, PA12) for 3D printing. Specialty materials on request — ask if you don't see what you need.</p>
+            <summary class="faq-q" data-i18n="faqPage.q11">What materials do you work with?</summary>
+            <p class="faq-a" data-i18n="faqPage.a11">Aluminium (6061, 7075, 5052), mild steel, stainless (304, 316), brass, copper, and engineering plastics (Nylon, Delrin, UHMWPE) for machining. Standard polymers (PLA, PETG, ABS, PA12) for 3D printing. Specialty materials on request — ask if you don't see what you need.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What is the minimum order quantity?</summary>
-            <p class="faq-a">There's no minimum quantity. We produce single prototypes and production runs of thousands. Unit price varies with quantity — include your target run size in your quote request.</p>
+            <summary class="faq-q" data-i18n="faqPage.q12">What is the minimum order quantity?</summary>
+            <p class="faq-a" data-i18n="faqPage.a12">There's no minimum quantity. We produce single prototypes and production runs of thousands. Unit price varies with quantity — include your target run size in your quote request.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Do you offer surface finishing?</summary>
-            <p class="faq-a">Yes: anodising (clear, black, colour), powder coating, brushing, bead blasting, electroplating, and painting. Specify the finish and any colour reference (RAL, Pantone) in your quote request.</p>
+            <summary class="faq-q" data-i18n="faqPage.q13">Do you offer surface finishing?</summary>
+            <p class="faq-a" data-i18n="faqPage.a13">Yes: anodising (clear, black, colour), powder coating, brushing, bead blasting, electroplating, and painting. Specify the finish and any colour reference (RAL, Pantone) in your quote request.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Can you provide inspection reports?</summary>
-            <p class="faq-a">Yes. First Article Inspection (FAI) reports and dimensional inspection with CMM are available on request. Specify required inspection documentation at quote stage so we can include it in scope and price.</p>
+            <summary class="faq-q" data-i18n="faqPage.q14">Can you provide inspection reports?</summary>
+            <p class="faq-a" data-i18n="faqPage.a14">Yes. First Article Inspection (FAI) reports and dimensional inspection with CMM are available on request. Specify required inspection documentation at quote stage so we can include it in scope and price.</p>
           </details>
 
         </div>
 
         <!-- Shop questions -->
         <div class="section-label reveal" style="margin-top:clamp(40px,6vh,64px);margin-bottom:24px">
-          <span class="section-num">Shop</span>
+          <span class="section-num" data-i18n="nav.shop">Shop</span>
         </div>
         <div class="faq-list reveal" style="transition-delay:.05s">
 
           <details class="faq-item">
-            <summary class="faq-q">How long does shipping take?</summary>
-            <p class="faq-a">Within Qatar: 1–2 business days. GCC countries: 3–5 business days. International: 7–14 business days depending on destination and customs. All orders ship with tracking.</p>
+            <summary class="faq-q" data-i18n="faqPage.q15">How long does shipping take?</summary>
+            <p class="faq-a" data-i18n="faqPage.a15">Within Qatar: 1–2 business days. GCC countries: 3–5 business days. International: 7–14 business days depending on destination and customs. All orders ship with tracking.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">What payment methods do you accept?</summary>
-            <p class="faq-a">Bank transfer (preferred for large orders), credit card via secure payment link, and local payment on collection in Doha. Invoices are issued in QAR. USD invoicing available on request.</p>
+            <summary class="faq-q" data-i18n="faqPage.q16">What payment methods do you accept?</summary>
+            <p class="faq-a" data-i18n="faqPage.a16">Bank transfer (preferred for large orders), credit card via secure payment link, and local payment on collection in Doha. Invoices are issued in QAR. USD invoicing available on request.</p>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-q">Can I return or exchange an item?</summary>
-            <p class="faq-a">Physical products may be returned within 14 days if unused and in original condition. Digital products are non-refundable once downloaded. Custom or made-to-order items cannot be returned unless faulty.</p>
+            <summary class="faq-q" data-i18n="faqPage.q17">Can I return or exchange an item?</summary>
+            <p class="faq-a" data-i18n="faqPage.a17">Physical products may be returned within 14 days if unused and in original condition. Digital products are non-refundable once downloaded. Custom or made-to-order items cannot be returned unless faulty.</p>
           </details>
 
         </div>
@@ -196,10 +198,10 @@
   <div style="border-top:1px solid var(--rule);padding:clamp(48px,8vh,80px) var(--px);max-width:var(--max);margin:0 auto">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--gap);flex-wrap:wrap">
       <div>
-        <p class="dwg-ref" style="margin-bottom:10px">Still have a question?</p>
-        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em">A senior engineer will answer directly.</h2>
+        <p class="dwg-ref" style="margin-bottom:10px" data-i18n="faqPage.still">Still have a question?</p>
+        <h2 style="font-size:clamp(20px,3vw,36px);font-weight:700;letter-spacing:-0.02em" data-i18n="faqPage.stillH">A senior engineer will answer directly.</h2>
       </div>
-      <a href="/contact/" class="btn btn-primary btn-arrow">Contact Us</a>
+      <a href="/contact/" class="btn btn-primary btn-arrow" data-i18n="faqPage.contactUs">Contact Us</a>
     </div>
   </div>
 
@@ -209,30 +211,30 @@
   <div class="footer-top">
     <div>
       <span class="footer-brand-name">Gestaltung</span>
-      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
+      <p class="footer-brand-desc" data-i18n="footer.tagline">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
     <div>
-      <p class="footer-col-title">Platform</p>
+      <p class="footer-col-title" data-i18n="footer.platform">Platform</p>
       <nav class="footer-links">
-        <a href="/studio/" class="footer-link">Studio</a>
-        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
-        <a href="/shop/" class="footer-link">Shop</a>
+        <a href="/studio/" class="footer-link" data-i18n="nav.studio">Studio</a>
+        <a href="/manufacturing/" class="footer-link" data-i18n="nav.manufacturing">Manufacturing</a>
+        <a href="/shop/" class="footer-link" data-i18n="nav.shop">Shop</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Company</p>
+      <p class="footer-col-title" data-i18n="footer.company">Company</p>
       <nav class="footer-links">
-        <a href="/projects/" class="footer-link">Projects</a>
-        <a href="/about/" class="footer-link">About</a>
-        <a href="/contact/" class="footer-link">Contact</a>
-        <a href="/faq/" class="footer-link">FAQ</a>
+        <a href="/projects/" class="footer-link" data-i18n="nav.projects">Projects</a>
+        <a href="/about/" class="footer-link" data-i18n="nav.about">About</a>
+        <a href="/contact/" class="footer-link" data-i18n="nav.contact">Contact</a>
+        <a href="/faq/" class="footer-link" data-i18n="nav.faq">FAQ</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Portal</p>
+      <p class="footer-col-title" data-i18n="cta.portal">Portal</p>
       <nav class="footer-links">
-        <a href="/login/client/" class="footer-link">Client Portal</a>
-        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
+        <a href="/login/client/" class="footer-link" data-i18n="cta.clientPortal">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link" data-i18n="cta.vendorPortal">Vendor Portal</a>
       </nav>
     </div>
   </div>

@@ -41,8 +41,8 @@ window.ClientStore = (function () {
       const seed = await res.json();
       state = {
         client:    seed.client,
-        inventory: seed.inventory.map((i) => Object.assign({}, i, { id: uid('inv') })),
-        projects:  seed.projects.map((p) => Object.assign({}, p, { parts: p.parts || [] })),
+        inventory: seed.inventory.map((i) => Object.assign({}, i, { id: uid('inv'), tenant_id: tenant() })),
+        projects:  seed.projects.map((p) => Object.assign({}, p, { parts: p.parts || [], tenant_id: tenant() })),
         cart:      [],
         orders:    [],
         counter:   41
@@ -55,6 +55,14 @@ window.ClientStore = (function () {
 
   function uid(prefix) {
     return prefix + '_' + Math.random().toString(36).slice(2, 9);
+  }
+
+  /* Every row this module creates is stamped with the tenant, so
+     rows added through the older pages stay visible to DataStore,
+     which filters by it. Same key DataStore reads. */
+  function tenant() {
+    try { return localStorage.getItem('gestaltung.tenant') || 'tenant_meridian'; }
+    catch (e) { return 'tenant_meridian'; }
   }
 
   /* ── reads ───────────────────────────────────────────── */
@@ -138,7 +146,7 @@ window.ClientStore = (function () {
       line.qty += opts.qty;
     } else {
       state.inventory.push({
-        id: uid('inv'), sku: null, name: opts.name, qty: opts.qty,
+        id: uid('inv'), tenant_id: tenant(), sku: null, name: opts.name, qty: opts.qty,
         origin: 'own', unitPrice: 0, note: opts.note || ''
       });
     }
@@ -151,7 +159,7 @@ window.ClientStore = (function () {
       line.qty += opts.qty;
     } else {
       state.inventory.push({
-        id: uid('inv'), sku: opts.sku || null, name: opts.name, qty: opts.qty,
+        id: uid('inv'), tenant_id: tenant(), sku: opts.sku || null, name: opts.name, qty: opts.qty,
         origin: 'store', unitPrice: opts.unitPrice || 0
       });
     }
@@ -169,6 +177,7 @@ window.ClientStore = (function () {
     const id = 'J-2026-' + String(state.counter).padStart(4, '0');
     state.projects.unshift({
       id: id,
+      tenant_id: tenant(),
       title: opts.title,
       brief: opts.brief,
       type: opts.type,
@@ -195,8 +204,8 @@ window.ClientStore = (function () {
       line.qty -= taken;
       if (line.qty === 0) state.inventory = state.inventory.filter((i) => i !== line);
       p.parts.push({
-        lineId: uid('pt'), sku: line.sku, name: line.name,
-        qty: taken, source: 'inventory', unitPrice: line.unitPrice || 0
+        lineId: uid('pt'), tenant_id: tenant(), sku: line.sku, name: line.name,
+        qty: taken, source: 'inventory', unitPrice: line.unitPrice || 0, paid: true
       });
     }
 
@@ -223,15 +232,15 @@ window.ClientStore = (function () {
 
     const lineId = uid('pt');
     state.cart.push({
-      lineId: lineId, sku: sku, name: name, qty: qty,
+      lineId: lineId, tenant_id: tenant(), sku: sku, name: name, qty: qty,
       unitPrice: unitPrice || 0, projectId: projectId || null
     });
     if (projectId) {
       const p = project(projectId);
       if (p) {
         p.parts.push({
-          lineId: lineId, sku: sku, name: name, qty: qty,
-          source: 'cart', unitPrice: unitPrice || 0
+          lineId: lineId, tenant_id: tenant(), sku: sku, name: name, qty: qty,
+          source: 'cart', unitPrice: unitPrice || 0, paid: false
         });
       }
     }
@@ -242,7 +251,7 @@ window.ClientStore = (function () {
   function addClientSuppliedPart(projectId, name, qty) {
     const p = project(projectId);
     if (!p) return;
-    p.parts.push({ lineId: uid('pt'), sku: null, name: name, qty: qty, source: 'supplied', unitPrice: 0 });
+    p.parts.push({ lineId: uid('pt'), tenant_id: tenant(), sku: null, name: name, qty: qty, source: 'supplied', unitPrice: 0, paid: true });
     write();
   }
 
@@ -358,7 +367,17 @@ window.ClientStore = (function () {
     addPartToCart: addPartToCart, addClientSuppliedPart: addClientSuppliedPart,
     removePart: removePart, updateCartQty: updateCartQty,
     removeCartLine: removeCartLine, cartTotal: cartTotal,
-    placeOrder: placeOrder, markDelivered: markDelivered, reset: reset
+    placeOrder: placeOrder, markDelivered: markDelivered, reset: reset,
+
+    /* ── seam for assets/js/data/store.js ───────────────────
+       DataStore is the layer everything new is written against.
+       Exposing the live state object rather than a copy is what
+       keeps the two from drifting while the older dashboard pages
+       still read through ClientStore. Both of these disappear when
+       Supabase replaces DataStore's internals. Do not call them
+       from page code. */
+    _state: () => state,
+    _write: write
   };
 
 })();

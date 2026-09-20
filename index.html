@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -37,15 +38,16 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
 <main>
@@ -58,12 +60,12 @@
       <span class="mono" style="color:var(--ink-35)">·</span>
       <span class="mono">N&nbsp;25°17′&nbsp;&nbsp;E&nbsp;51°31′</span>
       <span class="mono" style="color:var(--ink-35)">·</span>
-      <span class="mono">Doha, Qatar</span>
+      <span class="mono" data-i18n="cta.doha">Doha, Qatar</span>
     </div>
 
     <div class="hero-body">
       <div>
-        <h1 class="hero-headline reveal">
+        <h1 class="hero-headline reveal" data-i18n-html="hero.home">
           Design.<br>
           Build.<br>
           Deliver.
@@ -115,15 +117,15 @@
           <text x="360" y="274" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(25,23,20,.3)" letter-spacing=".08em">SCALE 1:2</text>
         </svg>
 
-        <p class="hero-lead">
+        <p class="hero-lead" data-i18n="home.lead">
           GESTALTUNG connects industrial design, precision manufacturing, and
           product commerce into one integrated system. From first sketch to
           delivered part — without the gaps.
         </p>
 
         <div class="hero-actions">
-          <a href="/studio/" class="btn btn-primary btn-arrow"><span class="btn-tag">Studio</span><span class="btn-label">Shape a new idea</span></a>
-          <a href="/projects/" class="btn btn-ghost">View work</a>
+          <a href="/studio/" class="btn btn-primary btn-arrow"><span class="btn-tag" data-i18n="nav.studio">Studio</span><span class="btn-label" data-i18n="cta.shapeIdea">Shape a new idea</span></a>
+          <a href="/projects/" class="btn btn-ghost" data-i18n="home.viewWork">View work</a>
         </div>
       </div>
     </div>
@@ -131,22 +133,22 @@
     <!-- Three pillars -->
     <nav class="hero-pillars" aria-label="Sections">
       <a class="hero-pillar" href="/studio/">
-        <span class="pillar-num">01 / Studio</span>
-        <span class="pillar-name">Engineering<br>Design</span>
-        <span class="pillar-desc">Industrial design, mechanical engineering, and 3D modelling from concept to production-ready files.</span>
-        <span class="pillar-link">Shape a new idea</span>
+        <span class="pillar-num" data-i18n="home.s1">01 / Studio</span>
+        <span class="pillar-name" data-i18n-html="hero.pillar1">Engineering<br>Design</span>
+        <span class="pillar-desc" data-i18n="home.s1desc">Industrial design, mechanical engineering, and 3D modelling from concept to production-ready files.</span>
+        <span class="pillar-link" data-i18n="cta.shapeIdea">Shape a new idea</span>
       </a>
       <a class="hero-pillar" href="/manufacturing/">
-        <span class="pillar-num">02 / Manufacturing</span>
-        <span class="pillar-name">Precision<br>Fabrication</span>
-        <span class="pillar-desc">CNC machining, laser cutting, 3D printing, and sheet metal — parts made with measurable intent.</span>
-        <span class="pillar-link">Get a Quote</span>
+        <span class="pillar-num" data-i18n="home.s2">02 / Manufacturing</span>
+        <span class="pillar-name" data-i18n-html="hero.pillar2">Precision<br>Fabrication</span>
+        <span class="pillar-desc" data-i18n="home.s2desc">CNC machining, laser cutting, 3D printing, and sheet metal — parts made with measurable intent.</span>
+        <span class="pillar-link" data-i18n="cta.getQuote">Get a Quote</span>
       </a>
       <a class="hero-pillar" href="/shop/">
-        <span class="pillar-num">03 / Shop</span>
-        <span class="pillar-name">Engineered<br>Objects</span>
-        <span class="pillar-desc">Precision tools, fixtures, and designed objects ready to ship. Form follows function, always.</span>
-        <span class="pillar-link">Browse Shop</span>
+        <span class="pillar-num" data-i18n="home.s3">03 / Shop</span>
+        <span class="pillar-name" data-i18n-html="hero.pillar3">Engineered<br>Objects</span>
+        <span class="pillar-desc" data-i18n="home.s3desc">Precision tools, fixtures, and designed objects ready to ship. Form follows function, always.</span>
+        <span class="pillar-link" data-i18n="home.browseShop">Browse Shop</span>
       </a>
     </nav>
 
@@ -157,19 +159,19 @@
     <div class="stats-inner">
       <div class="stat-cell reveal">
         <div class="stat-value">340<span class="stat-unit">+</span></div>
-        <p class="stat-label">Projects Delivered</p>
+        <p class="stat-label" data-i18n="home.statProjects">Projects Delivered</p>
       </div>
       <div class="stat-cell reveal" style="transition-delay:.08s">
         <div class="stat-value">±0.005<span class="stat-unit">mm</span></div>
-        <p class="stat-label">CNC Tolerance</p>
+        <p class="stat-label" data-i18n="home.statTolerance">CNC Tolerance</p>
       </div>
       <div class="stat-cell reveal" style="transition-delay:.16s">
-        <div class="stat-value">24<span class="stat-unit">hr</span></div>
-        <p class="stat-label">Quote Turnaround</p>
+        <div class="stat-value">24<span class="stat-unit" data-i18n="unit.hr">hr</span></div>
+        <p class="stat-label" data-i18n="home.statTurnaround">Quote Turnaround</p>
       </div>
       <div class="stat-cell reveal" style="transition-delay:.24s">
         <div class="stat-value">6</div>
-        <p class="stat-label">Manufacturing Processes</p>
+        <p class="stat-label" data-i18n="home.statProcesses">Manufacturing Processes</p>
       </div>
     </div>
   </div>
@@ -178,9 +180,9 @@
   <section class="featured">
     <div class="featured-header reveal">
       <div class="section-label" style="margin-bottom:0">
-        <span class="section-num">Selected Work</span>
+        <span class="section-num" data-i18n="home.selectedWork">Selected Work</span>
       </div>
-      <a href="/projects/" class="btn btn-text btn-arrow">All Projects</a>
+      <a href="/projects/" class="btn btn-text btn-arrow" data-i18n="home.allProjects">All Projects</a>
     </div>
 
     <div class="grid-3" style="margin-top:clamp(28px,4vh,48px)">
@@ -195,9 +197,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Industrial Design</p>
-          <h3 class="project-title">Precision Bracket Assembly</h3>
-          <p class="project-meta">Aluminium 6061 · CNC 5-axis · 2024</p>
+          <p class="project-cat" data-i18n="svc.industrialDesign">Industrial Design</p>
+          <h3 class="project-title" data-i18n="home.p1">Precision Bracket Assembly</h3>
+          <p class="project-meta" data-i18n="home.m1">Aluminium 6061 · CNC 5-axis · 2024</p>
         </div>
       </article>
 
@@ -212,9 +214,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Mechanical Engineering</p>
-          <h3 class="project-title">Rotary Fixture System</h3>
-          <p class="project-meta">Steel 4140 · Turned · 2024</p>
+          <p class="project-cat" data-i18n="svc.mechEng">Mechanical Engineering</p>
+          <h3 class="project-title" data-i18n="home.p2">Rotary Fixture System</h3>
+          <p class="project-meta" data-i18n="home.m2">Steel 4140 · Turned · 2024</p>
         </div>
       </article>
 
@@ -227,9 +229,9 @@
           </svg>
         </div>
         <div class="project-body">
-          <p class="project-cat">Design for Manufacture</p>
-          <h3 class="project-title">Structural Panel Series</h3>
-          <p class="project-meta">Sheet Metal · Laser + Bend · 2023</p>
+          <p class="project-cat" data-i18n="svc.dfm">Design for Manufacture</p>
+          <h3 class="project-title" data-i18n="home.p3">Structural Panel Series</h3>
+          <p class="project-meta" data-i18n="home.m3">Sheet Metal · Laser + Bend · 2023</p>
         </div>
       </article>
 
@@ -240,12 +242,12 @@
   <div class="cta-band">
     <div class="cta-band-inner wrap" style="padding:0">
       <div class="reveal">
-        <p class="dwg-ref" style="color:rgba(244,242,236,.3);margin-bottom:20px">Ready to build?</p>
-        <p class="cta-band-headline">
+        <p class="dwg-ref" style="color:rgba(244,242,236,.3);margin-bottom:20px" data-i18n="home.ready">Ready to build?</p>
+        <p class="cta-band-headline" data-i18n-html="hero.homeCta">
           From sketch<br>to finished part.
         </p>
       </div>
-      <a href="/studio/" class="btn btn-ghost reveal" style="transition-delay:.1s"><span class="btn-tag">Studio</span><span class="btn-label">Shape a new idea</span></a>
+      <a href="/studio/" class="btn btn-ghost reveal" style="transition-delay:.1s"><span class="btn-tag" data-i18n="nav.studio">Studio</span><span class="btn-label" data-i18n="cta.shapeIdea">Shape a new idea</span></a>
     </div>
   </div>
 
@@ -256,31 +258,31 @@
   <div class="footer-top">
     <div>
       <span class="footer-brand-name">Gestaltung</span>
-      <p class="footer-brand-desc">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
+      <p class="footer-brand-desc" data-i18n="footer.tagline">Engineering studio, manufacturing platform, and product commerce. Doha, Qatar.</p>
     </div>
     <div>
-      <p class="footer-col-title">Platform</p>
+      <p class="footer-col-title" data-i18n="footer.platform">Platform</p>
       <nav class="footer-links">
-        <a href="/studio/" class="footer-link">Studio</a>
-        <a href="/manufacturing/" class="footer-link">Manufacturing</a>
-        <a href="/shop/" class="footer-link">Shop</a>
+        <a href="/studio/" class="footer-link" data-i18n="nav.studio">Studio</a>
+        <a href="/manufacturing/" class="footer-link" data-i18n="nav.manufacturing">Manufacturing</a>
+        <a href="/shop/" class="footer-link" data-i18n="nav.shop">Shop</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Company</p>
+      <p class="footer-col-title" data-i18n="footer.company">Company</p>
       <nav class="footer-links">
-        <a href="/projects/" class="footer-link">Projects</a>
-        <a href="/about/" class="footer-link">About</a>
-        <a href="/contact/" class="footer-link">Contact</a>
-        <a href="/faq/" class="footer-link">FAQ</a>
+        <a href="/projects/" class="footer-link" data-i18n="nav.projects">Projects</a>
+        <a href="/about/" class="footer-link" data-i18n="nav.about">About</a>
+        <a href="/contact/" class="footer-link" data-i18n="nav.contact">Contact</a>
+        <a href="/faq/" class="footer-link" data-i18n="nav.faq">FAQ</a>
       </nav>
     </div>
     <div>
-      <p class="footer-col-title">Portal</p>
+      <p class="footer-col-title" data-i18n="cta.portal">Portal</p>
       <nav class="footer-links">
-        <a href="/login/client/" class="footer-link">Client Portal</a>
-        <a href="/login/vendor/" class="footer-link">Vendor Portal</a>
-        <a href="/login/admin/" class="footer-link">Admin</a>
+        <a href="/login/client/" class="footer-link" data-i18n="cta.clientPortal">Client Portal</a>
+        <a href="/login/vendor/" class="footer-link" data-i18n="cta.vendorPortal">Vendor Portal</a>
+        <a href="/login/admin/" class="footer-link" data-i18n="role.admin">Admin</a>
       </nav>
     </div>
   </div>

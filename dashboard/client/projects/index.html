@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-client-page="projects">
 
@@ -25,36 +26,37 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; your data stays in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="client" data-active="projects"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">My projects</p>
-    <h1 class="dash-heading">Projects.</h1>
-    <p class="dash-subhead">Open a project to build its parts list.</p>
+    <p class="dash-panel-title" data-i18n="common.myProjects">My projects</p>
+    <h1 class="dash-heading" data-i18n="clientProjects.h1">Projects.</h1>
+    <p class="dash-subhead" data-i18n="clientProjects.sub">Open a project to build its parts list.</p>
 
     <div class="table-scroll" data-project-list></div>
 
     <div class="dash-panel dash-section-gap">
-      <p class="dash-panel-title">Start a project</p>
+      <p class="dash-panel-title" data-i18n="common.startProject">Start a project</p>
       <form class="g-form" data-project-form novalidate>
 
         <div class="field span-2">
-          <label>What do you need?</label>
+          <label data-i18n="clientProjects.what">What do you need?</label>
           <div class="choice-row">
             <label class="choice"><input type="radio" name="type" value="design"> Design and build it</label>
             <label class="choice"><input type="radio" name="type" value="make"> Make it from my files</label>
@@ -62,46 +64,46 @@
         </div>
 
         <div class="field">
-          <label for="p-title">Project name</label>
+          <label for="p-title" data-i18n="clientProjects.name">Project name</label>
           <input type="text" id="p-title" name="title_" placeholder="e.g. Meridian display unit">
         </div>
 
         <div class="field">
-          <label for="p-date">Target date</label>
+          <label for="p-date" data-i18n="clientProjects.target">Target date</label>
           <input type="date" id="p-date" name="targetDate">
         </div>
 
         <div class="field span-2">
-          <label for="p-brief">What are you trying to achieve?</label>
+          <label for="p-brief" data-i18n="clientProjects.goal">What are you trying to achieve?</label>
           <textarea id="p-brief" name="brief" rows="5" placeholder="The goal, the constraints, anything that would change the approach."></textarea>
         </div>
 
         <div class="field span-2" data-when="make" hidden>
-          <label for="p-process">Process</label>
+          <label for="p-process" data-i18n="clientProjects.process">Process</label>
           <select id="p-process" name="process">
-            <option>CNC machining</option>
-            <option>Laser cutting</option>
-            <option>3D printing</option>
-            <option>Sheet metal</option>
-            <option>Injection moulding</option>
-            <option>Not sure</option>
+            <option data-i18n="clientProjects.cnc">CNC machining</option>
+            <option data-i18n="clientProjects.laser">Laser cutting</option>
+            <option data-i18n="clientProjects.print">3D printing</option>
+            <option data-i18n="clientProjects.sheet">Sheet metal</option>
+            <option data-i18n="clientProjects.mould">Injection moulding</option>
+            <option data-i18n="common.notSure">Not sure</option>
           </select>
         </div>
 
         <div class="field span-2" data-when="design" hidden>
-          <label for="p-service">Primary service</label>
+          <label for="p-service" data-i18n="clientProjects.service">Primary service</label>
           <select id="p-service" name="service">
-            <option>Industrial design</option>
-            <option>Mechanical engineering</option>
-            <option>3D modelling</option>
-            <option>Technical drawing</option>
-            <option>Design for manufacture</option>
-            <option>Not sure</option>
+            <option data-i18n="clientProjects.indDesign">Industrial design</option>
+            <option data-i18n="clientProjects.mech">Mechanical engineering</option>
+            <option data-i18n="clientProjects.model">3D modelling</option>
+            <option data-i18n="clientProjects.drawing">Technical drawing</option>
+            <option data-i18n="clientProjects.dfm">Design for manufacture</option>
+            <option data-i18n="common.notSure">Not sure</option>
           </select>
         </div>
 
         <div class="field span-2">
-          <button class="btn btn-primary btn-arrow" type="submit">Create project</button>
+          <button class="btn btn-primary btn-arrow" type="submit" data-i18n="clientProjects.create">Create project</button>
           <p class="field-error" data-error role="alert"></p>
         </div>
 

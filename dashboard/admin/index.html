@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-dash-page="admin-overview">
 
@@ -25,42 +26,43 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="admin" data-active="overview"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">Overview</p>
-    <h1 class="dash-heading">Admin.</h1>
-    <p class="dash-subhead">What needs a decision today.</p>
+    <p class="dash-panel-title" data-i18n="common.overview">Overview</p>
+    <h1 class="dash-heading" data-i18n="adminHome.h1">Admin.</h1>
+    <p class="dash-subhead" data-i18n="adminHome.sub">What needs a decision today.</p>
 
     <div class="metric-grid">
-      <div class="metric-card"><span class="metric-label">Need reordering</span><strong data-metric="reorder">—</strong></div>
-      <div class="metric-card"><span class="metric-label">Open jobs</span><strong data-metric="jobs">—</strong></div>
-      <div class="metric-card"><span class="metric-label">Client projects</span><strong data-metric="projects">—</strong></div>
-      <div class="metric-card"><span class="metric-label">Awaiting approval</span><strong data-metric="quotes">—</strong></div>
+      <div class="metric-card"><span class="metric-label" data-i18n="adminHome.reorder">Need reordering</span><strong data-metric="reorder">—</strong></div>
+      <div class="metric-card"><span class="metric-label" data-i18n="adminHome.openJobs">Open jobs</span><strong data-metric="jobs">—</strong></div>
+      <div class="metric-card"><span class="metric-label" data-i18n="adminHome.clientProjects">Client projects</span><strong data-metric="projects">—</strong></div>
+      <div class="metric-card"><span class="metric-label" data-i18n="adminHome.awaiting">Awaiting approval</span><strong data-metric="quotes">—</strong></div>
     </div>
 
-    <p class="dash-panel-title dash-section-gap">Reorder alerts</p>
+    <p class="dash-panel-title dash-section-gap" data-i18n="adminHome.alerts">Reorder alerts</p>
     <div class="table-scroll" data-reorder-table></div>
 
     <div class="dash-actions dash-section-gap">
-      <a class="btn btn-primary btn-arrow" href="/dashboard/admin/inventory/">Store stock</a>
-      <a class="btn btn-ghost" href="/dashboard/admin/jobs/">Jobs</a>
-      <a class="btn btn-ghost" href="/dashboard/admin/quotes/">Quotes</a>
+      <a class="btn btn-primary btn-arrow" href="/dashboard/admin/inventory/" data-i18n="common.storeStock">Store stock</a>
+      <a class="btn btn-ghost" href="/dashboard/admin/jobs/" data-i18n="common.jobs">Jobs</a>
+      <a class="btn btn-ghost" href="/dashboard/admin/quotes/" data-i18n="common.quotes">Quotes</a>
     </div>
   </section>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -25,57 +26,58 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="admin" data-active="users"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">Users</p>
-    <h1 class="dash-heading">User management.</h1>
-    <p class="dash-subhead">Add or remove platform users. Role-based access control.</p>
+    <p class="dash-panel-title" data-i18n="common.users">Users</p>
+    <h1 class="dash-heading" data-i18n="users.h1">User management.</h1>
+    <p class="dash-subhead" data-i18n="users.sub">Add or remove platform users. Role-based access control.</p>
 
     <div class="dash-panel">
-      <p class="dash-panel-title">Add user</p>
+      <p class="dash-panel-title" data-i18n="users.add">Add user</p>
       <form class="g-form" data-user-form>
         <div class="field">
-          <label for="u-name">Full name</label>
+          <label for="u-name" data-i18n="users.fullName">Full name</label>
           <input type="text" id="u-name" name="name" required placeholder="Full name">
         </div>
         <div class="field">
-          <label for="u-email">Email</label>
+          <label for="u-email" data-i18n="common.email">Email</label>
           <input type="email" id="u-email" name="email" required placeholder="email@example.com">
         </div>
         <div class="field">
-          <label for="u-role">Role</label>
+          <label for="u-role" data-i18n="common.role">Role</label>
           <select id="u-role" name="role">
-            <option>Client</option>
-            <option>Admin</option>
-            <option>Vendor / Workshop</option>
+            <option data-i18n="role.client">Client</option>
+            <option data-i18n="role.admin">Admin</option>
+            <option data-i18n="role.vendor">Vendor / Workshop</option>
           </select>
         </div>
         <div class="field">
-          <label for="u-status">Status</label>
+          <label for="u-status" data-i18n="users.status">Status</label>
           <select id="u-status" name="status">
-            <option>Active</option>
-            <option>Pending</option>
-            <option>Suspended</option>
+            <option data-i18n="state.active">Active</option>
+            <option data-i18n="state.pending">Pending</option>
+            <option data-i18n="state.suspended">Suspended</option>
           </select>
         </div>
         <div class="field span-2">
-          <button class="btn btn-primary" type="submit">Add user</button>
+          <button class="btn btn-primary" type="submit" data-i18n="users.add">Add user</button>
         </div>
       </form>
     </div>
@@ -83,40 +85,40 @@
     <div class="table-scroll">
       <table class="g-table" data-user-table>
         <thead>
-          <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr>
+          <tr><th data-i18n="common.name">Name</th><th data-i18n="common.email">Email</th><th data-i18n="common.role">Role</th><th data-i18n="users.status">Status</th><th></th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>Client Example</td>
+            <td data-i18n="users.demoClient">Client Example</td>
             <td class="mono small">client@example.com</td>
-            <td>Client</td>
-            <td><span class="badge active">Active</span></td>
-            <td class="num"><button class="btn-table danger" type="button" data-remove-user>Remove</button></td>
+            <td data-i18n="role.client">Client</td>
+            <td><span class="badge active" data-i18n="state.active">Active</span></td>
+            <td class="num"><button class="btn-table danger" type="button" data-remove-user data-i18n="common.remove">Remove</button></td>
           </tr>
           <tr>
-            <td>Workshop Partner</td>
+            <td data-i18n="users.demoVendor">Workshop Partner</td>
             <td class="mono small">vendor@example.com</td>
-            <td>Vendor / Workshop</td>
-            <td><span class="badge">Pending</span></td>
-            <td class="num"><button class="btn-table danger" type="button" data-remove-user>Remove</button></td>
+            <td data-i18n="role.vendor">Vendor / Workshop</td>
+            <td><span class="badge" data-i18n="state.pending">Pending</span></td>
+            <td class="num"><button class="btn-table danger" type="button" data-remove-user data-i18n="common.remove">Remove</button></td>
           </tr>
           <tr>
-            <td>Operations Admin</td>
+            <td data-i18n="users.demoAdmin">Operations Admin</td>
             <td class="mono small">admin@example.com</td>
-            <td>Admin</td>
-            <td><span class="badge active">Active</span></td>
-            <td class="num"><button class="btn-table danger" type="button" data-remove-user>Remove</button></td>
+            <td data-i18n="role.admin">Admin</td>
+            <td><span class="badge active" data-i18n="state.active">Active</span></td>
+            <td class="num"><button class="btn-table danger" type="button" data-remove-user data-i18n="common.remove">Remove</button></td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="dash-panel dash-section-gap">
-      <p class="dash-panel-title">Access policy</p>
+      <p class="dash-panel-title" data-i18n="users.policy">Access policy</p>
       <div class="policy">
-        <div><p class="policy-role">Client</p><p>Own projects and inventory. Buys parts, approves quotes, tracks orders.</p></div>
-        <div><p class="policy-role">Admin</p><p>Everything: store stock, jobs, quotes, vendors, users.</p></div>
-        <div><p class="policy-role">Vendor / Workshop</p><p>Assigned jobs only. No prices, no client names.</p></div>
+        <div><p class="policy-role" data-i18n="role.client">Client</p><p data-i18n="users.policyClient">Own projects and inventory. Buys parts, approves quotes, tracks orders.</p></div>
+        <div><p class="policy-role" data-i18n="role.admin">Admin</p><p data-i18n="users.policyAdmin">Everything: store stock, jobs, quotes, vendors, users.</p></div>
+        <div><p class="policy-role" data-i18n="role.vendor">Vendor / Workshop</p><p data-i18n="users.policyVendor">Assigned jobs only. No prices, no client names.</p></div>
       </div>
     </div>
   </section>

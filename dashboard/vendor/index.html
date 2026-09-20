@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/i18n.js"></script>
 </head>
 <body data-dash-page="vendor-jobs">
 
@@ -25,36 +26,37 @@
     <span class="g-logo-text">Gestaltung</span>
   </a>
   <nav class="g-nav-links" data-nav-links>
-    <a class="g-nav-link" href="/studio/">Studio</a>
-    <a class="g-nav-link" href="/manufacturing/">Manufacturing</a>
-    <a class="g-nav-link" href="/shop/">Shop</a>
-    <a class="g-nav-link" href="/projects/">Projects</a>
-    <a class="g-nav-link" href="/about/">About</a>
-    <a class="g-nav-link" href="/contact/">Contact</a>
-    <a class="g-nav-link access" href="/login/">Access</a>
+    <a class="g-nav-link" href="/studio/" data-i18n="nav.studio">Studio</a>
+    <a class="g-nav-link" href="/manufacturing/" data-i18n="nav.manufacturing">Manufacturing</a>
+    <a class="g-nav-link" href="/shop/" data-i18n="nav.shop">Shop</a>
+    <a class="g-nav-link" href="/projects/" data-i18n="nav.projects">Projects</a>
+    <a class="g-nav-link" href="/about/" data-i18n="nav.about">About</a>
+    <a class="g-nav-link" href="/contact/" data-i18n="nav.contact">Contact</a>
+    <a class="g-nav-link access" href="/login/" data-i18n="nav.access">Access</a>
+    <button class="lang-toggle" type="button" data-lang-toggle lang="ar">العربية</button>
   </nav>
-  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
+  <button class="menu-toggle" type="button" data-i18n-aria-label="nav.menu" aria-label="Open menu" aria-expanded="false" data-menu-toggle>&#8801;</button>
 </header>
 
-<div class="demo-strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
+<div class="demo-strip" data-i18n="demo.strip">Demo &middot; Static prototype &middot; stock and jobs stay in this browser</div>
 
 <main class="dash-shell">
 
   <aside class="dash-sidebar" data-dash-sidebar data-role="vendor" data-active="jobs"></aside>
 
   <section class="dash-main">
-    <p class="dash-panel-title">My jobs</p>
-    <h1 class="dash-heading"><span data-vendor-name>Workshop</span>.</h1>
-    <p class="dash-subhead">
+    <p class="dash-panel-title" data-i18n="common.myJobs">My jobs</p>
+    <h1 class="dash-heading"><span data-vendor-name data-i18n="role.workshop">Workshop</span>.</h1>
+    <p class="dash-subhead" data-i18n="vendor.sub">
       What to make, how many, and when it is due. Prices and client names are not
       shown here.
     </p>
 
     <div class="dash-actions" style="margin-bottom:24px">
-      <label class="mono small" for="v-pick">Signed in as</label>
+      <label class="mono small" for="v-pick" data-i18n="vendor.signedIn">Signed in as</label>
       <select class="mini-select" id="v-pick" data-vendor-picker>
-        <option>Workshop A</option>
-        <option>Workshop B</option>
+        <option data-i18n="common.workshopA">Workshop A</option>
+        <option data-i18n="common.workshopB">Workshop B</option>
       </select>
     </div>
 
@@ -65,22 +67,22 @@
       <p class="dash-panel-title">Mark ready — <span data-ready-job></span></p>
       <div class="g-form">
         <div class="field">
-          <label for="v-qty">How many did you actually make?</label>
+          <label for="v-qty" data-i18n="vendor.made">How many did you actually make?</label>
           <input type="number" id="v-qty" min="1" value="1" data-ready-qty>
         </div>
         <div class="field">
-          <label for="v-note">Note</label>
+          <label for="v-note" data-i18n="common.note">Note</label>
           <input type="text" id="v-note" placeholder="Inspection result, anything that went wrong…" data-ready-note>
         </div>
         <div class="field span-2 dash-actions">
-          <button class="btn btn-primary" type="button" data-ready-confirm>Confirm ready</button>
-          <button class="btn btn-ghost" type="button" data-ready-cancel>Cancel</button>
+          <button class="btn btn-primary" type="button" data-ready-confirm data-i18n="vendor.confirm">Confirm ready</button>
+          <button class="btn btn-ghost" type="button" data-ready-cancel data-i18n="vendor.cancel">Cancel</button>
           <p class="field-error" data-ready-error role="alert"></p>
         </div>
       </div>
     </div>
 
-    <p class="dash-panel-title dash-section-gap">Finished</p>
+    <p class="dash-panel-title dash-section-gap" data-i18n="vendor.finished">Finished</p>
     <div class="table-scroll" data-vendor-done></div>
   </section>
 
