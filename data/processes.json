@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "updated": "2026-09-20",
+  "note": "Single source of truth for manufacturing processes and the materials each one accepts. Read by the quote form (/manufacturing/) and the project workspace (/dashboard/client/projects/detail/) through assets/js/components/cascade.js. Add a process or a material here and both pages pick it up — no code change. When this moves to Supabase it becomes two tables, processes and materials, joined on process_key.",
+  "processes": [
+    {
+      "key": "3d-printing",
+      "label": {
+        "en": "3D Printing",
+        "ar": "الطباعة ثلاثية الأبعاد"
+      },
+      "materials": [
+        {
+          "key": "pla",
+          "label": {
+            "en": "PLA",
+            "ar": "بولي لاكتيك (PLA)"
+          }
+        },
+        {
+          "key": "petg",
+          "label": {
+            "en": "PETG",
+            "ar": "بولي إستر (PETG)"
+          }
+        },
+        {
+          "key": "abs",
+          "label": {
+            "en": "ABS",
+            "ar": "أكريلونيتريل (ABS)"
+          }
+        },
+        {
+          "key": "tpu",
+          "label": {
+            "en": "TPU (flexible)",
+            "ar": "بولي يوريثان مرن (TPU)"
+          }
+        },
+        {
+          "key": "pa12",
+          "label": {
+            "en": "Nylon (PA12)",
+            "ar": "نايلون (PA12)"
+          }
+        },
+        {
+          "key": "resin",
+          "label": {
+            "en": "Resin (SLA)",
+            "ar": "راتنج ضوئي (SLA)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "cnc-machining",
+      "label": {
+        "en": "CNC Machining",
+        "ar": "التصنيع بالتحكم الرقمي (CNC)"
+      },
+      "materials": [
+        {
+          "key": "al-6061",
+          "label": {
+            "en": "Aluminium 6061",
+            "ar": "ألمنيوم 6061"
+          }
+        },
+        {
+          "key": "al-7075",
+          "label": {
+            "en": "Aluminium 7075",
+            "ar": "ألمنيوم 7075"
+          }
+        },
+        {
+          "key": "ss-304",
+          "label": {
+            "en": "Stainless Steel 304",
+            "ar": "فولاذ مقاوم للصدأ 304"
+          }
+        },
+        {
+          "key": "ss-316",
+          "label": {
+            "en": "Stainless Steel 316",
+            "ar": "فولاذ مقاوم للصدأ 316"
+          }
+        },
+        {
+          "key": "brass",
+          "label": {
+            "en": "Brass",
+            "ar": "نحاس أصفر"
+          }
+        },
+        {
+          "key": "pom",
+          "label": {
+            "en": "Delrin / POM",
+            "ar": "دلرين (POM)"
+          }
+        },
+        {
+          "key": "mild-steel",
+          "label": {
+            "en": "Mild Steel",
+            "ar": "فولاذ طري"
+          }
+        },
+        {
+          "key": "tool-steel",
+          "label": {
+            "en": "Tool Steel",
+            "ar": "فولاذ العدة"
+          }
+        }
+      ]
+    },
+    {
+      "key": "laser-cutting",
+      "label": {
+        "en": "Laser Cutting",
+        "ar": "القطع بالليزر"
+      },
+      "materials": [
+        {
+          "key": "acrylic",
+          "label": {
+            "en": "Acrylic",
+            "ar": "أكريليك"
+          }
+        },
+        {
+          "key": "mdf",
+          "label": {
+            "en": "MDF",
+            "ar": "خشب مضغوط (MDF)"
+          }
+        },
+        {
+          "key": "plywood",
+          "label": {
+            "en": "Plywood",
+            "ar": "خشب رقائقي"
+          }
+        },
+        {
+          "key": "steel-sheet",
+          "label": {
+            "en": "Mild Steel sheet",
+            "ar": "صفيحة فولاذ طري"
+          }
+        },
+        {
+          "key": "ss-sheet",
+          "label": {
+            "en": "Stainless sheet",
+            "ar": "صفيحة فولاذ مقاوم للصدأ"
+          }
+        }
+      ]
+    },
+    {
+      "key": "pcb-manufacturing",
+      "label": {
+        "en": "PCB Manufacturing",
+        "ar": "تصنيع اللوحات الإلكترونية (PCB)"
+      },
+      "materials": [
+        {
+          "key": "fr4",
+          "label": {
+            "en": "FR-4",
+            "ar": "FR-4 (ألياف زجاجية)"
+          }
+        },
+        {
+          "key": "al-core",
+          "label": {
+            "en": "Aluminium core",
+            "ar": "قاعدة ألمنيوم"
+          }
+        },
+        {
+          "key": "flex",
+          "label": {
+            "en": "Flex (polyimide)",
+            "ar": "مرن (بولي إيميد)"
+          }
+        },
+        {
+          "key": "rogers",
+          "label": {
+            "en": "Rogers (high-frequency)",
+            "ar": "روجرز (ترددات عالية)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "edm",
+      "label": {
+        "en": "EDM (Wire / Sinker)",
+        "ar": "التفريغ الكهربائي (EDM)"
+      },
+      "materials": [
+        {
+          "key": "tool-steel",
+          "label": {
+            "en": "Tool Steel",
+            "ar": "فولاذ العدة"
+          }
+        },
+        {
+          "key": "carbide",
+          "label": {
+            "en": "Tungsten Carbide",
+            "ar": "كربيد التنجستن"
+          }
+        },
+        {
+          "key": "inconel",
+          "label": {
+            "en": "Inconel",
+            "ar": "إنكونيل"
+          }
+        },
+        {
+          "key": "titanium",
+          "label": {
+            "en": "Titanium",
+            "ar": "تيتانيوم"
+          }
+        }
+      ]
+    }
+  ]
+}
