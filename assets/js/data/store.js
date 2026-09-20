@@ -294,9 +294,10 @@ window.DataStore = (function () {
       file_hash:  entry.fileHash || null,
       file_ext:   entry.fileExt || '',
       file_size:  entry.fileSize || 0,
-      desc_hash:  entry.descHash || '',
+      question_hash: entry.questionHash || '',
       description: entry.description || '',
       features:   entry.features || {},
+      warnings:   entry.warnings || [],
       suggested_process: entry.suggested || null,
       alternatives: entry.alternatives || [],
       confidence: entry.confidence || 0,
@@ -323,15 +324,15 @@ window.DataStore = (function () {
   }
 
   /* The cache lookup ai.js makes before any analysis. Matched on the
-     file hash AND the description hash: the same file with a new
-     brief is a different question and deserves a fresh answer. Only
-     rows that were actually answered are reusable. */
-  async function findClassification(fileHash, descHash) {
+     file hash AND the question hash — the same file asked about with
+     a different brief, material or tolerance is a different question
+     and deserves a fresh answer. */
+  async function findClassification(fileHash, questionHash) {
     if (!fileHash) return null;
     const row = raw().aiClassifications.find((r) =>
       mine(r)
       && r.file_hash === fileHash
-      && (r.desc_hash || '') === (descHash || '')
+      && (r.question_hash || '') === (questionHash || '')
       && r.suggested_process !== undefined);
     return row ? Object.assign({}, row) : null;
   }

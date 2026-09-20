@@ -55,6 +55,7 @@ figure or the whole catalogue, edit one file:
 | `data/products.json` | the shop catalogue — sku, price, `onHand`, `committed`, `reorderPoint` |
 | `data/client-inventory.json` | seed data for the demo client's shelf and projects |
 | `data/processes.json` | manufacturing processes and the materials each accepts, EN + AR |
+| `data/classification-rules.json` | the classifier's thresholds and decision rules — tune without code |
 | `data/i18n/en.json` `ar.json` | every translated string, same key set in both |
 | `assets/js/product-art.js` | the line drawing for each product, keyed by its `art` field |
 
@@ -79,6 +80,8 @@ quote form and the workspace filter. No HTML to touch.
 | `assets/js/workspace.js` | the panel registry and slot layout |
 | `assets/js/workspace-project.js` | the four panels of the project workspace |
 | `assets/js/services/ai.js` | **the AI service** — the only door to any classifier or model |
+| `assets/js/services/rules-provider.js` | the rule engine, driven by `data/classification-rules.json` |
+| `assets/js/services/geometry.js` | measures a CAD file in the browser — nothing is uploaded |
 | `assets/js/services/ai-config.js` | which provider answers, in what order, and what is on |
 | `assets/js/components/classification-confirm.js` | shows a suggestion as a question, never as a fact |
 | `assets/js/workspace-ai-panel.js` | the "Identify the process" workspace panel |
@@ -453,9 +456,9 @@ and `rules` sits last in the chain on purpose: it is local, free and always
 available, so the chain can never fall through to nothing. A provider being
 down must never break the page.
 
-Today only `rules` is implemented, and it maps file extensions. It is
-deliberately shallow and says so in its own reasons — *"Based on the file
-extension alone."* Geometry analysis replaces it in the next stage.
+Today only `rules` is implemented. It measures the file in the browser and
+decides from `data/classification-rules.json` — see **The rule-based
+classifier** below.
 
 ### The machine never decides silently
 
@@ -502,6 +505,76 @@ Rows match `supabase/migrations/0004_ai.sql` field for field. That table has no
 delete policy: the log is both the training data and a record of what the
 machine told a client, and a tenant erasing a suggestion they disagreed with is
 exactly what must not be possible.
+
+### The rule-based classifier
+
+`rules` is the only implemented provider, it runs entirely in the browser, and
+it is free forever. It answers in two layers.
+
+**File type.** Gerber, KiCad and drill files only exist for one process, so the
+extension is not a guess there. A `.dxf` is a 2D profile. A `.stl` is a hint
+about the exporter, not about the part. A `.step` deliberately yields *no*
+process — a solid model says nothing about which machine should make it.
+
+**Geometry**, measured locally by `assets/js/services/geometry.js`: bounding
+box, volume, surface area, smallest dimension, flatness, whether the section is
+constant, triangle count and how many separate bodies there are. Loaders come
+from a CDN on first use and only for the format actually picked, so a client
+who only uploads STLs never downloads the STEP kernel. STL and OBJ are parsed
+here directly; 3MF uses the three.js loader, STEP and IGES use OpenCascade
+compiled to WebAssembly, DXF uses dxf-parser.
+
+Every one of those loaders can fail — blocked CDN, offline client, corrupt
+file — and every failure is soft. The classifier drops back to the file-type
+layer and says so in its reasons. **Geometry makes the answer better; its
+absence must never make the page worse.**
+
+### The extension is a prior, not a peer
+
+A flat 3 mm plate exported as STL is a laser job, even though it is an STL.
+Weighing "the extension says printing" equally against "the measured section is
+a constant 3 mm" would return *"the rules disagree, you decide"* for every
+plate anyone ever exported — the classifier refusing the one job it exists for.
+
+So when any rule from the data file decides, those rules resolve it alone and
+the extension's opinion demotes to an alternative, with a reason saying it was
+overruled. Only when no rule fires does the extension answer. Conflict then
+means genuine disagreement between *measurements*, which is worth asking about.
+
+A flat **metal** plate is exactly that case: geometry says laser, the material
+you stated says CNC. It comes back as "not sure" with both offered, and that is
+correct — nothing in the file can settle it.
+
+### Tuning it without touching code
+
+`data/classification-rules.json` holds every threshold, condition and reason
+key. Conditions are declarative — a feature name, an operator (`eq` `ne` `lt`
+`lte` `gt` `gte` `in` `exists`) and a value — never expressions. There is no
+`eval` anywhere: a data file cannot become an execution path, a malformed rule
+is skipped, and a malformed file leaves the file-type layer still answering.
+The worst a bad edit can do is make the classifier less certain.
+
+Warnings are separate from decisions, because a warning never changed the
+answer and Stage 4 counts the two differently.
+
+Two honest limits, both recorded in the file itself:
+
+- **Constant thickness is an approximation.** Volume ÷ footprint should come
+  back to the smallest dimension; when it does not, the section varies. It is a
+  good plate detector, not a feature recogniser.
+- **The thin-wall check catches a globally thin part, not a thin rib inside a
+  thick one.** Real minimum-wall analysis is a different and much heavier job.
+
+STL and OBJ carry no units. Everything is read as millimetres and the part is
+flagged as such, because being silently wrong by a factor of 25.4 is the worst
+outcome available.
+
+### After you confirm
+
+Confirming pre-selects that process in the Process → Material filter. It
+listens for the **decision**, not the suggestion — acting on the suggestion
+would be the classifier quietly steering the page, which is the behaviour the
+confirmation step exists to prevent. The select stays editable afterwards.
 
 ### Adding a panel or a provider
 

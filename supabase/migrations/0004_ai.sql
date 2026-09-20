@@ -34,10 +34,13 @@ create table if not exists public.ai_classifications (
   file_ext    text not null default '',
   file_size   bigint not null default 0,
 
-  -- The cache key is (file_hash, desc_hash): the same file with a new
-  -- brief is a different question and gets a fresh answer.
-  desc_hash   text not null default '',
-  description text,
+  -- The cache key is (file_hash, question_hash). It hashes the whole
+  -- question — the brief, the material class and the tolerance — not
+  -- just the description: the same file asked about as "aluminium,
+  -- ±0.02" is a different question from the same file asked about
+  -- with no hints, and must not reuse the answer.
+  question_hash text not null default '',
+  description   text,
 
   -- Extracted geometry — bounding box, volume, flatness and so on.
   -- Populated from Stage 2. jsonb because the feature set will grow
@@ -51,6 +54,10 @@ create table if not exists public.ai_classifications (
   -- [{ key, vars }] — i18n keys, not sentences, so a stored reason
   -- can be re-read in either language later.
   reasons     jsonb not null default '[]'::jsonb,
+  -- Rule ids that fired as warnings (thin wall, exceeds print volume,
+  -- multiple bodies). Kept separate from reasons because a warning
+  -- never changed the answer, and Stage 4 counts the two differently.
+  warnings    jsonb not null default '[]'::jsonb,
   -- 'rules' | 'cache' | a provider name.
   source      text not null default 'rules',
 
@@ -68,7 +75,7 @@ create index if not exists ai_cls_created_idx on public.ai_classifications (tena
 
 -- The cache lookup ai.js makes before any analysis.
 create index if not exists ai_cls_cache_idx
-  on public.ai_classifications (tenant_id, file_hash, desc_hash)
+  on public.ai_classifications (tenant_id, file_hash, question_hash)
   where file_hash is not null;
 
 -- Stage 4 counts accuracy off this: only answered rows, and whether

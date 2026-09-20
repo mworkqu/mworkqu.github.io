@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <!-- Sets lang and dir at parse time so the RTL layout is right on the first frame. -->
   <script src="/assets/js/i18n.js"></script>
+  <!-- three.js add-ons import the bare specifier "three". With no build
+       step the browser needs this map to resolve it. Nothing is fetched
+       until assets/js/services/geometry.js dynamically imports a loader,
+       which it only does for a 3MF file. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/",
+      "fflate": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/libs/fflate.module.js"
+    }
+  }
+  </script>
 </head>
 <body data-client-page="workspace">
 
@@ -77,7 +90,10 @@
 <script src="/assets/js/client-store.js"></script>
 <script src="/assets/js/data/store.js"></script>
 <script src="/assets/js/services/ai-config.js"></script>
+<script src="/assets/js/services/geometry.js"></script>
 <script src="/assets/js/services/ai.js"></script>
+<!-- Registers itself as the `rules` provider; ai.js never names it. -->
+<script src="/assets/js/services/rules-provider.js"></script>
 <script src="/assets/js/components/cascade.js"></script>
 <script src="/assets/js/components/classification-confirm.js"></script>
 <script src="/assets/js/dash-shell.js"></script>

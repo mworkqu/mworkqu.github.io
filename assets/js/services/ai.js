@@ -104,18 +104,32 @@ window.AIService = (function () {
 
   /* ── what leaves this module ─────────────────────────── */
 
-  /* The ONLY thing a provider is given. Note what is absent: the File,
-     its bytes, and its name. A filename can carry a client's project
-     or customer in it, so providers get the extension alone. */
-  function buildPayload(meta, features, description) {
+  /* The ONLY thing a provider is given. Note what is absent: the File
+     and its bytes, always; and its name, for anything that leaves the
+     machine. A filename routinely carries a client, a project or a
+     customer in it.
+
+     `isLocal` is the one distinction that matters. A local provider
+     runs in this browser, so handing it the base name costs nothing
+     and lets it spot a board package called "gerber-out.zip". A
+     remote provider gets the extension and nothing else, whatever it
+     claims to need. Which providers are local is declared in
+     ai-config.js, not asserted by the adapter itself. */
+  function buildPayload(meta, features, description, isLocal, extras) {
     const p = cfg().privacy || {};
-    return {
+    const payload = {
       ext:        meta.ext || '',
       sizeBytes:  meta.sizeBytes || 0,
       features:   features || {},
-      description: p.sendDescription ? (description || '') : '',
+      description: (isLocal || p.sendDescription) ? (description || '') : '',
       processes:  meta.processes || []
     };
+    if (isLocal && meta.baseName) payload.baseName = meta.baseName;
+    if (extras) {
+      if (extras.materialClass) payload.materialClass = extras.materialClass;
+      if (typeof extras.toleranceMm === 'number') payload.toleranceMm = extras.toleranceMm;
+    }
+    return payload;
   }
 
   /* ── provider registry ───────────────────────────────── */
@@ -150,89 +164,6 @@ window.AIService = (function () {
     return out;
   }
 
-  /* ── the rules provider (interim) ────────────────────────
-     Extension mapping only. It is deliberately shallow: Stage 2
-     replaces it with geometry analysis and an editable rule file. It
-     stays honest in the meantime by saying so in its reasons and by
-     refusing to guess when the extension cannot decide — a solid model
-     could go to a mill or a printer, and "I do not know, here are the
-     two candidates" is a better answer than a coin toss. */
-
-  const BY_EXTENSION = {
-    stl:   { process: '3d-printing',       confidence: 0.80, reason: 'mesh' },
-    '3mf': { process: '3d-printing',       confidence: 0.80, reason: 'mesh' },
-    obj:   { process: '3d-printing',       confidence: 0.60, reason: 'mesh' },
-    gcode: { process: '3d-printing',       confidence: 0.90, reason: 'gcode' },
-
-    dxf:   { process: 'laser-cutting',     confidence: 0.70, reason: 'flat' },
-    svg:   { process: 'laser-cutting',     confidence: 0.60, reason: 'flat' },
-    ai:    { process: 'laser-cutting',     confidence: 0.50, reason: 'flat' },
-
-    gbr:        { process: 'pcb-manufacturing', confidence: 0.90, reason: 'gerber' },
-    gbl:        { process: 'pcb-manufacturing', confidence: 0.90, reason: 'gerber' },
-    gtl:        { process: 'pcb-manufacturing', confidence: 0.90, reason: 'gerber' },
-    drl:        { process: 'pcb-manufacturing', confidence: 0.85, reason: 'gerber' },
-    brd:        { process: 'pcb-manufacturing', confidence: 0.80, reason: 'pcb' },
-    sch:        { process: 'pcb-manufacturing', confidence: 0.70, reason: 'pcb' },
-    kicad_pcb:  { process: 'pcb-manufacturing', confidence: 0.95, reason: 'kicad' }
-  };
-
-  /* A solid model carries no clue about which machine should make it. */
-  const AMBIGUOUS = {
-    step:   ['cnc-machining', '3d-printing'],
-    stp:    ['cnc-machining', '3d-printing'],
-    iges:   ['cnc-machining', '3d-printing'],
-    igs:    ['cnc-machining', '3d-printing'],
-    sldprt: ['cnc-machining', '3d-printing'],
-    ipt:    ['cnc-machining', '3d-printing'],
-    f3d:    ['cnc-machining', '3d-printing']
-  };
-
-  const rulesProvider = {
-    async classifyProject(payload) {
-      const ext = payload.ext;
-
-      if (!ext) {
-        return emptyResult('rules', [{ key: 'ai.reason.noExtension' }]);
-      }
-
-      if (BY_EXTENSION[ext]) {
-        const hit = BY_EXTENSION[ext];
-        return {
-          ok: true,
-          process: hit.process,
-          alternatives: [],
-          confidence: hit.confidence,
-          reasons: [
-            { key: 'ai.reason.' + hit.reason, vars: { ext: ext } },
-            { key: 'ai.reason.extensionOnly' }
-          ],
-          source: 'rules'
-        };
-      }
-
-      if (AMBIGUOUS[ext]) {
-        return {
-          ok: true,
-          process: null,
-          alternatives: AMBIGUOUS[ext].slice(),
-          confidence: 0,
-          reasons: [
-            { key: 'ai.reason.ambiguous', vars: { ext: ext } },
-            { key: 'ai.reason.extensionOnly' }
-          ],
-          source: 'rules'
-        };
-      }
-
-      return emptyResult('rules', [
-        { key: 'ai.reason.unknown', vars: { ext: ext } },
-        { key: 'ai.reason.extensionOnly' }
-      ]);
-    }
-  };
-
-  registerProvider('rules', rulesProvider);
 
   /* ── reasons, rendered ───────────────────────────────── */
 
@@ -267,12 +198,24 @@ window.AIService = (function () {
     const file = opts.file || null;
     const meta = {
       ext:       extensionOf(file),
+      baseName:  (file && file.name) || '',
       sizeBytes: (file && file.size) || 0,
       hash:      await hashFile(file),
       processes: opts.processes || []
     };
     const description = opts.description || '';
-    const descHash    = hashText(description);
+
+    /* The cache key has to cover the whole QUESTION, not just the
+       file. Description, material class and tolerance all change the
+       answer — a block is a printed part until the client says it is
+       aluminium — so hashing the description alone would serve a
+       stale verdict the moment a hint was edited, and the hint fields
+       would look broken. */
+    const questionHash = hashText([
+      description,
+      opts.materialClass || '',
+      (typeof opts.toleranceMm === 'number' ? opts.toleranceMm : '')
+    ].join(' '));
 
     /* Cache before analysis, as the brief requires: a file already
        answered is never analysed again. The decision is still logged,
@@ -282,7 +225,7 @@ window.AIService = (function () {
 
     if ((c.cache || {}).enabled && meta.hash && window.DataStore) {
       try {
-        const prior = await DataStore.findClassification(meta.hash, descHash);
+        const prior = await DataStore.findClassification(meta.hash, questionHash);
         if (prior) {
           result = {
             ok: true,
@@ -299,8 +242,37 @@ window.AIService = (function () {
       }
     }
 
+    /* Geometry runs only on a cache miss, which is the point of
+       hashing first: reading a 40 MB STEP file through a WASM kernel
+       is the most expensive thing this page does, and doing it twice
+       for the same file would be indefensible.
+
+       It is also entirely local and entirely optional. A blocked CDN,
+       an offline client or a corrupt file leaves `features` empty and
+       the extension rules answer alone — less precisely, but they
+       answer. Geometry improves the result; its absence must never
+       degrade the page. */
+    let features = opts.features || {};
+    let geometry = null;
+
+    if (!result
+        && file
+        && !Object.keys(features).length
+        && window.GeometryService
+        && GeometryService.supports(meta.ext)) {
+      const settings = (window.RulesProvider
+        ? ((await RulesProvider.config()) || {}).settings
+        : null);
+      geometry = await GeometryService.extract(file, meta.ext, settings);
+      if (geometry && geometry.ok) features = geometry.features;
+    }
+
     if (!result) {
-      const payload = buildPayload(meta, opts.features, description);
+      const decl    = (c.providers || {});
+      const payload = buildPayload(
+        meta, features, description,
+        false,                      /* per-provider below */
+        { materialClass: opts.materialClass, toleranceMm: opts.toleranceMm });
 
       /* Belt and braces. buildPayload cannot leak the file, but if a
          future edit makes it possible, refuse rather than send. */
@@ -313,7 +285,15 @@ window.AIService = (function () {
 
       for (const name of chain) {
         try {
-          const r = await registry[name].classifyProject(payload);
+          /* Rebuilt per provider: a local one may see the base name,
+             a remote one may not, and that must be decided by config
+             rather than by the adapter asking nicely. */
+          const forProvider = buildPayload(
+            meta, features, description,
+            !!(decl[name] && decl[name].local),
+            { materialClass: opts.materialClass, toleranceMm: opts.toleranceMm });
+
+          const r = await registry[name].classifyProject(forProvider);
           if (r && r.ok) { result = Object.assign({ source: name }, r); break; }
           errors.push({ provider: name, reason: (r && r.reason) || 'no_result' });
         } catch (err) {
@@ -332,10 +312,15 @@ window.AIService = (function () {
 
     result.cached     = cached;
     result.band       = confidenceBand(result.confidence || 0);
+    result.features   = result.features || features;
+    result.warnings   = result.warnings || [];
+    result.geometry   = geometry
+      ? { ok: geometry.ok, reason: geometry.reason || null }
+      : { ok: false, reason: cached ? 'cached' : 'not_attempted' };
     result.fileHash   = meta.hash;
     result.fileExt    = meta.ext;
     result.fileSize   = meta.sizeBytes;
-    result.descHash   = descHash;
+    result.questionHash = questionHash;
 
     /* Logged here, so no caller can skip it. */
     if (window.DataStore && DataStore.logClassification) {
@@ -344,13 +329,19 @@ window.AIService = (function () {
           fileHash:   meta.hash,
           fileExt:    meta.ext,
           fileSize:   meta.sizeBytes,
-          descHash:   descHash,
+          questionHash: questionHash,
           description: description,
-          features:   opts.features || {},
+          features:   result.features || {},
+          warnings:   (result.warnings || []).map((w) => w.id || w.key),
           suggested:  result.process,
           alternatives: result.alternatives || [],
           confidence: result.confidence || 0,
-          reasons:    result.reasons || [],
+          /* The "answered before" marker is about this READING, not
+             about the part, so it must not be stored — otherwise the
+             next cache hit reads it back and appends another, and the
+             reason list grows every time the file is opened. */
+          reasons:    (result.reasons || []).filter(
+                        (r) => !r || r.key !== 'ai.reason.cached'),
           source:     result.source
         });
         if (logged && logged.ok) result.logId = logged.id;

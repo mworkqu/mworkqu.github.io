@@ -154,7 +154,34 @@ Rules that are structural, not stylistic:
   chain because it is local and always available.
 
 Row shapes match `supabase/migrations/0004_ai.sql`, which has no delete
-policy on purpose.
+policy on purpose. The cache key is `(file_hash, question_hash)`, and
+the question hash covers the brief, the material class **and** the
+tolerance — hashing the description alone serves a stale verdict the
+moment a hint is edited.
+
+### The classifier
+
+`assets/js/services/rules-provider.js` registers itself as `rules`;
+`ai.js` never names it. Everything it decides comes from
+`data/classification-rules.json`: thresholds, conditions and reason
+keys. Conditions are declarative (`eq` `ne` `lt` `lte` `gt` `gte` `in`
+`exists`) and there is **no `eval` anywhere** — a data file must never
+become an execution path. A malformed rule is skipped, not fatal.
+
+`assets/js/services/geometry.js` measures the file locally. Loaders
+load from a CDN on first use and only for the format picked. Every
+failure is soft and falls back to the file-type layer.
+
+Two rules that are easy to break by accident:
+
+- **The extension is a prior, not a peer.** When a data rule decides,
+  it resolves alone and the extension demotes to an alternative.
+  Treating them as equals returns "not sure" for every flat plate
+  exported as STL.
+- **`ne` is evaluated before the missing-value guard**, because absent
+  genuinely is "not equal to". Folding it in with the other operators
+  silently disables every negative test on an optional feature, which
+  is worse than having no test — it looks like it passed.
 
 ## i18n
 

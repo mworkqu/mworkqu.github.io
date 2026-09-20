@@ -170,8 +170,26 @@ window.ProcessCascade = (function () {
 
     if (window.I18n) I18n.apply(host);
 
+    /* Used by the classifier to pre-select what it identified. The
+       user can still change it — a suggestion that silently locks the
+       control would be the classifier deciding, which is the one
+       thing it must not do. Emits like a real change so any listener
+       sees it, but leaves the material cleared for the user. */
+    function setProcess(key) {
+      if (!key || processEl.value === key) return false;
+      const exists = Array.prototype.some.call(
+        processEl.options, (o) => o.value === key);
+      if (!exists) return false;
+      processEl.value = key;
+      materialEl.innerHTML = materialOptions(key);
+      materialEl.disabled  = false;
+      syncOther();
+      emit();
+      return true;
+    }
+
     return {
-      value: value, reset: reset, relabel: relabel,
+      value: value, reset: reset, relabel: relabel, setProcess: setProcess,
       processEl: processEl, materialEl: materialEl,
       data: data
     };

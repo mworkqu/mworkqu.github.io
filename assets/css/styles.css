@@ -2556,3 +2556,81 @@ input[type="file"] {
   padding: 8px 0;
   color: var(--ink-70);
 }
+
+/* ── Stage 2: measurements, hints and warnings ─────────── */
+
+.ai-hints {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.ai-hints .panel-field { margin-bottom: 8px; }
+
+.ai-warnings {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-warning {
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 7px 10px;
+  border-inline-start: 2px solid var(--ink-35);
+  background: var(--ink-03);
+  color: var(--ink-70);
+}
+
+/* A warning about a part that will not survive the machine earns a
+   stronger edge than one that is merely worth knowing. */
+.ai-warning.is-warn { border-inline-start-color: #B5651D; color: #7A3F10; }
+.ai-warning.is-info { border-inline-start-color: var(--rule-mid); }
+
+.ai-nogeo {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-50);
+  margin-top: 11px;
+  font-style: italic;
+}
+
+.ai-features { margin-top: 12px; }
+
+.ai-features summary {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  cursor: pointer;
+  padding: 3px 0;
+}
+
+.ai-features summary:hover { color: var(--ink-70); }
+
+.ai-features dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 14px;
+  margin: 7px 0 0;
+  padding-top: 7px;
+  border-top: 1px solid var(--rule);
+}
+
+.ai-features dt {
+  font-size: 11px;
+  color: var(--ink-50);
+}
+
+.ai-features dd {
+  font-size: 11px;
+  color: var(--ink);
+  margin: 0;
+  text-align: end;
+}

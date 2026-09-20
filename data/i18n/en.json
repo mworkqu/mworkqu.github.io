@@ -70,6 +70,28 @@
     },
     "confirm": "Confirm",
     "failed": "That file could not be read. Nothing was changed.",
+    "feature": {
+      "bodies": "Separate bodies",
+      "flat": "Flat part",
+      "size": "Size",
+      "thickness": "Thickness",
+      "title": "What was measured",
+      "triangles": "Triangles",
+      "volume": "Volume"
+    },
+    "geometry": {
+      "failed": "The geometry could not be read, so this is based on the file type alone."
+    },
+    "material": {
+      "composite": "Composite",
+      "label": "Material, if you know it",
+      "metal": "Metal",
+      "plastic": "Plastic",
+      "unsure": "Not sure yet",
+      "wood": "Wood or board"
+    },
+    "measuring": "Measuring the geometry…",
+    "no": "No",
     "notAvailable": "Not available yet.",
     "panel": {
       "title": "Identify the process"
@@ -81,15 +103,30 @@
     "reason": {
       "ambiguous": ".{ext} is a solid model — it could be machined or printed, so the geometry has to decide",
       "cached": "Answered before for this exact file",
+      "conflict": "{count} rules disagreed, so this needs your decision",
       "extensionOnly": "Based on the file extension alone — geometry is not read yet",
       "flat": ".{ext} describes a flat 2D profile",
       "gcode": ".{ext} is already machine code for a printer",
+      "geometryOverrides": "A specific rule outweighed the guess from the file extension",
       "gerber": ".{ext} is a Gerber fabrication file",
+      "gerberZip": "An archive named like a board fabrication package",
       "kicad": ".{ext} is a KiCad board file",
       "mesh": ".{ext} is a mesh format, which is what a printer takes",
       "noExtension": "The file has no extension",
+      "noGeometry": "The file type alone was used — no geometry was measured",
       "noProvider": "No classifier is available right now",
       "pcb": ".{ext} is a circuit board layout",
+      "rule": {
+        "flat2d": "A 2D profile with no thickness of its own, which is what a laser cuts",
+        "flatPlate": "Flat with a constant {thicknessMm} mm section — a laser cuts this in one pass",
+        "flatVarying": "Flat overall, but the section changes — a laser cannot cut that, a mill can",
+        "meshDefault": "A mesh format, which usually means a printed part",
+        "metal": "You said the material is metal",
+        "organic": "Far more surface than its bounding box implies — curved, hollow or organic",
+        "pcb": "A board fabrication format — this only exists for PCB manufacturing",
+        "plastic": "You said the material is plastic",
+        "tolerance": "A tolerance of {toleranceMm} mm is tighter than a printer or a laser holds"
+      },
       "unknown": "No rule matches .{ext}"
     },
     "reasons": "Why",
@@ -102,9 +139,20 @@
     "savedCorrected": "Saved as {process}. Thank you — corrections train the classifier.",
     "selectPrompt": "Select…",
     "sourceLine": "Source: {source}",
+    "tolerance": {
+      "label": "Tightest tolerance (mm)",
+      "placeholder": "e.g. 0.05"
+    },
     "upload": {
       "label": "Project file"
-    }
+    },
+    "warning": {
+      "assembly": "{bodyCount} separate bodies — this is an assembly and may need more than one process",
+      "printVolume": "At {boundingBoxMaxMm} mm this may not fit a printer — consider CNC, or splitting the part",
+      "thinWall": "Thinnest section is {minDimensionMm} mm, which is below 1 mm and may not survive",
+      "units": "This format carries no units, so every dimension above is read as millimetres"
+    },
+    "yes": "Yes"
   },
   "btn": {
     "iSupply": "I supply this",
@@ -759,6 +807,7 @@
       "cancelled": "Project cancelled. Every part went back to your inventory.",
       "carted": "{n} × {name} added to your cart.",
       "failed": "That could not be done. Nothing changed.",
+      "filterSet": "Filters set to the process you confirmed.",
       "forProject": "{n} added to the cart for this project.",
       "insufficient": "Only {n} left — nothing was taken.",
       "removed": "Removed from the project.",

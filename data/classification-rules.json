@@ -1,0 +1,326 @@
+{
+  "version": 1,
+  "updated": "2026-09-20",
+  "note": "Decision rules for the process classifier. Tune these without touching code — assets/js/services/rules-provider.js reads this file and nothing else. Conditions are declarative, never expressions, so there is no eval and a bad edit degrades to 'no match, ask the user' instead of breaking the page. Rules are evaluated in order; every match is collected. If the matches agree on a process the highest confidence wins; if they disagree the answer becomes 'not sure' with the candidates listed, because a tie broken silently is how a classifier earns distrust.",
+  "settings": {
+    "flatMaxThicknessMm": 10,
+    "flatAspectMax": 0.12,
+    "constantThicknessTolerance": 0.35,
+    "thinWallWarnMm": 1,
+    "printerVolumeMm": 250,
+    "organicSurfaceRatio": 2.0,
+    "agreementConfidenceBonus": 0.05,
+    "conflictConfidence": 0.2
+  },
+  "featureVocabulary": [
+    "extension",
+    "fileKind",
+    "hasGeometry",
+    "boundingBoxXMm",
+    "boundingBoxYMm",
+    "boundingBoxZMm",
+    "boundingBoxMaxMm",
+    "minDimensionMm",
+    "volumeMm3",
+    "surfaceAreaMm2",
+    "surfaceRatio",
+    "isFlat",
+    "constantThickness",
+    "thicknessMm",
+    "bodyCount",
+    "triangleCount",
+    "materialClass",
+    "toleranceMm"
+  ],
+  "operators": [
+    "eq",
+    "ne",
+    "lt",
+    "lte",
+    "gt",
+    "gte",
+    "in",
+    "exists"
+  ],
+  "rules": [
+    {
+      "id": "pcb-by-extension",
+      "when": {
+        "all": [
+          {
+            "feature": "fileKind",
+            "eq": "pcb"
+          }
+        ]
+      },
+      "then": {
+        "process": "pcb-manufacturing",
+        "alternatives": [],
+        "confidence": 0.95
+      },
+      "reason": "ai.reason.rule.pcb"
+    },
+    {
+      "id": "flat-2d-by-extension",
+      "when": {
+        "all": [
+          {
+            "feature": "fileKind",
+            "eq": "flat2d"
+          }
+        ]
+      },
+      "then": {
+        "process": "laser-cutting",
+        "alternatives": [
+          "cnc-machining"
+        ],
+        "confidence": 0.7
+      },
+      "reason": "ai.reason.rule.flat2d"
+    },
+    {
+      "id": "flat-constant-thickness",
+      "note": "The headline geometric rule: a plate is a laser job until something says otherwise.",
+      "when": {
+        "all": [
+          {
+            "feature": "isFlat",
+            "eq": true
+          },
+          {
+            "feature": "constantThickness",
+            "eq": true
+          },
+          {
+            "feature": "thicknessMm",
+            "lte": 10
+          }
+        ]
+      },
+      "then": {
+        "process": "laser-cutting",
+        "alternatives": [
+          "cnc-machining"
+        ],
+        "confidence": 0.75
+      },
+      "reason": "ai.reason.rule.flatPlate"
+    },
+    {
+      "id": "flat-but-varying-thickness",
+      "note": "Flat footprint, changing section — a laser cannot make that, a mill can.",
+      "when": {
+        "all": [
+          {
+            "feature": "isFlat",
+            "eq": true
+          },
+          {
+            "feature": "constantThickness",
+            "eq": false
+          }
+        ]
+      },
+      "then": {
+        "process": "cnc-machining",
+        "alternatives": [
+          "3d-printing"
+        ],
+        "confidence": 0.6
+      },
+      "reason": "ai.reason.rule.flatVarying"
+    },
+    {
+      "id": "metal-material",
+      "when": {
+        "all": [
+          {
+            "feature": "materialClass",
+            "eq": "metal"
+          }
+        ]
+      },
+      "then": {
+        "process": "cnc-machining",
+        "alternatives": [
+          "laser-cutting"
+        ],
+        "confidence": 0.7
+      },
+      "reason": "ai.reason.rule.metal"
+    },
+    {
+      "id": "tight-tolerance",
+      "note": "Tighter than a printer or a laser can hold, so it has to be cut.",
+      "when": {
+        "all": [
+          {
+            "feature": "toleranceMm",
+            "exists": true
+          },
+          {
+            "feature": "toleranceMm",
+            "lt": 0.1
+          }
+        ]
+      },
+      "then": {
+        "process": "cnc-machining",
+        "alternatives": [],
+        "confidence": 0.8
+      },
+      "reason": "ai.reason.rule.tolerance"
+    },
+    {
+      "id": "plastic-material",
+      "when": {
+        "all": [
+          {
+            "feature": "materialClass",
+            "eq": "plastic"
+          },
+          {
+            "feature": "isFlat",
+            "ne": true
+          }
+        ]
+      },
+      "then": {
+        "process": "3d-printing",
+        "alternatives": [
+          "cnc-machining"
+        ],
+        "confidence": 0.65
+      },
+      "reason": "ai.reason.rule.plastic"
+    },
+    {
+      "id": "organic-geometry",
+      "note": "Far more surface than its bounding box implies: curved, organic or hollow. A mill cannot reach into that.",
+      "when": {
+        "all": [
+          {
+            "feature": "hasGeometry",
+            "eq": true
+          },
+          {
+            "feature": "surfaceRatio",
+            "gt": 2.0
+          },
+          {
+            "feature": "isFlat",
+            "ne": true
+          }
+        ]
+      },
+      "then": {
+        "process": "3d-printing",
+        "alternatives": [],
+        "confidence": 0.7
+      },
+      "reason": "ai.reason.rule.organic"
+    },
+    {
+      "id": "mesh-default",
+      "note": "Lowest confidence on purpose: a mesh format is a hint about the exporter, not about the part.",
+      "when": {
+        "all": [
+          {
+            "feature": "fileKind",
+            "eq": "mesh"
+          },
+          {
+            "feature": "hasGeometry",
+            "ne": true
+          }
+        ]
+      },
+      "then": {
+        "process": "3d-printing",
+        "alternatives": [
+          "cnc-machining"
+        ],
+        "confidence": 0.55
+      },
+      "reason": "ai.reason.rule.meshDefault"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "exceeds-print-volume",
+      "when": {
+        "all": [
+          {
+            "feature": "hasGeometry",
+            "eq": true
+          },
+          {
+            "feature": "boundingBoxMaxMm",
+            "gt": 250
+          },
+          {
+            "feature": "profileOnly",
+            "ne": true
+          }
+        ]
+      },
+      "reason": "ai.warning.printVolume",
+      "severity": "warn",
+      "note": "Only for something with real thickness. A 2D profile has no print volume to exceed — warning a laser job that it will not fit a printer is noise, and noise is how a warning stops being read."
+    },
+    {
+      "id": "thin-wall",
+      "note": "Catches a globally thin part. It does NOT find a thin rib inside a thick one — that needs a real thickness analysis, which this does not do.",
+      "when": {
+        "all": [
+          {
+            "feature": "hasGeometry",
+            "eq": true
+          },
+          {
+            "feature": "minDimensionMm",
+            "gt": 0
+          },
+          {
+            "feature": "minDimensionMm",
+            "lt": 1
+          },
+          {
+            "feature": "profileOnly",
+            "ne": true
+          }
+        ]
+      },
+      "reason": "ai.warning.thinWall",
+      "severity": "warn"
+    },
+    {
+      "id": "multiple-bodies",
+      "when": {
+        "all": [
+          {
+            "feature": "bodyCount",
+            "gt": 1
+          }
+        ]
+      },
+      "reason": "ai.warning.assembly",
+      "severity": "info"
+    },
+    {
+      "id": "units-assumed",
+      "note": "STL and OBJ carry no units. Every dimension above is millimetres by assumption, and saying so is cheaper than being wrong by 25.4x.",
+      "when": {
+        "all": [
+          {
+            "feature": "unitsAssumed",
+            "eq": true
+          }
+        ]
+      },
+      "reason": "ai.warning.units",
+      "severity": "info"
+    }
+  ]
+}

@@ -126,6 +126,26 @@
         publish();
       });
 
+      /* Stage 2e. Once the classifier's answer has been CONFIRMED by
+         the user, pre-select it here so the results narrow to that
+         process without them picking it twice.
+
+         It listens for the decision, not for the suggestion: acting
+         on the suggestion would be the classifier quietly steering
+         the page, which is the behaviour the confirmation step
+         exists to prevent. The select stays editable afterwards. */
+      ctx.bus.on('classification:decided', (e) => {
+        const key = e.detail && e.detail.process;
+        if (!key || !cascade || !cascade.setProcess) return;
+        if (cascade.setProcess(key)) {
+          ctx.bus.emit('notice', {
+            kind: 'ok',
+            text: tv('workspace.notice.filterSet', { process: key },
+                     'Filters set to the process you confirmed.')
+          });
+        }
+      });
+
       publish();
       return { publish: publish };
     }
